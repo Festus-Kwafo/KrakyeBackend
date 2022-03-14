@@ -33,8 +33,10 @@ class Product(models.Model):
     discount_percent = FloatField(default=0)
     in_stock = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=255, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
 
     @property
     def discount(self):
