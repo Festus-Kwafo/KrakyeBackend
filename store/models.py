@@ -1,4 +1,5 @@
 from tkinter import CASCADE
+from turtle import title
 from django.db import models
 from django.urls import reverse
 from django.db.models.fields import FloatField
@@ -17,9 +18,14 @@ class Category(models.Model):
         return self.name
 
 class Images(models.Model):
+    title = models.CharField(max_length=255, default='First_product')
     image_one = models.ImageField(upload_to='images/')
     image_two = models.ImageField(upload_to='images/')
     image_three = models.ImageField(upload_to='images/')
+    image_four = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.title
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
