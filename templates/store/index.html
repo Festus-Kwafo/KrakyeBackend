@@ -1,9 +1,11 @@
 {% extends './base.html' %} {% block title %}Krakye Clothing{% endblock%}
-{% block content %}
+{% block content %} {%load static%}
 <!--Main site-->
 
   <main id="main-site">
-
+    <div class="text-center">
+      <div class="spinner-border" role="status" id="spinner"></div>
+    </div>
     <!--carousel-->
     <section id="banner-area">
       <div class="mt-1">
@@ -200,11 +202,12 @@
         <hr>
       <!--Owl carousel-->
       <div class="owl-carousel owl-theme">
+        {%for items in products%}
         <div class="shadow-sm item py-2 m-2" style="width: 200px">
           <div class="product font-inter">
-            <button type="button" class="btn p-0" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="assets/product-1.jpg" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;"></button>
+            <button type="button" class="btn p-0" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="{{items.image_one.url}}" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;"></button>
             <div class="mt-2">
-              <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">Church</a></h4>
+              <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">{{items.category}}</a></h4>
             </div>
             
             <div class="text-center ml-2">
@@ -223,6 +226,7 @@
             </div>
           </div>
         </div>
+        {% endfor %}
       </div>
       <!--End Owl carousel-->
       </div>
