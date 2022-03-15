@@ -24,8 +24,12 @@ class Images(models.Model):
     image_three = models.ImageField(upload_to='images/')
     image_four = models.ImageField(upload_to='images/')
 
+    class Meta:
+        verbose_name_plural = 'images'
+
     def __str__(self):
         return self.title
+
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
@@ -41,6 +45,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=255, unique=True)
     created = models.DateTimeField(auto_now_add=True)
+    #created_by = models.User(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 
