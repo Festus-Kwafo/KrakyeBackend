@@ -1,0 +1,38 @@
+{%if page.has_other_pages%}
+<div class="pagination-area">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 my-2 font-inter">
+        <p>Showing {{products.start_index}}-{{products.end_index}} of {{product_count}} items</p>
+      </div>
+      <div class="col-lg-6 col-md-6 font-inter">
+        <ul class="pagination-box">
+            {%if page.has_previous%}
+          <li>
+            <a href="?page={{ page.previous_page_number }}" class="Previous"
+              ><i class="fa fa-chevron-left"></i> Previous</a
+            >
+          </li>
+          {% else %}
+      <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+    {% for i in page.paginator.page_range %}
+      {% if page.number == i %}
+        <li class="active page-item"><span class="page-link">{{ i }}</span></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page.has_next %}
+          <li>
+            <a href="?page={{ page.next_page_number }}" class="Next">
+              Next <i class="fa fa-chevron-right"></i
+            ></a>
+          </li>
+          {% else %}
+      <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}

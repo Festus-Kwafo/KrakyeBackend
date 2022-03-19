@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.forms import FloatField
+from django.utils.html import mark_safe
 
 # Create your models here.
 class Category(models.Model):
@@ -44,6 +45,10 @@ class Product(models.Model):
         if self.sale_price > 0:
             discount_percent = ((self.list_price - self.sale_price)/self.list_price)*100
             return format(discount_percent, '.2f')
+
+    def image_tag(self):
+            return mark_safe('<img src="/media/%s" width="90" height="90" />' % (self.image_one))
+    image_tag.short_description = 'Image'
 
     class Meta:
         verbose_name_plural = 'Products'

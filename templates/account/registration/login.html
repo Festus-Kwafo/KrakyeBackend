@@ -1,0 +1,41 @@
+{% extends "../../store/base.html" %} {% block title %}Login{% endblock %}
+{%block content %}
+
+<div class="container-fluid col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+  <!-- Login Form s-->
+  <form action="." method="post">
+    <div class="login-form">
+      {% csrf_token %}
+      <h4 class="login-title">Login</h4>
+      {% if form.errors %}
+      <div class="alert alert-primary" role="alert">
+        Error: Username or Password not correct!
+      </div>
+      {% endif %}
+
+      <div class="row">
+      
+        <div class="col-md-12 mb-20">
+            <label class="form-label">{{ form.username.label}}</label>
+                                {{ form.username}}
+        </div>
+        <div class="col-12 mb-20">
+          <label>{{form.password.label}}</label>
+          {{form.password}}
+        </div>
+        <div class="col-md-12">
+          <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw500 w-100" type="submit" value="Log-in">Login</button>
+        </div>
+        <div class="col-md-6 col-12 mb-20">
+          <a href={%url 'account:pwdreset'%}>Forgotten Password</a>
+        </div>
+        <div class="col-md-6 col-12 mb-20" >
+        <span>
+        <a href="{% url "account:register" %}">Create an account</a>
+        </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{%endblock%}

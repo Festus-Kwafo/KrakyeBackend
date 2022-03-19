@@ -21,9 +21,6 @@ $(document).ready(function(){
         $('#product-price-list').html($(this).data('listprice'));
         $('#product-price-sale').html($(this).data('saleprice'));
         $('#product-category').html($(this).data('productcategory'));
-
-
-        console.log($(this).data('productcategory'))
     });
 
 });
