@@ -1,0 +1,153 @@
+{% extends '../../base.html' %} {% block title %}Krakye Clothing || Cart{% endblock%}
+{% block content %} {%load static%}
+  <!--Main site-->
+  <main id="main-site">
+    <!--Shopping Cart Section-->
+    <section id="cart" class="py-3">
+      <div class="shadow-m card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Shopping Cart</b></h4>
+                        </div>
+                        <div class="col align-self-center text-right text-muted">3 items</div>
+                    </div>
+                </div>
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="assets/product-1.jpg"></div>
+                        <div class="col">
+                            <div class="row text-muted">Shirt</div>
+                            <div class="row">Cotton T-shirt</div>
+                        </div>
+                        <div class="qty col"> 
+                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
+                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
+                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
+                         </div>
+                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="assets/product-2.jpg"></div>
+                        <div class="col">
+                            <div class="row text-muted">Shirt</div>
+                            <div class="row">Cotton T-shirt</div>
+                        </div>
+                        <div class="qty col"> 
+                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
+                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
+                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
+                         </div>
+                        <div class="col">  44.00 <span class="close">&#10005;</span></div>
+                    </div>
+                </div>
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="assets/product-3.jpg"></div>
+                        <div class="col">
+                          <!--Category-->
+                            <div class="row text-muted">Shirt</div>
+                            <!--Product Name-->
+                            <div class="row">Cotton T-shirt</div>
+                        </div>
+                        <div class="qty col"> 
+                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
+                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
+                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
+                         </div>
+                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                    </div>
+                </div>
+                <div class="back-to-shop"><a href="#"><i class="fa-solid fa-arrow-left-long"></i><span class="text-muted font-inter"> Back to shop</span></a></div>
+            </div>
+            <div class="col-md-4 summary">
+                <div>
+                    <h5 class="font-inter"><b>Summary</b></h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;"><span class="font-inter">ITEMS 3</span> </div>
+                    <div class="col text-right">&euro; 132.00</div>
+                </div>
+                <form>
+                    <p class="font-inter">DELIVERY</p> 
+                    <select>
+                        <option class="text-muted font-inter">Standard-Delivery- &euro;5.00</option>
+                        <option class="text-muted font-inter">Express-Delivery- &euro;10.00</option>
+                        <option class="text-muted font-inter">Premuim-Delivery- &euro;20.00</option>
+                    </select>
+                    <p class="font-inter">COUPON CODE</p>
+                    <div class="input-group mb-3">
+                      <input type="number" class="form-control" placeholder="Enter your code" aria-label="Recipient's username" aria-describedby="button-addon2">
+                      <button class="btn btn-product" type="submit"><i class="fa-solid fa-arrow-right-long"></i></button>
+                    </div>                    
+                </form>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col"> <span class="font-inter">TOTAL PRICE</span> </div>
+                    <div class="col text-right">&euro; 137.00</div>
+                </div> <button type="submit" class="btn btn-checkout font-inter">CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+
+    </section>
+    <!--End Shopping Cart Section-->
+
+    <!--New Clothes-->
+    <section id="new-clothes">
+        <div class="container py-5">
+          <h4 class="font-inter font-size-20">New Clothes</h4>
+          <hr>
+          <!--Owl carousel-->
+        <div class="owl-carousel owl-theme">
+          <div class="shadow-sm item py-2 m-2" style="width: 200px">
+            <div class="product font-inter">
+              <button type="button" class="btn p-0" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="assets/product-1.jpg" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;"></button>
+              <div class="mt-2">
+                <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">Church</a></h4>
+              </div>
+              
+              <div class="text-center ml-2">
+                <div class="d-flex align-items-center justify-content-between mb-0">
+                  <h6>Kaftan Men</h6>
+                  <button class="btn btn-wishlist pb-3" style="color: black;">
+                    <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                  </button>
+                </div>
+                <div class="price d-flex text-left font-size-14">
+                  <span class="new-price p-2">$150</span>
+                  <span class="old-price text-muted p-2">$140</span>
+                  <span class="discount-percentage ml-auto p-2 text-danger">-7%</span>
+                </div>
+                <button type="submit" class="btn btn-product font-size-12" data-toggle="modal" data-target=".bd-example-modal-lg">View Product</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--End Owl carousel-->
+        </div>
+        
+      </section>
+      <!--End New Clothes-->
+
+    <!--Social Media-->
+    <section id="social-media">
+        <div class="container my-2">
+          <div class="row d-flex justify-content-end font-size-20 ">
+            <a href=""> <i class="fa-brands fa-facebook px-2 color-primary"></i></a>
+            <a href=""> <i class="fa-brands fa-whatsapp px-2 color-primary"></i></a>
+            <a href=""> <i class="fa-brands fa-twitter px-2 color-primary"></i></a>
+            <a href=""> <i class="fa-brands fa-instagram px-2 color-primary "></i></a>
+          </div>
+    
+        </div>
+      </section>
+      <!--Social Media-->
+    
+  </main>
+  <!--End Main site-->
+{%endblock%}

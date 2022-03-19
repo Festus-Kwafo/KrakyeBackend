@@ -21,6 +21,10 @@ $(document).ready(function(){
         $('#product-price-list').html($(this).data('listprice'));
         $('#product-price-sale').html($(this).data('saleprice'));
         $('#product-category').html($(this).data('productcategory'));
+
+        var proid = $(this).data('id');
+        $("#add-button").attr('value' , proid);
     });
+
 
 });

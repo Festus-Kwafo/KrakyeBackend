@@ -6,8 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def all_products(request):
     categories = Category.objects.all()
-    products    = Product.objects.all().order_by('id')[:10]
-    top_sale    = Product.objects.all().order_by('-sale_price')[:10]
+    products    = Product.objects.filter(is_active=True).order_by('id')[:10]
+    top_sale    = Product.objects.filter(is_active=True).order_by('-sale_price')[:10]
     new_arrivals = Product.objects.all().order_by('-created')[:5]
     return render(request, 'index.html', {'products': products, 'categories': categories, 'new_arrivals': new_arrivals, 'top_sale': top_sale })
 
