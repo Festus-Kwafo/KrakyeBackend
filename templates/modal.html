@@ -49,7 +49,7 @@
                               <tr >
                                 <!--Old Price-->
                                   <td class='old-price'>
-                                      <span class=" font-inter font-size-16 text-muted">GH₵</span><span id="product-price-sale" class="font-inter font-size-16 text-muted"></span>
+                                      <span class="font-inter font-size-16 text-muted">GH₵</span><span id="product-price-sale" class="font-inter font-size-16 text-muted"></span>
                                   </td>
                               </tr>
                               <tr>
@@ -60,7 +60,7 @@
                               </tr>
                               <tr>
                                   <td>
-                                      <span class="font-inter font-size-16">Category: <span id="product-category"></span> </span>
+                                      <span class="font-inter font-size-16">Category: <span id="product-category"></span></span>
                                   </td>
                               </tr>
                           </table>
@@ -130,6 +130,7 @@
                           <div class="form-row pt-2 font-size-16 font-inter">
                             
                             <div class="col">
+                              <a href="{% url 'cart:cart_add' product.id %}">Add To Cart</a>
                                 <button type="submit" id="add-button" value=" " class="btn btn-product form-control">Add to Cart</button>
                             </div>
                         </div>

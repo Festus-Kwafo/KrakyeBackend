@@ -170,7 +170,7 @@
                   <span class="discount-percentage text-danger">{{item.discount}}%</span>
                 </div>
               </div>
-              <button type="submit" class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
+              <button type="submit" id='addtest' class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
             </div>
           </div>
         </div>
@@ -203,5 +203,9 @@
         </div>
       </div>
     </section>
+    <script>
+      var csrftoken = '{{ csrf_token }}';
+      console.log(csrftoken)
+  </script>
     <!--End Site Info-->
     {%endblock%}

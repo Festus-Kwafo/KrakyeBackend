@@ -25,6 +25,4 @@ $(document).ready(function(){
         var proid = $(this).data('id');
         $("#add-button").attr('value' , proid);
     });
-
-
 });
