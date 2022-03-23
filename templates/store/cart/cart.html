@@ -15,53 +15,23 @@
                         <div class="col align-self-center text-right text-muted">3 items</div>
                     </div>
                 </div>
+                {%for items in items%}
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="assets/product-1.jpg"></div>
+                        <div class="col-2"><img class="img-fluid" src="{{item.product.imageURL}}"></div>
                         <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
+                            <div class="row text-muted">{{item.product.category}}</div>
+                            <div class="row"{{item.product.name}}></div>
                         </div>
                         <div class="qty col"> 
                           <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
                           <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
                           <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
                          </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
+                        <div class="col">&euro;{{item.product.sale_price}} <span class="close">&#10005;</span></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="assets/product-2.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="qty col"> 
-                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
-                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
-                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
-                         </div>
-                        <div class="col">  44.00 <span class="close">&#10005;</span></div>
-                    </div>
-                </div>
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="assets/product-3.jpg"></div>
-                        <div class="col">
-                          <!--Category-->
-                            <div class="row text-muted">Shirt</div>
-                            <!--Product Name-->
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="qty col"> 
-                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
-                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
-                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
-                         </div>
-                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
-                    </div>
-                </div>
+                {%endfor%}
                 <div class="back-to-shop"><a href="#"><i class="fa-solid fa-arrow-left-long"></i><span class="text-muted font-inter"> Back to shop</span></a></div>
             </div>
             <div class="col-md-4 summary">

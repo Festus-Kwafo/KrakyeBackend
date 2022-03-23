@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('.product-link').click(function(){
         $('#product-name').html($(this).data('name'));
+
         var imgset = $(this).data('img');
         $("#product-img").attr('src' , imgset);
         $("#indicator-img").attr('src' , imgset);
@@ -21,8 +22,10 @@ $(document).ready(function(){
         $('#product-price-list').html($(this).data('listprice'));
         $('#product-price-sale').html($(this).data('saleprice'));
         $('#product-category').html($(this).data('productcategory'));
-
+        
         var proid = $(this).data('id');
-        $("#add-button").attr('value' , proid);
+        $("#add-button").attr('value', proid);
+
+
     });
 });

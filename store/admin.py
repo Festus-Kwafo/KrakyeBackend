@@ -10,8 +10,6 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
-
-
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'image_tag', 'category', 
                     'sale_price', 'discount', 'in_stock', 'created',    ]
@@ -22,3 +20,8 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['discount', 'image_tag',]
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(ShippingAddress)
+admin.site.register(Customer)
+

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from .models import Category, Product
+from .models import Category, Order, Product
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from backend.settings import AUTH_USER_MODEL
 
 # Create your views here.
 
@@ -26,3 +27,12 @@ def shop(request):
         # If page is out of range deliver last page of results
         products = paginator.page(paginator.num_pages)
     return render(request, 'store/shop.html', {'products': products, page: 'pages', 'product_count': product_count})
+
+
+def cart(request):
+    if request.user.is_authenticated:
+        order, created = Order.objects.get_or_create(complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items =[]
+    return render(request, 'store/cart/cart.html', {'items': items})

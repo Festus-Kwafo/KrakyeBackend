@@ -1,4 +1,4 @@
-{% extends "../../store/base.html" %} {% block title %}Login{% endblock %}
+{% extends '../../base.html' %} {% block title %}Login{% endblock %}
 {%block content %}
 
 <div class="container-fluid col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
@@ -27,11 +27,11 @@
           <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw500 w-100" type="submit" value="Log-in">Login</button>
         </div>
         <div class="col-md-6 col-12 mb-20">
-          <a href={%url 'account:pwdreset'%}>Forgotten Password</a>
+          <a href={%url 'accounts:pwdreset'%}>Forgotten Password</a>
         </div>
         <div class="col-md-6 col-12 mb-20" >
         <span>
-        <a href="{% url "account:register" %}">Create an account</a>
+        <a href="{% url "accounts:register" %}">Create an account</a>
         </span>
         </div>
       </div>

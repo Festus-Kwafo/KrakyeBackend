@@ -37,8 +37,8 @@ class Product(models.Model):
     image_two = models.ImageField(upload_to='image/')
     image_three = models.ImageField(upload_to='image/')
     slug = models.SlugField(unique=True)
-    list_price = models.DecimalField(max_digits=6, decimal_places=2)
-    sale_price = models.DecimalField(max_digits=6, decimal_places=2)
+    list_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    sale_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     in_stock = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -59,3 +59,50 @@ class Product(models.Model):
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created', )
+
+
+
+class Customer(models.Model):
+    customer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=255, null=True)
+    email = models.EmailField(null=True)
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    delivered = models.BooleanField(default=False)
+    shipped = models.BooleanField(default=False)
+    complete =  models.BooleanField(default=False)
+    billing_status = models.BooleanField(default=False)
+    order_key =  models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ('-date_ordered',)
+
+    def __str__(self):
+        return str(self.id)
+
+class OrderItem(models.Model):
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True)
+    quantity = models.IntegerField(default=0, null=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+class ShippingAddress(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.address)
+
+    

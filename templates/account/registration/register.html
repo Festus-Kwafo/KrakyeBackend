@@ -1,4 +1,4 @@
-{% extends "../../store/base.html" %} {% block title %}Register{% endblock %}
+{% extends '../../base.html' %} {% block title %}Register{% endblock %}
 {%block content %}
 
 <style>
@@ -64,10 +64,10 @@
         
         <div class="col-md-12 mb-20">
           <label
-            >{{form.user_name.label}}<span class="text-muted small">
+            >{{form.username.label}}<span class="text-muted small">
               (Required)</span
             ></label
-          >{{form.user_name}}
+          >{{form.username}}
         </div>
         <div class="col-md-12 mb-20">
           <label

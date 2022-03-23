@@ -89,6 +89,12 @@
                                           <button class="btn btn-dropdown dropdown-toggle border-dark rounded-pill border-2 text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
                                             Size
                                           </button>
+                                          <select class="form-select border-dark rounded-pill border-2" aria-label="Default select example">
+                                            <option selected>Open this select menu</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                          </select>
                                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                             {%for s in products %}
                                             <button class="dropdown-item" type="button">{{s.size}}</button>
@@ -103,7 +109,7 @@
                                   <div class="qty d-flex">
                                     <div class="px-1 flex flex-row font-inter">
                                       <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
-                                      <input type="text" class="qty_input mx-0 bg-white rounded-pill text-center" data-id="pro2" disabled value="1" placeholder="1">
+                                      <input type="text" id='input' class="qty_input mx-0 bg-white rounded-pill text-center" data-id="pro2" disabled value="1" placeholder="1">
                                       <button class="qty_down py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
                                     </div>
                                   </div>
@@ -130,7 +136,7 @@
                           <div class="form-row pt-2 font-size-16 font-inter">
                             
                             <div class="col">
-                                <button type="submit" id="add-button" value=" " class="btn btn-product form-control">Add to Cart</button>
+                                <button type="submit" id="add-button" value=" "  class="btn btn-product form-control update-cart">Add to Cart</button>
                             </div>
                         </div>
                           <!--Order Details-->
@@ -147,4 +153,29 @@
           </div>
         </div>
       </div>
+      <script>
+        var updateBtns = document.getElementsByClassName('update-cart')
+
+          for (var i = 0; i < updateBtns.length; i++){
+              updateBtns[i].addEventListener('click', function(){
+                var productid = $('#add-button').val()
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "cart:cart_add" %}',
+                    data: {
+                        productid: $('#add-button').val(),
+                        productqty: $('#input').val(),
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        action: 'post'
+                    },
+                    success: function (json) {
+                      console.log(json)
+                      document.getElementById("cart-qty").innerHTML = json.qty
+                      
+                    },
+                    error: function (xhr, errmsg, err) {}
+                });
+              })
+          }
+      </script>
     <!--Modal Pop up-->
