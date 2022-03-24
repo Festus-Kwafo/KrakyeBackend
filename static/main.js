@@ -23,8 +23,13 @@ $(document).ready(function(){
         $('#product-price-sale').html($(this).data('saleprice'));
         $('#product-category').html($(this).data('productcategory'));
         
-        var proid = $(this).data('id');
-        $("#add-button").attr('value', proid);
+        var id = $(this).data('id');
+        $("#add-button").attr('value', id);
+
+        var pro_id = $(this).data('id');
+        $('#input').attr('data-id', pro_id)
+        $('.qty_up').attr('data-id', pro_id)
+        $('.qty_down').attr('data-id', pro_id)       
 
 
     });
