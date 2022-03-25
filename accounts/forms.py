@@ -25,8 +25,8 @@ class RegistrationForm(forms.ModelForm):
         label='Enter Username', min_length=4, max_length=50, help_text='Required')
     first_name = forms.CharField(
         label='Enter Firstname', min_length=4, max_length=50, help_text='Required')
-    last_name = forms.CharField(
-        label='Enter Lastname', min_length=4, max_length=50, help_text='Required')
+    other_name = forms.CharField(
+        label='Enter Othername(s)', min_length=4, max_length=50, help_text='Required')
     email = forms.EmailField(max_length=100, help_text='Required', error_messages={
         'required': 'Sorry, you will need an email'})
     phone_number = forms.CharField(max_length=100, help_text='Required', error_messages={
@@ -39,7 +39,7 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = UserBase
         fields = ('username', 'email', 'first_name',
-                  'country', 'last_name', 'phone_number')
+                  'country', 'other_name', 'phone_number')
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -85,7 +85,7 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = UserBase
-        fields = ('email', 'username', 'first_name',)
+        fields = ('email', 'first_name',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -15,24 +15,30 @@
                         <div class="col align-self-center text-right text-muted">3 items</div>
                     </div>
                 </div>
-                {%for items in items%}
-                <div class="row border-top border-bottom">
+                {%for item in cart %}
+                {%with product=item.product%}
+                <div data-index='{{product.id}}' class="row border-top border-bottom product-item">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{item.product.imageURL}}"></div>
+                        <div class="col-2"><img class="img-fluid" src="{{product.image_one.url}}"></div>
                         <div class="col">
-                            <div class="row text-muted">{{item.product.category}}</div>
-                            <div class="row"{{item.product.name}}></div>
+                            <div class="row text-muted font-size-14">{{product.category}}</div>
+                            <div class="row font-inter font-size-16"><b><span>{{product.name}}</span></b></div>
                         </div>
                         <div class="qty col"> 
-                          <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
-                          <input type="text" class="qty_input mt-3 bg-white text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
-                          <button class="qty_down border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
+                          
+                          <input type="text" class="qty_input mt-3 bg-white border-0 text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
+                          
                          </div>
-                        <div class="col">&euro;{{item.product.sale_price}} <span class="close">&#10005;</span></div>
+                        <div class="col">GH₵{{product.sale_price}} 
+                    </div>
+                    <div class="col font-size-16 font-inter">
+                      <button type="submit" id="delete-btn" data-index="{{product.id}}" class="btn btn-danger form-control font-inter delete-btn">Delete</button>
+                  </div>
                     </div>
                 </div>
+                {%endwith%}
                 {%endfor%}
-                <div class="back-to-shop"><a href="#"><i class="fa-solid fa-arrow-left-long"></i><span class="text-muted font-inter"> Back to shop</span></a></div>
+                <div class="back-to-shop"><a href="{%url 'store:shop'%}"><i class="fa-solid fa-arrow-left-long"></i><span class="text-muted font-inter"> Back to shop</span></a></div>
             </div>
             <div class="col-md-4 summary">
                 <div>
@@ -40,15 +46,15 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col" style="padding-left:0;"><span class="font-inter">ITEMS 3</span> </div>
-                    <div class="col text-right">&euro; 132.00</div>
+                    <div class="col" style="padding-left:0;"><span class="font-inter">ITEMS {{cart|length}}</span> </div>
+                    <div class="col text-right">GH₵ 132.00</div>
                 </div>
                 <form>
                     <p class="font-inter">DELIVERY</p> 
                     <select>
-                        <option class="text-muted font-inter">Standard-Delivery- &euro;5.00</option>
-                        <option class="text-muted font-inter">Express-Delivery- &euro;10.00</option>
-                        <option class="text-muted font-inter">Premuim-Delivery- &euro;20.00</option>
+                        <option class="text-muted font-inter">Standard-Delivery- GH₵5.00</option>
+                        <option class="text-muted font-inter">Express-Delivery- GH₵10.00</option>
+                        <option class="text-muted font-inter">Premuim-Delivery- GH₵20.00</option>
                     </select>
                     <p class="font-inter">COUPON CODE</p>
                     <div class="input-group mb-3">
@@ -58,7 +64,7 @@
                 </form>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col"> <span class="font-inter">TOTAL PRICE</span> </div>
-                    <div class="col text-right">&euro; 137.00</div>
+                    <div  class="col text-right">GH₵ <span id='subtotal'> {{cart.get_total_price}}</span></div>
                 </div> <button type="submit" class="btn btn-checkout font-inter">CHECKOUT</button>
             </div>
         </div>
@@ -70,7 +76,7 @@
     <!--New Clothes-->
     <section id="new-clothes">
         <div class="container py-5">
-          <h4 class="font-inter font-size-20">New Clothes</h4>
+          <h4 class="font-inter font-size-20">Related Products</h4>
           <hr>
           <!--Owl carousel-->
         <div class="owl-carousel owl-theme">
@@ -102,22 +108,34 @@
         </div>
         
       </section>
+      
       <!--End New Clothes-->
-
-    <!--Social Media-->
-    <section id="social-media">
-        <div class="container my-2">
-          <div class="row d-flex justify-content-end font-size-20 ">
-            <a href=""> <i class="fa-brands fa-facebook px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-whatsapp px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-twitter px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-instagram px-2 color-primary "></i></a>
-          </div>
-    
-        </div>
-      </section>
-      <!--Social Media-->
-    
   </main>
+  <script>
+    var updateBtns = document.getElementsByClassName('delete-btn')
+
+      for (var i = 0; i < updateBtns.length; i++){
+          updateBtns[i].addEventListener('click', function(){
+            var proid = $(this).data('index')
+            $.ajax({
+                type: 'POST',
+                url: '{% url "cart:cart_delete" %}',
+                data: {
+                    productid: $(this).data('index'),
+                    csrfmiddlewaretoken: "{{csrf_token}}",
+                    action: 'post'
+                },
+                success: function (json) {
+                  console.log(proid)
+                  $('.product-item[data-index= "'+ proid + '"]').remove();
+                  document.getElementById('subtotal').innerHTML = json.subtotal
+                  document.getElementById('cart-qty').innerHTML = json.qty
+                  
+                },
+                error: function (xhr, errmsg, err) {}
+            });
+          })
+      }
+  </script>
   <!--End Main site-->
 {%endblock%}

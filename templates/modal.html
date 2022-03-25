@@ -108,9 +108,9 @@
                               <div class="col-12">
                                   <div class="qty d-flex">
                                     <div class="px-1 flex flex-row font-inter">
-                                      <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up"></i> </button>
-                                      <input type="text" id='input' class="qty_input mx-0 bg-white rounded-pill text-center" data-id="pro2"  disabled value="1" placeholder="1">
-                                      <button class="qty_down py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-down"></i> </button>
+                                      <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up hidden"></i> </button>
+                                      <input type="text" id='input' class="qty_input mx-0 bg-white rounded-pill text-center hidden" data-id="pro2"  disabled value="1" placeholder="1">
+                                      <button class="qty_down py-1 border-0 bg-white " data-id="pro2"> <i class="fas fa-angle-down hidden"></i> </button>
                                     </div>
                                   </div>
                               </div>
@@ -133,12 +133,7 @@
                                 <hr>
                               </div>
                           </div>
-                          <div class="form-row pt-2 font-size-16 font-inter">
-                            
-                            <div class="col">
-                                <button type="submit" id="add-button" value=" "  class="btn btn-product form-control update-cart">Add to Cart</button>
-                            </div>
-                        </div>
+                          <div class="btn-inCart hidden">
                         <div class="form-row pt-2 font-size-16 font-inter" id="in-cart"> 
                           <div class="col">
                               <button type="submit" class="btn btn-secondary form-control">In Cart</button>
@@ -151,8 +146,14 @@
                           <div class="col">
                               <button type="submit" class="btn btn-product form-control">Go to cart</button>
                           </div>
-
                       </div>
+                    </div>
+                      <div class="form-row pt-2 font-size-16 font-inter">
+                            
+                        <div class="col">
+                            <button type="submit" id="add-button" count='1' value=" "  class="btn btn-product form-control update-cart">Add to Cart</button>
+                        </div>
+                    </div>
                       
                           <!--Order Details-->
                           <div id="order-details" class="font-inter d-flex flex-column text-dark m-1">

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from store import views
 from .cart import Cart
 from store.models import Product
 from django.http import JsonResponse
@@ -7,7 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def cart_summary(request):
-    return render(request, 'store/cart/cart.html' )
+    cart = Cart(request)
+    return render(request,  'store/cart/cart.html', {'cart':cart} )
 
 @csrf_exempt
 def cart_add(request):
@@ -16,10 +19,20 @@ def cart_add(request):
         product_id = int(request.POST.get('productid'))
         product_qty = int(request.POST.get('productqty'))
         product = get_object_or_404(Product, id=product_id)
+        
         cart.add(product=product, qty=product_qty)
         
         cartqty = cart.__len__()
         response = JsonResponse({'qty' : cartqty})
         return response
     
-
+def cart_delete(request):
+    cart = Cart(request)
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('productid'))
+        cart.delete(product=product_id) 
+        
+        carttotal  = cart.get_total_price()
+        cartqty = cart.__len__()
+        response = JsonResponse({'subtotal': carttotal,'qty' : cartqty})
+        return response

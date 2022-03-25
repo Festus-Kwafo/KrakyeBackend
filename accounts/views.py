@@ -57,6 +57,27 @@ def account_activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('account:dashboard')
+        return redirect('accounts:dashboard')
     else:
         return render(request, 'account/registration/activation_invalid.html')
+
+@login_required
+def edit_details(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+
+    return render(request,
+                  'account/user/edit_details.html', {'user_form': user_form})
+
+@login_required
+def delete_user(request):
+    user = UserBase.objects.get(username=request.user)
+    user.is_active = False
+    user.save()
+    logout(request)
+    return redirect('accounts:delete_confirmation')
