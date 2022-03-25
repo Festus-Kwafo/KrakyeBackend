@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'accounts',
     'cart',
     'wishlist',
+    'payments',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -139,12 +140,15 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-EMAIL_USE_TLS = "True"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "yotechsystems3@gmail.com"
-EMAIL_HOST_PASSWORD = "conviction123"
-EMAIL_PORT = "587"
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
 
+# PAYSTACT SECRET KEYS
+PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY')
+PAYSTACK_PUBLIC_KEY = env('PAYSTACK_PUBLIC_KEY')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
