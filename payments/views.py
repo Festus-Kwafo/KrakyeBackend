@@ -16,7 +16,7 @@ import payments
 # def BasketView(request):
 #   return render(request, 'payment/make_payment.html')
 
-
+@login_required
 def initiate_payment(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         payment_form = forms.PaymentForm(request.POST)
@@ -29,7 +29,7 @@ def initiate_payment(request: HttpRequest) -> HttpResponse:
     return render(request, 'payment/initiate_payment.html',
                   {'payment_form': payment_form})
 
-
+@login_required
 def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
     payment = get_object_or_404(Payment, ref=ref)
     verified = payment.verify_payment()
@@ -37,4 +37,4 @@ def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
         messages.success(request, "Verification Succesful")
     else:
         messages.error(request, "Verifaction failed")
-    return redirect('payment:initiate-payment')
+    return redirect('payments:initiate-payment')

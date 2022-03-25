@@ -35,10 +35,12 @@ INSTALLED_APPS = [
     'cart',
     'wishlist',
     'payments',
+    'orders',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'crispy_forms',
 
 ]
 
