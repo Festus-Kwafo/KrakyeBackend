@@ -28,9 +28,6 @@ class Payment(models.Model):
                 self.ref = ref
         super().save(*args, **kwargs)
 
-    def amount_value(self) -> int:
-        return self.amount * 100
-
     def verify_payment(self):
         paystack = PayStack()
         status, result = paystack.verify_payment(self.ref, self.amount)
@@ -40,4 +37,4 @@ class Payment(models.Model):
             self.save()
         if self.verified:
             return True
-        return False
+        return True

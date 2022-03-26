@@ -6,11 +6,14 @@ from store.models import Product
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def cart_summary(request):
     cart = Cart(request)
     return render(request,  'store/cart/cart.html', {'cart':cart} )
+
 
 @csrf_exempt
 def cart_add(request):

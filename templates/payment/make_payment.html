@@ -14,14 +14,19 @@
     </div>
 </div>
 <script>
+  
+</script>
+
+<script>
   function payWithPayStack(){
+    var amount_val = {{cart.get_total_price}} * 100
     let currency = "GHS";
     let plan = "";
     let ref = "{{payment.ref}}";
     let obj = {
       key: "{{paystack_public_key}}",
       email: "{{payment.email}}",
-      amount: "{{payment.amount_value}}",
+      amount: amount_val,
       ref : ref,
       callback: function(response){
         window.location.href = "{%url 'payments:verify-payment' payment.ref%}";

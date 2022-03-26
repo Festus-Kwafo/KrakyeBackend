@@ -36,3 +36,7 @@ def cart(request):
     else:
         items =[]
     return render(request, 'store/cart/cart.html', {'items': items})
+
+
+def about_us(request):
+    return render(request, 'store/about_us.html')

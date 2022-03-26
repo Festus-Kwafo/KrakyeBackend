@@ -10,7 +10,7 @@ class PaymentForm(forms.ModelForm):
 
     amount = forms.IntegerField(
         label='Amount', widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'amount', 'id': 'form-amount', }))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'amount', 'id': 'form-amount',}))
 
     class Meta:
         model = Payment

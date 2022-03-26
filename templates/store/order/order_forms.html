@@ -15,16 +15,8 @@
             <form class="account-form px-4 pt-4" method="post" enctype="multipart/form-data">
 
                     {% csrf_token %}
-                    <label class="small font-weight-bold">{{ user_form.first_name.label}}</label>
-                    {{ orderForm.full_name }}
-                    <label class="small font-weight-bold">{{ user_form.first_name.label}}</label>
-                    {{ orderForm.country }}
-                    <label class="small font-weight-bold">{{ user_form.first_name.label}}</label>
-                    {{ orderForm.location }}
-                    <label class="small font-weight-bold">{{ user_form.first_name.label}}</label>
-                    {{ orderForm.phone_number }}
-                    <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit"
-                        value="Save changes">Save Changes
+                    {{orderForm}}
+                    <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit">submit
                     </button>
                     <hr class="mb-3">
                 </form>
