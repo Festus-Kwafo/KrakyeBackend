@@ -6,7 +6,13 @@
 <div class="container">
     <div class= "d-flex row justify-content align-items-center py md-5 py-3" style= "min-height: 90vh">
         <div class="col-12">
-            <h5>Make payment for: GH {{payment.amount}}</h5>
+            <h5>Make payment for: GHS {{cart.get_total_price}}</h5>
+{%for item in order_delivery %}
+{{item.location}}
+{{item.full_name}}
+{{item.country}}
+{{item.city}}
+{%endfor%}
             <hr>
               <script src="https://js.paystack.co/v1/inline.js"></script> 
               <button class = "btn btn-large btn-success" onclick="payWithPayStack()" id ="django-paystack-button">Make Payment</button>
@@ -22,14 +28,45 @@
     var amount_val = {{cart.get_total_price}} * 100
     let currency = "GHS";
     let plan = "";
-    let ref = "{{payment.ref}}";
     let obj = {
       key: "{{paystack_public_key}}",
       email: "{{payment.email}}",
       amount: amount_val,
-      ref : ref,
+      ref : ""+ Math.floor(Math.random()* 1000000000 + 1),
+
+      metadata:{
+        custom_fields: [
+        {
+          display_name: name,
+          variable_name: name,
+        }
+        ]
+      },
       callback: function(response){
-        window.location.href = "{%url 'payments:verify-payment' payment.ref%}";
+        var referenceid = response.reference;
+        var status = response.status
+        console.log(status)
+        console.log(referenceid)
+        $.ajax({
+          type: "POST",
+          url: "http://127.0.0.1:8000/orders/add/",
+          data: {
+            order_key: referenceid,
+            status: status,
+            csrfmiddlewaretoken: "{{csrf_token}}",
+            action: 'post'       
+        },
+          success: function(response){
+            
+            if (status == "success"){
+              window.location.replace("{%url 'orders:invoice' %}")
+              console.log(order_key)
+            }else {
+              $(".alert").text("Transaction reference not found");
+              console.log("Transaction failed")
+            }
+          }
+        })
       }
     }
     if (Boolean(currency)){
@@ -41,5 +78,8 @@
     var handler = PaystackPop.setup(obj);
     handler.openIframe();
   }
+</script>
+<script>
+
 </script>
 {%endblock%}

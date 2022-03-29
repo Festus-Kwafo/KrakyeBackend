@@ -20,4 +20,5 @@ class PayStack:
             response_data = response.json()
             return response_data['status'], response_data['data']
         response_data = response.json()
+        print(response.json())
         return response_data['status'], response_data['message']

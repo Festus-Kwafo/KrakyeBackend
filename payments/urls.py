@@ -6,5 +6,5 @@ app_name = 'payments'
 
 urlpatterns = [
     path('', views.initiate_payment, name='initiate-payment'),
-    path('<str:ref>/', views.verify_payment, name='verify-payment')
+    path('<str:id>/', views.verify_payment, name='verify-payment'),
 ]

@@ -55,7 +55,7 @@
 
 <!--Main NavBar-->
 <nav class=" px-5 ml-3 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
-  <a class="navbar-brand" href="#"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
+  <a class="navbar-brand" href="{%url "store:all_products"%}"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
       <div class="input-group col-6">
           <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
           <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -124,14 +124,18 @@
     <a class="nav-link" href="#">Contact</a>
   </li>
   <li class="nav-item nav-item-hidden">
+    <a href="">
       <button type="button" class="btn btn-dark rounded">
           Wishlist <span class="badge badge-light">4</span>
       </button>
+    </a>
   </li>
   <li class="nav-item nav-item-hidden">
+    <a href="{% url "accounts:logout" %}">
       <button type="button" class="btn btn-danger rounded">
           Log Out
       </button>
+    </a>
   </li>
 </ul>
 </div>

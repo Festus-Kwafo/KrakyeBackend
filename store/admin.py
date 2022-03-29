@@ -20,8 +20,5 @@ class ProductAdmin(admin.ModelAdmin):
     readonly_fields = ['discount', 'image_tag',]
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Order)
-admin.site.register(OrderItem)
-admin.site.register(ShippingAddress)
-admin.site.register(Customer)
+
 

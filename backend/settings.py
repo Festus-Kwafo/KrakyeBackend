@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.8.100', '127.0.0.1']
 
 
 # Application definition
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
-
+    'address',
 ]
 
 MIDDLEWARE = [
@@ -82,14 +82,16 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'krakyedata',
+        'USER': 'postgres',
+        'PASSWORD': 'conviction123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -147,6 +149,9 @@ EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = env('EMAIL_PORT')
+
+#GOOGLE_API_KEY
+GOOGLE_API_KEY = 'AIzaSyD--your-google-maps-key-SjQBE'
 
 # PAYSTACT SECRET KEYS
 PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY')

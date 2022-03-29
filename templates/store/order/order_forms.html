@@ -11,14 +11,35 @@
     box-shadow: none;
   }
 </style>
-<div class="container-fluid col-sm-12 col-md-12 col-lg-6 col-xs-12">
-            <form class="account-form px-4 pt-4" method="post" enctype="multipart/form-data">
+  <!--Main site-->
+  <main id="main-site">
 
-                    {% csrf_token %}
-                    {{orderForm}}
-                    <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit">submit
-                    </button>
-                    <hr class="mb-3">
-                </form>
-</div>
+    <!--Billing and Shipping-->
+        <section id="billing">
+            <div class="container mt-5 mb-3">
+              <div class="row d-flex justify-content-center">
+                <div class="col-md-8">
+                  <div class="card">
+                    <h3 class="font-inter text-center mt-4">Billing Details</h3>
+                    <h3 class="font-inter text-left mt-3 pl-3">Details</h3>
+                <div class="checkout-forms d-flex">
+                      <form class="m-auto account-form px-4 pt-4" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{orderForm}}
+                        <button class="btn btn-product btn-block py-2 mb-4 mt-5 fw-bold font-inter" type="submit">SUBMIT
+                        </button>
+                        <hr class="mb-3">
+                    
+                      </form>
+                </div>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+    <!--End Billing and Shippping-->
+        
+      </main>
+      <!--End Main site-->
 {%endblock%}

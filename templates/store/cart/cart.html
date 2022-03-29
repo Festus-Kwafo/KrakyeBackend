@@ -50,7 +50,7 @@
                 <hr>
                 <div class="row">
                     <div class="col" style="padding-left:0;"><span class="font-inter">ITEMS {{cart|length}}</span> </div>
-                    <div class="col text-right">GH₵ 132.00</div>
+                    <div class="col text-right">{{cart.get_total_price}}</div>
                 </div>
                 <form>
                     <p class="font-inter">DELIVERY</p> 
@@ -68,7 +68,13 @@
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col"> <span class="font-inter">TOTAL PRICE</span> </div>
                     <div  class="col text-right">GH₵ <span id='subtotal'> {{cart.get_total_price}}</span></div>
-                </div> <a href="{%url 'orders:order_register'%}"><button type="submit" class="btn btn-checkout"><span class="font-inter font-size-16">CHECKOUT</span></button></a>
+                </div> 
+                {%if delivery_item %}
+                <a href="{%url 'payments:initiate-payment'%}">
+                {%else%}
+                <a href="{%url 'orders:order_register'%}">
+                {%endif%}
+                  <button type="submit" class="btn btn-checkout"><span class="font-inter font-size-16">CHECKOUT</span></button></a>
             </div>
             {%else%}
             <div class="pt-4 m-auto text-center font-inter">
