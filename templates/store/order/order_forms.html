@@ -26,10 +26,9 @@
                       <form class="m-auto account-form px-4 pt-4" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{orderForm}}
-                        <button class="btn btn-product btn-block py-2 mb-4 mt-5 fw-bold font-inter" type="submit">SUBMIT
-                        </button>
                         <hr class="mb-3">
-                    
+                        <button class="btn btn-product btn-block btn-forms py-2 mb-4 mt-5 fw-bold font-inter" type="submit">SUBMIT
+                        </button>
                       </form>
                 </div>
     
@@ -42,4 +41,35 @@
         
       </main>
       <!--End Main site-->
+      <script>
+        var Btnforms = document.getElementsByClassName('btn-forms')
+
+          for (var i = 0; i < Btnforms.length; i++){
+            Btnforms[i].addEventListener('click', function(){
+                var inputName = $('#inputName').val()
+                var id_location = $('#id_location').val()
+                var id_phone_number = $('#id_phone_number').val()
+                var id_post_code = $('#id_post_code').val()
+                var id_address = $('#id_address').val()
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://127.0.0.1:8000/orders/update/',
+                    data: {
+                        Fullname: inputName,
+                        Location: id_location,
+                        PhoneNumber: id_phone_number,
+                        Postcode: id_post_code,
+                        Address: id_address,
+                        csrfmiddlewaretoken: "{{csrf_token}}",
+                        action: 'formspost'
+                    },
+                    success: function (json) {
+                      
+                      
+                    },
+                    error: function (xhr, errmsg, err) {}
+                });
+              })
+          }
+      </script>
 {%endblock%}

@@ -28,15 +28,18 @@ def initiate_payment(request: HttpRequest) -> HttpResponse:
         payment_form = forms.PaymentForm(request.POST)
         if payment_form.is_valid():
             payment = payment_form.save()
-            order_delivery = Order.objects.filter(user=request.user)
-        if order_delivery.exists():
-            delivery_item = order_delivery
             return render(request, 'payment/make_payment.html',
-                          {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY, 'order_delivery': order_delivery, 'delivery_item':delivery_item})
+                          {'payment': payment, 'paystack_public_key': settings.PAYSTACK_PUBLIC_KEY,})
     else:
         payment_form = forms.PaymentForm()
     return render(request, 'payment/initiate_payment.html',
                   {'payment_form': payment_form})
+
+def single_details(request):
+    user_id = request.POST.user.id
+    order_details = Order.objects.filter(user_id=user_id)
+    return render(request, 'payment/make_payment.html', {'order_details': order_details} )
+
 
 @login_required
 def verify_payment(request, id):
@@ -47,3 +50,5 @@ def verify_payment(request, id):
     data = JsonResponse(response, safe=False)
     print(data.status_code)
     return data
+
+

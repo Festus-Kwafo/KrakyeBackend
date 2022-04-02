@@ -6,7 +6,15 @@
     <section id="cart" class="py-3">
       <div class="shadow-m card">
         <div class="row">
-          {%if cart%}
+          {%if cart|length == 0%}
+          <div class="pt-4 m-auto text-center font-inter">
+            <span class="material-icons text-muted" style="font-size:9rem; margin-top: 3rem; margin-bottom: 3rem;">
+              remove_shopping_cart
+              </span>
+                <p class="font-size-40">No item in Cart</p>
+                <a href="{%url 'store:shop'%}"><button type="submit" class="btn btn-checkout mb-3"> <span class="font-inter font-size-16">Return to Shop</span></button></a>
+          </div>
+          {%else%}
             <div class="col-md-8 cart">
                 <div class="title">
                     <div class="row">
@@ -49,15 +57,13 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col" style="padding-left:0;"><span class="font-inter">ITEMS {{cart|length}}</span> </div>
-                    <div class="col text-right">{{cart.get_total_price}}</div>
+                    <div class="col" style="padding-left:0;"><span class="font-inter">SUBTOTAL:</span> </div>
+                    <div class="col text-right">GH₵{{cart.get_subtotal_price}}</div>
                 </div>
                 <form>
                     <p class="font-inter">DELIVERY</p> 
                     <select>
-                        <option class="text-muted font-inter">Standard-Delivery- GH₵5.00</option>
-                        <option class="text-muted font-inter">Express-Delivery- GH₵10.00</option>
-                        <option class="text-muted font-inter">Premuim-Delivery- GH₵20.00</option>
+                        <option class="text-muted font-inter">Standard-Delivery- GH₵11.50</option>
                     </select>
                     <p class="font-inter">COUPON CODE</p>
                     <div class="input-group mb-3">
@@ -69,22 +75,15 @@
                     <div class="col"> <span class="font-inter">TOTAL PRICE</span> </div>
                     <div  class="col text-right">GH₵ <span id='subtotal'> {{cart.get_total_price}}</span></div>
                 </div> 
-                {%if delivery_item %}
+                {%with delivery_details=order_delivery%}
+                {%if delivery_details.id >= 1 %}
                 <a href="{%url 'payments:initiate-payment'%}">
                 {%else%}
                 <a href="{%url 'orders:order_register'%}">
                 {%endif%}
+                {%endwith%}
                   <button type="submit" class="btn btn-checkout"><span class="font-inter font-size-16">CHECKOUT</span></button></a>
             </div>
-            {%else%}
-            <div class="pt-4 m-auto text-center font-inter">
-              <span class="material-icons text-muted" style="font-size:9rem; margin-top: 3rem; margin-bottom: 3rem;">
-                remove_shopping_cart
-                </span>
-                  <p class="font-size-40">No item in Cart</p>
-                  <a href="{%url 'store:shop'%}"><button type="submit" class="btn btn-checkout mb-3"> <span class="font-inter font-size-16">Return to Shop</span></button></a>
-            </div>
-            
                 {%endif%}
         </div>
     </div>
@@ -146,7 +145,6 @@
                     action: 'post'
                 },
                 success: function (json) {
-                  console.log(proid)
                   $('.product-item[data-index= "'+ proid + '"]').remove();
                   document.getElementById('subtotal').innerHTML = json.subtotal
                   document.getElementById('cart-qty').innerHTML = json.qty 

@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 
 from backend.settings import EMAIL_HOST_USER
 
+from orders.views import user_orders
 from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
 from .tokens import account_activation_token
@@ -17,7 +18,8 @@ from .tokens import account_activation_token
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/user/dashboard.html',)
+    orders = user_orders(request)
+    return render(request, 'account/user/dashboard.html', {'orders':orders})
 
 
 def account_register(request):

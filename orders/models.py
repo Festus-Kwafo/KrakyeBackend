@@ -10,7 +10,6 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='order_user', null=True)
     full_name = models.CharField(max_length=255, null=True)
     country = models.CharField(max_length=255, null=True)
-    address = AddressField(null=True)
     location = models.CharField(max_length=250, null=True)
     postcode = models.CharField(max_length=255, blank=True, null=True)
     address_line_1 = models.CharField(max_length=150, blank=True, null=True)

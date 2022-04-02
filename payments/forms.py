@@ -13,4 +13,4 @@ class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = Payment
-        fields = ('email', 'phonenumber',  )
+        fields = ('email', 'phonenumber')

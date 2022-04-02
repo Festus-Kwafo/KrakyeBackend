@@ -1,4 +1,6 @@
 from itertools import product
+
+from django.conf import settings
 from store.models import Product
 from decimal import Decimal
 
@@ -27,9 +29,8 @@ class Cart():
 
     def __len__(self):
         """
-        Get the basket data and count the qy of items
+        Get the cart data and count the qty of items
         """
-
         return sum(item['qty'] for item in self.cart.values())
 
 
@@ -49,9 +50,21 @@ class Cart():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['qty']
             yield item
- 
+    
+    def get_subtotal_price(self):
+        return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+   
+   
     def get_total_price(self):
-            return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+        subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+
+        if subtotal == 0:
+            shipping = Decimal(0.00)
+        else:
+            shipping = Decimal(11.50)
+
+        total = subtotal + Decimal(shipping)
+        return total
 
 
     def delete(self, product):
@@ -62,5 +75,12 @@ class Cart():
         
         self.session.modified = True
 
+    def clear(self):
+        del self.session["skey"]
+        self.save()
+
     def save(self):
         self.session.modified = True
+
+
+        

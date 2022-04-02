@@ -7,12 +7,24 @@
     <div class= "d-flex row justify-content align-items-center py md-5 py-3" style= "min-height: 90vh">
         <div class="col-12">
             <h5>Make payment for: GHS {{cart.get_total_price}}</h5>
-{%for item in order_delivery %}
-{{item.location}}
-{{item.full_name}}
-{{item.country}}
-{{item.city}}
-{%endfor%}
+<div class="container col-6 my-3">
+  <table class="table table-sm table-hover text-center">
+      <thead class="table-success">
+        <tr>
+          <th scope="col" class="border-dark border-top-0 border-right border-bottom-0">Name</th>
+          <th scope="col" class="border-dark border-top-0 border-right border-bottom-0" >Address</th>
+          <th scope="col" class="border-dark border-top-0 border-bottom-0" >Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Festus Kwafo Ofori</th>
+          <td>University Of Ghana, Legon<br>Accra, Ghana<br>Ghana</td>
+          <td>0555358099</td>
+        </tr>
+      </tbody>
+    </table>
+</div> 
             <hr>
               <script src="https://js.paystack.co/v1/inline.js"></script> 
               <button class = "btn btn-large btn-success" onclick="payWithPayStack()" id ="django-paystack-button">Make Payment</button>
