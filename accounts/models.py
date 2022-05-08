@@ -41,7 +41,7 @@ class CustomAccountManager(BaseUserManager):
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'))
     first_name = models.CharField(max_length=150, blank=True)
     other_name = models.CharField(max_length=150, blank=True)
     # Delivery details
@@ -52,7 +52,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     address_line_2 = models.CharField(max_length=150, blank=True)
     town_city = models.CharField(max_length=150, blank=True)
     # User Status
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

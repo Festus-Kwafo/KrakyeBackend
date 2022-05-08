@@ -14,7 +14,6 @@ def cart_summary(request):
     cart = Cart(request)
     return render(request,  'store/cart/cart.html', {'cart':cart} )
 
-
 @csrf_exempt
 def cart_add(request):
     cart = Cart(request)

@@ -4,6 +4,8 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,6 +21,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['192.168.8.100', '127.0.0.1']
 
+CITIES_COUNTRY_MODEL = 'my_cities_app.CustomCountryModel'
 
 # Application definition
 
@@ -36,12 +39,15 @@ INSTALLED_APPS = [
     'wishlist',
     'payments',
     'orders',
+    'crispy_forms',
+    'address',
+    'sslserver',
+    'cities_light',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'crispy_forms',
-    'address',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -82,14 +88,20 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'krakyedata',
+#         'USER': 'postgres',
+#         'PASSWORD': 'conviction123',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'krakyedata',
-        'USER': 'postgres',
-        'PASSWORD': 'conviction123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -142,6 +154,8 @@ LOGIN_URL = '/account/login/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
 
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
@@ -171,9 +185,22 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '123',
-            'secret': '456',
+            'client_id': env('GOOGLE_CLIENT_ID'),
+            'secret': env('GOOGLE_SECRET'),
+            'key': ''
+        }
+    },
+    'facebook':{
+        'APP':{
+            'client_id': env('FACEBOOK_CLIENT_ID'),
+            'secret': env('FACEBOOK_SECRET'),
             'key': ''
         }
     }
 }
+
+ACCOUNT_EMAIL_VERIFICATION ="optional"
+
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['fr', 'en']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['FR']
+CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC', 'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT',]

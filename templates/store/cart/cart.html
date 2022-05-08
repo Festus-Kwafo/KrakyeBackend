@@ -79,7 +79,7 @@
                 {%if delivery_details.id >= 1 %}
                 <a href="{%url 'payments:initiate-payment'%}">
                 {%else%}
-                <a href="{%url 'orders:order_register'%}">
+                 <a href="{%url 'orders:checkout'%}"> 
                 {%endif%}
                 {%endwith%}
                   <button type="submit" class="btn btn-checkout"><span class="font-inter font-size-16">CHECKOUT</span></button></a>

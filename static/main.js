@@ -25,12 +25,40 @@ $(document).ready(function(){
         
         var id = $(this).data('id');
         $("#add-button").attr('value', id);
-
+        
         var pro_id = $(this).data('id');
         $('#input').attr('data-id', pro_id)
         $('.qty_up').attr('data-id', pro_id)
         $('.qty_down').attr('data-id', pro_id)       
 
+        
 
     });
+
+    var hideable_shipping_form = $('.hideable_shipping_form');
+    var hideable_billing_form = $('.hideable_billing_form');
+
+    var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+    var use_default_billing = document.querySelector("input[name=use_default_billing]");
+    
+    window.onload=function(){
+      use_default_shipping.addEventListener('change', function() {
+        if (this.checked) {
+          hideable_shipping_form.hide();
+        } else {
+          hideable_shipping_form.show();
+        }
+      });
+  
+      use_default_billing.addEventListener('change', function() {
+        if (this.checked) {
+          hideable_billing_form.hide();
+        } else {
+          hideable_billing_form.show();
+        }
+      });
+  
+    }
+    
 });
+

@@ -62,6 +62,7 @@
               </div>
               <div class="price d-flex text-left font-size-14">
                 <div class="new-price p-2">
+                
                   <span><b>GH₵{{item.sale_price}}</b></span>
                   <span class="old-price text-muted">GH₵{{item.list_price}}</span>
                 </div>
@@ -69,7 +70,9 @@
                   <span class="discount-percentage text-danger">{{item.discount}}%</span>
                 </div>
               </div>
+              <a href="{{item.get_absolute_url}}">
               <button type="submit" class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
+              </a>
             </div>
           </div>
         </div>
@@ -138,7 +141,14 @@
     </section>
     <!--End Banner ads-->
 
-
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Open this select menu</option>
+      {%for item in countries_qs %}
+      a
+      <option value="{{item.id}}">{{item.name}}</option>
+      {%endfor%}
+      
+    </select>
     <!--New Arrivals-->
     <section id="new-clothes">
       <div class="container">

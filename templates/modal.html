@@ -68,71 +68,76 @@
                           <hr>
                           <div class="row">
                               <div class="col-6">
-                                  <!--Color-->
-                                  <div class="color my-3">
-                                      <div class="dropdown">
-                                          <button class="btn dropdown-toggle border-dark rounded-pill border-2 text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-                                            Color
-                                          </button>
-                                          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button class="dropdown-item" type="button">Green</button>
-                                            <button class="dropdown-item" type="button">White</button>
-                                            <button class="dropdown-item" type="button">Black</button>
-                                          </div>
-                                        </div>
-                                  </div>
-                              </div>
-                              <!--Size section-->
-                              <div class="col-6">
-                                  <div class="size my-3">
-                                      <div class="dropdown">
-                                          <button class="btn btn-dropdown dropdown-toggle border-dark rounded-pill border-2 text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-                                            Size
-                                          </button>
-                                          <select class="form-select border-dark rounded-pill border-2" aria-label="Default select example">
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                          </select>
-                                          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            {%for s in products %}
-                                            <button class="dropdown-item" type="button">{{s.size}}</button>
-                                            {%endfor%}
-                                          </div>
-                                        </div>
-                                  </div>
-                              </div>
-                              <!--End Qty section-->
-                              <!--Qty section-->
-                              <div class="col-12">
-                                  <div class="qty d-flex">
-                                    <div class="px-1 flex flex-row font-inter">
-                                      <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up hidden"></i> </button>
-                                      <input type="text" id='input' class="qty_input mx-0 bg-white rounded-pill text-center hidden" data-id="pro2"  disabled value="1" placeholder="1">
-                                      <button class="qty_down py-1 border-0 bg-white " data-id="pro2"> <i class="fas fa-angle-down hidden"></i> </button>
-                                    </div>
-                                  </div>
-                              </div>
-                              <!--End Qty section-->
-                              <div class="col-12 details">
-                                <div class="font-rubik font-size-16 text-black">
-                                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                      <a class="nav-link active " id="home-tab" data-toggle="tab" href="#product-description" role="tab" aria-controls="home" aria-selected="true">Description</a>
-                                    </li>
-                                    <li class="nav-item">
-                                      <a class="nav-link " id="profile-tab" data-toggle="tab" href="#size-guide" role="tab" aria-controls="profile" aria-selected="false">Size Guide</a>
-                                    </li>
-                                  </ul>
-                                  <div class="tab-content font-inter font-size-14 mt-1" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="product-description" role="tabpanel" aria-labelledby="home-tab"></div>
-                                    <div class="tab-pane fade" id="size-guide" role="tabpanel" aria-labelledby="profile-tab"><img id="size-guidee" src="" width='200px' height='200px'></div>
-                                  </div>
-                                </div>
-                                <hr>
+                                  
+                              
+                             
+                              <forms>
+                                <!--Color-->
+
+                              <div class="color my-3 form-group">
+                                <label for="exampleFormControlSelect1">Example select</label>
+                                <select class="form-control border-dark rounded-pill border-2 text-left" id="exampleFormControlSelect1">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
                               </div>
                           </div>
+                                <!--Size section-->
+                              <div class="col-6">
+                                <div class="size my-3">
+                                    <div class="dropdown">
+                                        <button class="btn btn-dropdown dropdown-toggle border-dark rounded-pill border-2 text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+                                          Size
+                                        </button>
+                                        <select class="form-select border-dark rounded-pill border-2" aria-label="Default select example">
+                                          <option selected>Open this select menu</option>
+                                          <option value="1">One</option>
+                                          <option value="2">Two</option>
+                                          <option value="3">Three</option>
+                                        </select>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                          {%for s in products %}
+                                          <button class="dropdown-item" type="button">{{s.size}}</button>
+                                          {%endfor%}
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <!--End Size section-->
+                                 <!--Qty section-->
+                              <div class="col-12">
+                                <div class="qty d-flex">
+                                  <div class="px-1 flex flex-row font-inter">
+                                    <button class="qty_up py-1 border-0 bg-white" data-id="pro2"> <i class="fas fa-angle-up hidden"></i> </button>
+                                    <input type="text" id='input' class="qty_input mx-0 bg-white rounded-pill text-center hidden" data-id="pro2"  disabled value="1" placeholder="1">
+                                    <button class="qty_down py-1 border-0 bg-white " data-id="pro2"> <i class="fas fa-angle-down hidden"></i> </button>
+                                  </div>
+                                </div>
+                            </div>
+                            <!--End Qty section-->
+                                <div class="col-12 details">
+                                  <div class="font-rubik font-size-16 text-black">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                      <li class="nav-item">
+                                        <a class="nav-link active " id="home-tab" data-toggle="tab" href="#product-description" role="tab" aria-controls="home" aria-selected="true">Description</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link " id="profile-tab" data-toggle="tab" href="#size-guide" role="tab" aria-controls="profile" aria-selected="false">Size Guide</a>
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content font-inter font-size-14 mt-1" id="myTabContent">
+                                      <div class="tab-pane fade show active" id="product-description" role="tabpanel" aria-labelledby="home-tab"></div>
+                                      <div class="tab-pane fade" id="size-guide" role="tabpanel" aria-labelledby="profile-tab"><img id="size-guidee" src="" width='200px' height='200px'></div>
+                                    </div>
+                                  </div>
+                                  <hr>
+                                </div>
+                            </div>
+                              </forms>
+                              
                           <div class="btn-inCart hidden">
                         <div class="form-row pt-2 font-size-16 font-inter" id="in-cart"> 
                           <div class="col">
@@ -153,6 +158,7 @@
                         <div class="col">
                             <button type="submit" id="add-button" count='1' value=" "  class="btn btn-product form-control update-cart">Add to Cart</button>
                         </div>
+                        
                     </div>
                       
                           <!--Order Details-->
@@ -185,9 +191,7 @@
                         action: 'post'
                     },
                     success: function (json) {
-                      console.log(json)
-                      document.getElementById("cart-qty").innerHTML = json.qty
-                      
+                      document.getElementById("cart-qty").innerHTML = json.qty 
                     },
                     error: function (xhr, errmsg, err) {}
                 });

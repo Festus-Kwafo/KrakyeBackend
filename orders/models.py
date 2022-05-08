@@ -1,23 +1,21 @@
-from decimal import Decimal
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from store.models import Product
-from django_countries.data import COUNTRIES
-from address.models import AddressField
+from cities_light.models import Country
+
+
+ADDRESS_CHOICES = (
+    ('B', 'Billing'),
+    ('S', 'Shipping'),
+)
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='order_user', null=True)
-    full_name = models.CharField(max_length=255, null=True)
-    country = models.CharField(max_length=255, null=True)
-    location = models.CharField(max_length=250, null=True)
-    postcode = models.CharField(max_length=255, blank=True, null=True)
-    address_line_1 = models.CharField(max_length=150, blank=True, null=True)
-    address_line_2 = models.CharField(max_length=150, blank=True, null=True)
-    town_city = models.CharField(max_length=150, blank=True, null=True)
-    city = models.CharField(max_length=100, null=True)
-    phone_number = models.CharField(max_length=100, null=True)
-    post_code = models.CharField(max_length=255, null=True)
+    shipping_address = models.ForeignKey(
+        'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
+    billing_address = models.ForeignKey(
+        'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
     order_key = models.CharField(max_length=200, null=True, blank=True)
@@ -25,13 +23,31 @@ class Order(models.Model):
     shipped = models.BooleanField(default=False)
     complete =  models.BooleanField(default=False)
     billing_status = models.BooleanField(default=False)
+    
 
     class Meta:
         ordering = ('-created',)
     
     def __str__(self):
         return str(self.created)
-    
+class Address(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255, null=True)
+    last_name = models.CharField(max_length=255, null=True)
+    street_address = models.CharField(max_length=225, null=True)
+    apartment_address = models.CharField(max_length=225, null=True)
+    country = models.CharField(max_length=255, null=True)
+    zip = models.CharField(max_length=225, null=True)
+    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES, null=True)
+    default = models.BooleanField(default=False, null=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name_plural = 'Addresses'
+ 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
                               related_name='items',

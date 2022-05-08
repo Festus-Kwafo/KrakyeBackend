@@ -1,4 +1,4 @@
-
+from django.conf import settings
 from django.db import models
 
 
@@ -6,17 +6,15 @@ from django.db import models
 
 
 class Payment(models.Model):
-    amount = models.PositiveIntegerField(null=True)
-    email = models.EmailField(null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField(null=True)
+    email= models.CharField(max_length=255)
     verified = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=255, null=True)
-    phonenumber = models.CharField(max_length=255, null=True )
     order_key = models.CharField(max_length=200, null=True, blank=True)
     class Meta:
         ordering = ('-date_created',)
 
-    def __str__(self) -> str:
-        return f"Payment: {self.amount}"
 
 

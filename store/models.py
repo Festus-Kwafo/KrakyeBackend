@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.forms import FloatField
 from django.utils.html import mark_safe
+from django.urls import reverse
 
 # Create your models here.
 
@@ -56,7 +57,15 @@ class Product(models.Model):
             return mark_safe('<img src="/media/%s" width="90" height="90" />' % (self.image_one))
     image_tag.short_description = 'Image'
 
+
+    
+    def __str__(self):
+        return self.name   
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail', args=[self.slug])
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created', )
+
 

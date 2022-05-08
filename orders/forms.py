@@ -1,24 +1,31 @@
 from django import forms
-from .models import Order
-from django_countries.data import COUNTRIES
-from address.forms import AddressField
-from django.forms import ModelForm
 
-class OrderForm(ModelForm):
-    full_name = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Fullname', 'id': 'inputName'}))
-    
-    country = forms.ChoiceField(choices=sorted(COUNTRIES.items()))
-    
-    address = AddressField()
+PAYMENT_CHOICES = (
+    ('M', 'MobileMoney'),
+    ('C', 'Credit Card')
+)
 
-    location = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Your Location',}
-        ))
-    phone_number = forms.CharField(max_length=100, error_messages={
-        'required': 'Sorry, you will need a Phone Number'})
-    
-    
-    class Meta:
-        model = Order
-        fields = ('full_name', 'country', 'location', 'phone_number', 'post_code', 'address')
+
+class CheckoutForm(forms.Form):
+    shipping_first_name = forms.CharField(required=False)
+    shipping_last_name = forms.CharField(required=False)
+    shipping_address = forms.CharField(required=False)
+    shipping_address2 = forms.CharField(required=False)
+    shipping_country = forms.CharField(required=False)
+    shipping_zip = forms.CharField(required=False)
+
+    billing_first_name = forms.CharField(required=False)
+    billing_last_name = forms.CharField(required=False)
+    billing_address = forms.CharField(required=False)
+    billing_address2 = forms.CharField(required=False)
+    billing_country = forms.CharField(required=False)
+    billing_zip = forms.CharField(required=False)
+
+    same_billing_address = forms.BooleanField(required=False)
+    set_default_shipping = forms.BooleanField(required=False)
+    use_default_shipping = forms.BooleanField(required=False)
+    set_default_billing = forms.BooleanField(required=False)
+    use_default_billing = forms.BooleanField(required=False)
+
+    payment_option = forms.ChoiceField(
+        widget=forms.RadioSelect, choices=PAYMENT_CHOICES)
