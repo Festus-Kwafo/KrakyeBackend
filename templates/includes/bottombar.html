@@ -1,0 +1,44 @@
+<nav class="shadow px-5 navbar navbar-expand-lg navbar-light">
+    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-trigger="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fa-solid fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse text-center" id="navbarNav">
+    <div class="offcanvas-header mt-3 pb-3">
+      <button type="button" class="btn-close float-left"><i class="fas fa-times"></i></button>
+      <h5 class="text-white float-right" style="text-align: right;">Menu</h5>
+      
+    </div>
+    <ul class="navbar-nav m-auto font-inter">
+      <li class= "nav-item active">
+        <a class="nav-link text-black" href="{%url "store:all_products"%}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "store:about_us" %}">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url "store:shop" %}">Shop</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Book Appointment</a>
+      </li>
+      <li class="nav-item nav-item-hidden">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+      <li class="nav-item nav-item-hidden">
+        <a href="">
+          <button type="button" class="btn btn-dark rounded">
+              Wishlist <span class="badge badge-light">4</span>
+          </button>
+        </a>
+      </li>
+      <li class="nav-item nav-item-hidden">
+        <a href="{% url "accounts:logout" %}">
+          <button type="button" class="btn btn-danger rounded">
+              Log Out
+          </button>
+        </a>
+      </li>
+    </ul>
+    </div>
+    </nav>
+    

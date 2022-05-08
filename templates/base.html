@@ -35,161 +35,28 @@
   <!--Header-->
   <header id="header">
 <!--Top Bar-->
-<nav class="px-5 navbar-item-hidden navbar navbar-light bg-light border-top border-bottom ">
-  <div class="d-flex">
-      <span class="font-inter font-size-14 text-black-50 pr-2 m-1" ><b><i class="fa-solid fa-phone"></i></b><a href="tel:+233205115005" class="text-black-50 text-decoration-none" >0205115005</a></span>  
-      <span class="font-inter font-size-14 text-black-50 pr-2 m-1" > <b><i class="fa-solid fa-envelope"></i></b> <a href="mailto:festuskwafo11@gmail.com" class="text-black-50 text-decoration-none" >Krakye Clothing</a></span>
-  </div>
-  <div class="ml-auto">
-    {% if user.is_authenticated %}
-    <span class="font-inter font-size-14 text-black-50 pr-2 m-1">Hello, {{user.username}}</span>
-    <span class="font-inter font-size-14 text-black-50 pr-2 m-1 border-left" ><a href="{% url "accounts:logout" %}" class="text-black-50 text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Log out</a></span>
-    {%else%}
-      <span class="font-inter font-size-14 text-black-50 pr-2 m-1 border-rightx" ><a href="Register" class="text-black-50 text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Register</a></span>
-      <span class="font-inter font-size-14 text-black-50 m-1 ml-0"><a href="{% url "accounts:login" %}" class="text-black-50 text-decoration-none">Sign in</a></span>  
-    {% endif %}
-      
-  </div>
-</nav>
+{%include 'includes/topbar.html' %}
 <!--End Top Bar-->
 
 <!--Main NavBar-->
-<nav class=" px-5 ml-3 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
-  <a class="navbar-brand" href="{%url "store:all_products"%}"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
-      <div class="input-group col-6">
-          <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
-          <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </div>
-      <div class="d-flex">
-          <div class="mr-3 navbar-item-hidden">
-            <a href="">
-              <button class="btn btn-wishlist" style="color: black;">
-                <span class="material-icons font-size-40">
-                    favorite_border
-                    </span>
-                <span class="btn-wishlist__badge">4</span>
-            </button>
-            </a>    
-          </div>
-          <div>
-            <a href="{%url 'cart:cart_summary'%}">
-              <button class="btn btn-cart" style="color: black;">
-                <span class="material-icons font-size-40">
-                    shopping_cart
-                    </span>
-                    {%with total_qty=cart|length%}
-                    <span id="cart-qty" class="btn-cart__badge">
-                      {%if total_qty >= 0%}
-                          {{total_qty}}
-                      {%else%}
-                      0
-                      {%endif%}
-                    </span>
-                    {%endwith%}
-            </button>
-            </a>
-              
-          </div>
-      </div>
-  <div>
-  </div>
-</nav>
+{%include 'includes/navbar.html' %}
 <!--End Main NavBar-->
 
 <!--Bottom Navbar-->
-<nav class="shadow px-5 navbar navbar-expand-lg navbar-light">
-<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-trigger="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-<span><i class="fa-solid fa-bars"></i></span>
-</button>
-<div class="collapse navbar-collapse text-center" id="navbarNav">
-<div class="offcanvas-header mt-3 pb-3">
-  <button type="button" class="btn-close float-left"><i class="fas fa-times"></i></button>
-  <h5 class="text-white float-right" style="text-align: right;">Menu</h5>
-  
-</div>
-<ul class="navbar-nav m-auto font-inter">
-  <li class= "nav-item active">
-    <a class="nav-link text-black" href="{%url "store:all_products"%}">Home <span class="sr-only">(current)</span></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url "store:about_us" %}">About Us</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url "store:shop" %}">Shop</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Book Appointment</a>
-  </li>
-  <li class="nav-item nav-item-hidden">
-    <a class="nav-link" href="#">Contact</a>
-  </li>
-  <li class="nav-item nav-item-hidden">
-    <a href="">
-      <button type="button" class="btn btn-dark rounded">
-          Wishlist <span class="badge badge-light">4</span>
-      </button>
-    </a>
-  </li>
-  <li class="nav-item nav-item-hidden">
-    <a href="{% url "accounts:logout" %}">
-      <button type="button" class="btn btn-danger rounded">
-          Log Out
-      </button>
-    </a>
-  </li>
-</ul>
-</div>
-</nav>
+{%include 'includes/bottombar.html' %}
 <!--Bottom Navbar-->  
   </header>
   <!--End Header-->
   {%block content%} {%endblock%}
     <!--Social Media-->
-    <section id="social-media">
-        <div class="container my-2">
-          <div class="row d-flex justify-content-end font-size-20 ">
-            <a href=""> <i class="fa-brands fa-facebook px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-whatsapp px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-twitter px-2 color-primary"></i></a>
-            <a href=""> <i class="fa-brands fa-instagram px-2 color-primary "></i></a>
-          </div>
-    
-        </div>
-      </section>
+    {%include 'includes/socialmedia.html' %}
       <!--Social Media-->
       
     </main>
     <!--End Main site-->
   
     <!--Footer-->
-    <footer id="footer" class="color-second-bg py-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-3 col-12 text-center">
-            <img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="90px" height="100px" alt="">
-          </div>
-          <div class="col-lg-4 col-12">
-            <h4 class="font-rubik font-size-20 text-dark">Contact</h4>
-            <div class="d-flex flex-column flex-wrap ">
-              <span class="font-inter font-size-12 text-black-50 pb-1" > <b>Address:</b>  <a href="https://goo.gl/maps/PvDEY96d2sS3cyo46" class="text-black-50 text-decoration-none">Hannah School Road, Madina</a> </span>
-              <span class="font-inter font-size-12 text-black-50 pb-1" > <b>Email:</b>  <a href="mailto:festuskwafo11@gmail.com" class="text-black-50 text-decoration-none" >Krakye Clothing</a></span>
-              <span class="font-inter font-size-12 text-black-50 pb-1" ><b>Mobile: </b><a href="tel:+233205115005" class="text-black-50 text-decoration-none" >0205115005</a></span>
-              <span class="font-inter font-size-12 text-black-50 pb-1" >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi, assumenda!</span>
-            </div>
-          </div>
-          <div class="col-lg-4 col-12">
-            <h4 class="font-rubik font-size-20 text-dark">Information</h4>
-            <div class="d-flex flex-column flex-wrap">
-              <a href="#" class="font-inter font-size-14 text-black-50 pb-1 text-decoration-none">About Us</a>
-              <a href="#" class="font-inter font-size-14 text-black-50 pb-1 text-decoration-none">Delivery Information</a>
-              <a href="#" class="font-inter font-size-14 text-black-50 pb-1 text-decoration-none">Privacy Policy</a>
-              <a href="#" class="font-inter font-size-14 text-black-50 pb-1 text-decoration-none">Terms & Conditions</a>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-    </footer>
+    {%include 'includes/footer.html' %}
     <!--End Footer-->
     <div class="copyright text-center color-second-bg text-dark px-0">
       <span class="font-inter font-size-14">Copyrights &copy; <script>document.write(new Date().getFullYear())</script> Krakye Clothing. All rights reserved </span>
