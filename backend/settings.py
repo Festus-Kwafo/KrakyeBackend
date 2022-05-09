@@ -82,6 +82,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+# Custom user model
+AUTH_USER_MODEL = 'accounts.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -144,11 +148,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-# Custom user model
-AUTH_USER_MODEL = 'accounts.UserBase'
-LOGIN_REDIRECT_URL = '/account/dashboard'
-LOGIN_URL = '/account/login/'
 
 # Email setting
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

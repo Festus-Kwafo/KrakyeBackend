@@ -1,18 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 
 from cart.views import cart_summary
-from .models import Category, Product
+from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from backend.settings import AUTH_USER_MODEL
 from cities_light.models import Country
 from cart.cart import Cart
+from category.models import *
 # Create your views here.
 
-def all_products(request):
+def home(request):
     categories = Category.objects.all()
-    products    = Product.objects.filter(is_active=True).order_by('id')[:10]
-    top_sale    = Product.objects.filter(is_active=True).order_by('-sale_price')[:10]
-    new_arrivals = Product.objects.all().order_by('-created')[:5]
+    products    = Product.objects.filter(in_stock=True).order_by('id')[:10]
+    top_sale    = Product.objects.filter(in_stock=True).order_by('-price')[:10]
+    new_arrivals = Product.objects.all().order_by('-created_date')[:5]
     countries_qs = Country.objects.all()
     return render(request, 'index.html', {'products': products, 'categories': categories, 'new_arrivals': new_arrivals, 'top_sale': top_sale, 'countries_qs': countries_qs })
 

@@ -4,7 +4,6 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin, User)
 from django.urls.base import translate_url
 from django.utils.translation import gettext_lazy as _
-from django_countries.fields import CountryField
 from django.core.mail import send_mail
 
 from backend.settings import EMAIL_HOST_USER
@@ -30,37 +29,36 @@ class CustomAccountManager(BaseUserManager):
 
         if not email:
             raise ValueError(_('You must provide an email address'))
+        if not username:
+            raise ValueError(_('You must provide a username'))
 
         email = self.normalize_email(email)
         user = self.model(email=email, username=username,
                           **other_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
-    email = models.EmailField(_('email address'))
+    email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=150, blank=True)
-    other_name = models.CharField(max_length=150, blank=True)
-    # Delivery details
-    country = CountryField()
-    phone_number = models.CharField(max_length=15, blank=True)
-    postcode = models.CharField(max_length=12, blank=True)
-    address_line_1 = models.CharField(max_length=150, blank=True)
-    address_line_2 = models.CharField(max_length=150, blank=True)
-    town_city = models.CharField(max_length=150, blank=True)
-    # User Status
-    is_active = models.BooleanField(default=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    phone_number = models.CharField(max_length=50)
+    
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
+    is_admin = models.BooleanField(default=False)
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     objects = CustomAccountManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     class Meta:
         verbose_name = "Accounts"
@@ -71,4 +69,4 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, EMAIL_HOST_USER, [self.email])
 
     def __str__(self):
-        return self.username
+        return self.email
