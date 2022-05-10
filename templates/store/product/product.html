@@ -150,8 +150,15 @@
                 <div class="form-row pt-2 font-size-16 font-inter">
                       
                   <div class="col">
-                      <button type="submit" id="add-button" count='1' value=" "  class="btn btn-product form-control update-cart">Add to Cart</button>
-                  </div>
+                    {%if single_product.stock <= 0%}
+                    <h4 class="text-danger">Out of Stock</h4>
+                    {%else%}
+                      <a href="{%url 'cart:add_cart' single_product.id%}">
+                        <button class="btn btn-product form-control update-cart">Add to Cart</button>
+                      </a>
+                      
+                    {%endif%}
+                    </div>
                   
               </div>
               
@@ -213,7 +220,7 @@
     
   </main>
   <!--End Main site-->
-  <script>
+  {% comment %} <script>
     var updateBtns = document.getElementsByClassName('update-cart')
 
       for (var i = 0; i < updateBtns.length; i++){
@@ -235,6 +242,6 @@
             });
           })
       }
-  </script>
+  </script> {% endcomment %}
 
 {%endblock%}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Category(models.Model):
@@ -7,6 +8,8 @@ class Category(models.Model):
     description = models.TextField(blank=True)
     cat_image = models.ImageField(upload_to = 'categories')
 
+    def get_absolute_url(self):
+        return reverse('products_by_category', args=[self.slug])
     class Meta:
         verbose_name_plural ='categories'
 

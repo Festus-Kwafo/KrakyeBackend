@@ -537,3 +537,50 @@
 .item-option-select .btn {
   min-width: 80px !important;
 }
+
+.table-shopping-cart.table td, .table-shopping-cart.table th {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.table-shopping-cart .price-wrap {
+  line-height: 1.2;
+}
+.table-shopping-cart .price {
+  font-weight: bold;
+  margin-right: 5px;
+  display: block;
+}
+
+/*# sourceMappingURL=ui.css.map */
+
+/* --------- description list --------*/
+dl[class=row] {
+  margin-bottom: 0;
+}
+[class*=dlist-] {
+  margin-bottom: 5px;
+}
+[class*=dlist-] dd {
+  margin-bottom: 0;
+}
+
+.dlist-inline dt, .dlist-inline dd {
+  display: inline-block;
+}
+
+.dlist-align {
+  display: flex;
+}
+.dlist-align dt {
+  width: 150px;
+  word-wrap: break-word;
+  font-weight: normal;
+}
+.dlist-align dd {
+  flex-grow: 1;
+}
+
+.price-wrap {
+  letter-spacing: -0.7px;
+  line-height: 1.2;
+}

@@ -46,7 +46,7 @@ class Product(models.Model):
         return self.product_name
 
     def get_absolute_url(self):
-        return reverse('store:product_detail', args=[self.slug])
+        return reverse('store:product_detail', args=[self.category.slug, self.slug])
     class Meta:
         verbose_name_plural = 'Products'
         ordering = ('-created_date', )

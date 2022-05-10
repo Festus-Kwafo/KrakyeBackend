@@ -376,9 +376,8 @@ a:hover {
   margin: auto;
   max-width: 950px;
   width: 90%;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 1rem;
-  border: transparent;
+  border: 1px transparent;
 }
 
 .cart {
@@ -389,7 +388,7 @@ a:hover {
 }
 
 .summary {
-  background-color: #ddd;
+  background-color: rgb(247, 244, 244);
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
   padding: 4vh;

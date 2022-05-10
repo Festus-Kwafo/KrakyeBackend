@@ -1,92 +1,125 @@
 {% extends '../../base.html' %} {% block title %}Krakye Clothing || Cart{% endblock%}
 {% block content %} {%load static%}
+<link rel="stylesheet" href="{%static 'css/ui.css'%}">
   <!--Main site-->
   <main id="main-site">
     <!--Shopping Cart Section-->
     <section id="cart" class="py-3">
-      <div class="shadow-m card">
+      <div class="container">
         <div class="row">
-          {%if cart|length == 0%}
+         {%if not cart_items%}
           <div class="pt-4 m-auto text-center font-inter">
             <span class="material-icons text-muted" style="font-size:9rem; margin-top: 3rem; margin-bottom: 3rem;">
               remove_shopping_cart
               </span>
                 <p class="font-size-40">No item in Cart</p>
                 <a href="{%url 'store:shop'%}"><button type="submit" class="btn btn-checkout mb-3"> <span class="font-inter font-size-16">Return to Shop</span></button></a>
-          </div>
-          {%else%}
+          </div> 
+          {%else%}        
             <div class="col-md-8 cart">
                 <div class="title">
                     <div class="row">
                         <div class="col">
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">3 items</div>
+                        <div class="col align-self-center text-right text-muted">{{cart_item_count}} items</div>
                     </div>
                 </div>
                 
-                {%for item in cart %} 
-                {%with product=item.product%}
-                <div data-index='{{product.id}}' class="row border-top border-bottom  product-item">
+                {%for cart_item in cart_items%}
+                <div data-index='{{cart_item.id}}' class="row border-top border-bottom  product-item">
                     <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="{{product.image_one.url}}"></div>
+                        <div class="col-3">
+                          <img src="{{cart_item.product.images.url}}" class="img-sm">
+                        </div>
+                      
                         <div class="col">
-                            <div class="row text-muted font-size-14">{{product.category}}</div>
-                            <div class="row font-inter font-size-16"><b><span>{{product.name}}</span></b></div>
+                            <div class="row text-muted font-size-14">{{cart_item.product.category}}</div>
+                            <div class="row font-inter font-size-16"><b><span>{{cart_item.product.product_name}}</span></b></div>
                         </div>
                         <div class="qty col"> 
                           
-                          <input type="text" class="qty_input mt-3 bg-white border-0 text-center qty_input_cart" data-id="pro2" disabled value="1" placeholder="1">
+                          <div class="input-group input-spinner">
+                            <div class="input-group-prepend">
+                              <a href="{%url 'cart:cart_delete' cart_item.product.id%}">
+                                <button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+                            
+                              </a>
+                            </div>
+                            <div>
+                              <input type="text" class="form-control" style="width: 3rem"   value="{{cart_item.quantity}}">
+                            </div>
+                            
+                            <div class="input-group-append">
+                              <a href="{%url 'cart:add_cart' cart_item.product.id%}" class='m-0'>
+                                <button  class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+                                
+                              </a>
+                            </div>
+                          </div> <!-- input-group.// -->
                           
                          </div>
-                        <div class="col">GH₵{{product.sale_price}} 
+                        <div class="col">
+                          <div class="price-wrap"> 
+                          <var class="price row">GH₵ {{cart_item.sub_total}}</var> 
+                          <small class="text-muted">GH₵ {{cart_item.product.discounted_price}} each</small> 
+                        </div> <!-- price-wrap .// --> 
                     </div>
                     <div class="col font-size-16 font-inter">
-                      <button type="submit" id="delete-btn" data-index="{{product.id}}" class="btn btn-danger form-control font-inter delete-btn">Delete</button>
+                      <a href="{%url 'cart:cart_item_delete' cart_item.product.id%}">
+                        <button type="submit" id="delete-btn" data-index="{{product.id}}" class="btn btn-danger form-control font-inter delete-btn">Delete</button>
+                      </a>
+                      
                   </div>
                     </div>
                 </div>
-                {%endwith%}
                 {%endfor%}
-                
-                <div class="back-to-shop"><a href="{%url 'store:shop'%}"><i class="fa-solid fa-arrow-left-long"></i><span class="text-muted font-inter"> Back to shop</span></a></div>
             </div>
-            <div class="col-md-4 summary">
-                <div>
-                    <h5 class="font-inter"><b>Summary</b></h5>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col" style="padding-left:0;"><span class="font-inter">SUBTOTAL:</span> </div>
-                    <div class="col text-right">GH₵{{cart.get_subtotal_price}}</div>
-                </div>
+            <div class="col-md-4 summary font-inter">
+              <div class="card mb-3">
+                <div class="card-body">
                 <form>
-                    <p class="font-inter">DELIVERY</p> 
-                    <select>
-                        <option class="text-muted font-inter">Standard-Delivery- GH₵11.50</option>
-                    </select>
-                    <p class="font-inter">COUPON CODE</p>
-                    <div class="input-group mb-3">
-                      <input type="number" class="form-control" placeholder="Enter your code" aria-label="Recipient's username" aria-describedby="button-addon2">
-                      <button class="btn btn-product" type="submit"><i class="fa-solid fa-arrow-right-long"></i></button>
-                    </div>                    
+                  <div class="form-group">
+                    <label>Have coupon?</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="" placeholder="Coupon code">
+                      <span class="input-group-append"> 
+                        <button class="btn btn-product">Apply</button>
+                      </span>
+                    </div>
+                  </div>
                 </form>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col"> <span class="font-inter">TOTAL PRICE</span> </div>
-                    <div  class="col text-right">GH₵ <span id='subtotal'> {{cart.get_total_price}}</span></div>
-                </div> 
-                {%with delivery_details=order_delivery%}
-                {%if delivery_details.id >= 1 %}
-                <a href="{%url 'payments:initiate-payment'%}">
-                {%else%}
-                 <a href="{%url 'orders:checkout'%}"> 
-                {%endif%}
-                {%endwith%}
-                  <button type="submit" class="btn btn-checkout"><span class="font-inter font-size-16">CHECKOUT</span></button></a>
+                </div> <!-- card-body.// -->
+              </div>  <!-- card .// -->
+              
+              <div class="card font-inter ">
+                <div class="card-body">
+                  <dl class="dlist-align">
+                    <dt>Total price:</dt>
+                    <dd class="text-right font-inter">GH₵{{total}}</dd>
+                  </dl>
+                  <dl class="dlist-align">
+                    <dt>Discount:</dt>
+                    <dd class="text-right font-inter ">GH₵0.00</dd>
+                  </dl>
+                  <dl class="dlist-align">
+                    <dt>Total:</dt>
+                    <dd class="text-right font-inter text-dark b"><strong>GH₵{{total}}</strong></dd>
+                  </dl>
+                  <hr>
+                  <p class="text-center mb-3">
+                    <img src="{%static 'images/payments.png'%}" height="26">
+                  </p>
+                  <a href="./place-order.html"   ><button class="btn btn-product btn-block"> Checkout</button></a>
+                  <a href="{%url 'store:shop'%}"   ><button class="btn btn-primary btn-block"> Continue Shopping</button></a>
+                </div> <!-- card-body.// -->
+                </div> <!-- card.// -->
+            
             </div>
-                {%endif%}
+                
         </div>
     </div>
+    {%endif%}
 
     </section>
     <!--End Shopping Cart Section-->
