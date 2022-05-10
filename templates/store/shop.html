@@ -2,182 +2,61 @@
 {% block content %} {%load static%}
   <!--Main site-->
   <main id="main-site">
-    {% include "../modal.html"  %} 
-    <!--Sorting-->
-    <section>
-      <div class="d-flex justify-content-end">
-        <div class="product-select-box">
-          <div class="product-short">
-              <p>Sort By:</p>
-              <select class="nice-select">
-                  <option value="trending">Relevance</option>
-                  <option value="sales">Name (A - Z)</option>
-                  <option value="sales">Name (Z - A)</option>
-                  <option value="rating">Price (Low &gt; High)</option>
-                  <option value="date">Rating (Lowest)</option>
-                  <option value="price-asc">Model (A - Z)</option>
-                  <option value="price-asc">Model (Z - A)</option>
-              </select>
-          </div>
-      </div>
-      </div>
-      
-      
-    </section>
-    <!--End Sorting-->
-    <!--Top Sale-->
-    <section id="store">
-      <div class="row">
-        <aside class="col-md-3">
+    <div class="row">
+      {%include '../includes/category.html'%}
+      <div class='col-md-9'>
+        <!--Top Sale-->
+      <section id="shop">
         <div class="container py-5">
-        <div class="card">
-          <article class="filter-group">
-            <header class="card-header">
-              <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-                <i class="icon-control fa fa-chevron-down"></i>
-                <h6 class="title">Categories</h6>
-              </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_1" style="">
-              <div class="card-body">
+          <h4 class="font-inter font-size-20">Shop</h4>
+          <hr>
+        <!--Owl carousel-->
+        <div class="grid">
+          {%for item in shop_products%}
+          <div class="grid-item {{item.category}} m-0">
+            <div class="shadow-sm item py-2 m-1" style="width: 200px">
+              <div class="product font-inter">
+                  <img src="{{item.images.url}}" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;">
+                <div class="mt-2">
+                  <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">{{item.category}}</a></h4>
+                </div>
                 
-                <ul class="list-menu">
-                <li><a href="#">People  </a></li>
-                <li><a href="#">Watches </a></li>
-                <li><a href="#">Cinema  </a></li>
-                <li><a href="#">Clothes  </a></li>
-                <li><a href="#">Home items </a></li>
-                <li><a href="#">Animals</a></li>
-                <li><a href="#">People </a></li>
-                </ul>
-        
-              </div> <!-- card-body.// -->
-            </div>
-          </article> <!-- filter-group  .// -->
-          <article class="filter-group">
-            <header class="card-header">
-              <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
-                <i class="icon-control fa fa-chevron-down"></i>
-                <h6 class="title">Sizes </h6>
-              </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_4" style="">
-              <div class="card-body">
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> XS </span>
-                </label>
-        
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> SM </span>
-                </label>
-        
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> LG </span>
-                </label>
-        
-                <label class="checkbox-btn">
-                  <input type="checkbox">
-                  <span class="btn btn-light"> XXL </span>
-                </label>
-            </div><!-- card-body.// -->
-            </div>
-          </article> <!-- filter-group .// -->
-          
-          <article class="filter-group">
-            <header class="card-header">
-              <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-                <i class="icon-control fa fa-chevron-down"></i>
-                <h6 class="title">Price range </h6>
-              </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_3" style="">
-              <div class="card-body">
-                
-                <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Min</label>
-                  <!-- <input class="form-control" placeholder="$0" type="number"> -->
-                    <select class="mr-2 form-control">
-                    <option value="0">$0</option>
-                    <option value="50">$50</option>
-                    <option value="100">$100</option>
-                    <option value="150">$150</option>
-                    <option value="200">$200</option>
-                    <option value="500">$500</option>
-                    <option value="1000">$1000</option>
-                  </select>
-                </div>
-                <div class="form-group text-right col-md-6">
-                  <label>Max</label>
-                    <select class="mr-2 form-control">
-                    <option value="50">$50</option>
-                    <option value="100">$100</option>
-                    <option value="150">$150</option>
-                    <option value="200">$200</option>
-                    <option value="500">$500</option>
-                    <option value="1000">$1000</option>
-                    <option value="2000">$2000+</option>
-                  </select>
-                </div>
-                </div> <!-- form-row.// -->
-                <button class="btn btn-block btn-primary">Apply</button>
-              </div><!-- card-body.// -->
-            </div>
-          </article> <!-- filter-group .// -->
-          
-        </div> <!-- card.// -->
-        </aside>
-        </div>
-      </div>
-      <div class="col-sm-9">
-        <h4 class="font-inter font-size-20">All products</h4>
-        <hr>
-      <!--Owl carousel-->
-      <div class="owl-carousel owl-theme">
-        {%for item in products%}
-        <div class="shadow-sm item py-2 m-2" style="width: 200px">
-          <div class="product font-inter">
-              <img src="{{item.image_one.url}}" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;">
-            <div class="mt-2">
-              <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">{{item.category}}</a></h4>
-            </div>
-            
-            <div class="text-center ml-2">
-              <div class="d-flex align-items-center justify-content-between mb-0">
-                <h6>{{item.name}}</h6>
-                <button class="btn btn-wishlist pb-3" style="color: black;">
-                  <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                </button>
-              </div>
-              <div class="price d-flex text-left font-size-14">
-                <div class="new-price p-2">
-                  <span><b>GH₵{{item.sale_price}}</b></span>
-                  <span class="old-price text-muted">GH₵{{item.list_price}}</span>
-                </div>
-                <div class= "ml-auto p-2">
-                  <span class="discount-percentage text-danger">{{item.discount}}%</span>
+                <div class="text-center ml-2">
+                  <div class="d-flex align-items-center justify-content-between mb-0">
+                    <h6>{{item.product_name}}</h6>
+                    <button class="btn btn-wishlist pb-3" style="color: black;">
+                      <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                  </div>
+                  <div class="price d-flex text-left font-size-14">
+                    <div class="new-price p-2">
+                      <span><b>GH₵{{item.price}}</b></span>
+                      <span class="old-price text-muted">GH₵{{item.discounted_price}}</span>
+                    </div>
+                    <div class= "ml-auto p-2">
+                      <span class="discount-percentage text-danger">{{item.discount}}%</span>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
                 </div>
               </div>
-              <button type="submit" class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
             </div>
           </div>
+          {%endfor%}
         </div>
-        {%endfor%}
+        <!--End Owl carousel-->
+        </div>
+      </section>
+      <!--End Top Sale-->
       </div>
-      <!--End Owl carousel-->
-      </div>
-      </div>
-        
-    </section>
-    <!--End Top Sale-->
+    </div>
+
+    
   
 
     <!--Pagination-->
     <div class="container"> 
-    {% include "./pagination.html" with page=products %} 
+    {% include "./pagination.html" with page=shop_products %} 
     </div>
     <!--End Pagination-->
 

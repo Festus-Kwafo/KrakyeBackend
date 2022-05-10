@@ -1,3 +1,5 @@
+from multiprocessing import context
+from unicodedata import category
 from django.shortcuts import render, get_object_or_404
 
 from cart.views import cart_summary
@@ -18,29 +20,45 @@ def home(request):
     return render(request, 'index.html', {'products': products, 'categories': categories, 'new_arrivals': new_arrivals, 'top_sale': top_sale, 'countries_qs': countries_qs })
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug, in_stock=True)
-    related_product = Product.objects.filter(
-        category=product.category).exclude(slug=slug)
-    cart = Cart(request)
-    product_in_cart = cart_summary
-    return render(request, 'store/product/product.html', {'product': product, 'related': related_product, 'cart':product_in_cart})
-
-
-def shop(request):
-    products = Product.objects.all().order_by('-id')
-    paginator = Paginator(products, 30)
-    page = request.GET.get('page')
-    product_count = Product.objects.count()
+def product_detail(request, category_slug=None, product_slug=None):
     try:
-        products = paginator.page(page)
+        single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    except Exception as e:
+        raise e
+   
+    context = {'single_product':single_product}
+    return render(request, 'store/product/product.html', context )
+
+
+def shop(request, category_slug=None):
+    shop_products = None
+    categories = None
+    if category_slug != None:
+        categories = get_object_or_404(Category, slug=category_slug)
+        shop_products = Product.objects.filter(category = categories, in_stock=True)
+        product_count = Product.objects.count()
+    else:
+        
+        shop_products  = Product.objects.all()
+        product_count = Product.objects.count()
+
+    paginator = Paginator(shop_products, 20)
+    page = request.GET.get('page')
+    
+    try:
+        shop_products = paginator.page(page)
     except PageNotAnInteger:
         # if page is not an integer deliver the first page
-        products = paginator.page(1)
+        shop_products = paginator.page(1)
     except EmptyPage:
         # If page is out of range deliver last page of results
-        products = paginator.page(paginator.num_pages)
-    return render(request, 'store/shop.html', {'products': products, page: 'pages', 'product_count': product_count})
+        shop_products = paginator.page(paginator.num_pages)
+    context = {
+        'shop_products': shop_products, 
+        'pages'  : page ,
+        'product_count': product_count
+    }
+    return render(request, 'store/shop.html', context)
 
 
 def about_us(request):
