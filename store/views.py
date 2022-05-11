@@ -1,7 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from cart.models import CartItem
 from cart.views import _cart_id
 from .models import *
+from django.db.models import Q
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from backend.settings import AUTH_USER_MODEL
@@ -65,3 +67,15 @@ def shop(request, category_slug=None):
 
 def about_us(request):
     return render(request, 'store/about_us.html')
+
+def search(request):
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            shop_products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
+            product_count = shop_products.count()
+    context = {
+        'shop_products':shop_products,
+        'product_count':product_count,
+    }
+    return render(request, 'store/shop.html', context)

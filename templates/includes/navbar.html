@@ -1,9 +1,14 @@
 <nav class=" px-5 ml-3 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
     <a class="navbar-brand" href="{%url "store:home"%}"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
-        <div class="input-group col-6">
-            <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
+        <form action="{%url 'store:search'%}" method="GET" class="col-6">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." name="keyword">
+            <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+          
+        
         <div class="d-flex">
             <div class="mr-3 navbar-item-hidden">
               <a href="">
