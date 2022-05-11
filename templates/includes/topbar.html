@@ -1,15 +1,15 @@
-<nav class="px-5 navbar-item-hidden navbar navbar-light bg-light border-top border-bottom ">
+<nav class="px-5 navbar-item-hidden navbar border-top border-bottom topbar ">
     <div class="d-flex">
-        <span class="font-inter font-size-14 text-black-50 pr-2 m-1" ><b><i class="fa-solid fa-phone"></i></b><a href="tel:+233205115005" class="text-black-50 text-decoration-none" >0205115005</a></span>  
-        <span class="font-inter font-size-14 text-black-50 pr-2 m-1" > <b><i class="fa-solid fa-envelope"></i></b> <a href="mailto:festuskwafo11@gmail.com" class="text-black-50 text-decoration-none" >Krakye Clothing</a></span>
+        <span class="font-inter font-size-14 text-light pr-2 m-1" ><b><i class="fa-solid fa-phone"></i></b><a href="tel:+233205115005" class="text-light text-decoration-none" >0205115005</a></span>  
+        <span class="font-inter font-size-14 text-light pr-2 m-1" > <b><i class="fa-solid fa-envelope"></i></b> <a href="mailto:festuskwafo11@gmail.com" class="text-light text-decoration-none" >Krakye Clothing</a></span>
     </div>
     <div class="ml-auto">
       {% if user.is_authenticated %}
-      <span class="font-inter font-size-14 text-black-50 pr-2 m-1">Hello, {{user.username}}</span>
-      <span class="font-inter font-size-14 text-black-50 pr-2 m-1 border-left" ><a href="{% url "accounts:logout" %}" class="text-black-50 text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Log out</a></span>
+      <span class="font-inter font-size-14 text-light pr-2 m-1">Hello, {{user.username}}</span>
+      <span class="font-inter font-size-14 text-light pr-2 m-1 border-left" ><a href="{% url "accounts:logout" %}" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Log out</a></span>
       {%else%}
-        <span class="font-inter font-size-14 text-black-50 pr-2 m-1 border-rightx" ><a href="Register" class="text-black-50 text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Register</a></span>
-        <span class="font-inter font-size-14 text-black-50 m-1 ml-0"><a href="{% url "accounts:login" %}" class="text-black-50 text-decoration-none">Sign in</a></span>  
+        <span class="font-inter font-size-14 text-light pr-2 m-1 border-rightx" ><a href="Register" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Register</a></span>
+        <span class="font-inter font-size-14 text-light m-1 ml-0"><a href="{% url "accounts:login" %}" class="text-light text-decoration-none">Sign in</a></span>  
       {% endif %}
         
     </div>

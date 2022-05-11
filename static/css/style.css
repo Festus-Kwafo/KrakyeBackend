@@ -152,7 +152,7 @@ a:hover {
 }
 
 .color-second-bg {
-  background: #c2c2ca;
+  background: #000  ;
 }
 
 /*Top sale Template*/
@@ -267,7 +267,9 @@ a:hover {
 .navbar-nav .nav-item a {
   color: black !important;
 }
-
+.topbar{
+  background: #000;
+}
 .carousel-control-prev-icon1,
 .carousel-control-next-icon1 {
   font-size: 22px;

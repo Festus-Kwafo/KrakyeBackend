@@ -1,15 +1,17 @@
-import re
 from django.shortcuts import render, redirect
 
-from store import views
 from .models import Cart, CartItem
 from store.models import Product
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
+def _cart_id(request):
+    cart = request.session.session_key
+    if not cart:
+        cart = request.session.session_key
+    return cart
 
 def cart_summary(request, total=0, quantity=0, cart_items=None, cart_item_count=0 ):
     try:
@@ -22,6 +24,7 @@ def cart_summary(request, total=0, quantity=0, cart_items=None, cart_item_count=
         
     except:
         pass
+
     context ={
         'total': total,
         'quantity':quantity,
@@ -30,12 +33,9 @@ def cart_summary(request, total=0, quantity=0, cart_items=None, cart_item_count=
     }
     return render(request,  'store/cart/cart.html', context )
 
-def _cart_id(request):
-    cart = request.session.session_key
-    if not cart:
-        cart = request.session.session_key
-    return cart
 
+
+@login_required
 def add_cart(request, product_id):
     product = Product.objects.get(id=product_id)
 

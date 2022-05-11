@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Order, OrderItem, Address
-from cart.cart import Cart
+
 from django.http.response import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView, DetailView, View

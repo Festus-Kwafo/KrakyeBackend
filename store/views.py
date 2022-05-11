@@ -37,11 +37,11 @@ def shop(request, category_slug=None):
     categories = None
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
-        shop_products = Product.objects.filter(category = categories, in_stock=True)
+        shop_products = Product.objects.filter(category = categories, in_stock=True).order_by('?')
         product_count = Product.objects.count()
     else:
         
-        shop_products  = Product.objects.all()
+        shop_products  = Product.objects.all().order_by('?')
         product_count = Product.objects.count()
 
     paginator = Paginator(shop_products, 20)
