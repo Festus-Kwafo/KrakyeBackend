@@ -21,15 +21,11 @@
                   <span class="material-icons font-size-40">
                       shopping_cart
                       </span>
-                      {%with total_qty=cart|length%}
+                      
                       <span id="cart-qty" class="btn-cart__badge">
-                        {%if total_qty >= 0%}
-                            {{total_qty}}
-                        {%else%}
-                        0
-                        {%endif%}
+                        {{cart_count}}
                       </span>
-                      {%endwith%}
+                     
               </button>
               </a>
                 

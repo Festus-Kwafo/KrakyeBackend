@@ -130,8 +130,8 @@
                           </div>
                       </div>
                         </forms>
-                     
-                    <div class="btn-inCart hidden">
+                     {%if in_cart%}
+                    <div class="btn-inCart">
                   <div class="form-row pt-2 font-size-16 font-inter" id="in-cart"> 
                     <div class="col">
                         <button type="submit" class="btn btn-secondary form-control">In Cart</button>
@@ -139,14 +139,20 @@
                 </div>
                   <div class="form-row pt-2 font-size-16 font-inter" id="btn-shopping"> 
                     <div class="col">
+                      <a href="{%url 'store:shop'%}">
                         <button type="submit" class="btn btn-primary form-control">Continue Shopping</button>
+                      </a>
+                        
                     </div>
                     <div class="col">
+                      <a href="{%url 'cart:cart_summary'%}">
                         <button type="submit" class="btn btn-product form-control">Go to cart</button>
+                      </a>
+                        
                     </div>
                 </div>
               </div>
-              
+              {%else%}
                 <div class="form-row pt-2 font-size-16 font-inter">
                       
                   <div class="col">
@@ -161,6 +167,7 @@
                     </div>
                   
               </div>
+              {%endif%}
               
                 
                     <!--Order Details-->

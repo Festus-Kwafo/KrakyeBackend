@@ -1,13 +1,11 @@
-from multiprocessing import context
-from unicodedata import category
 from django.shortcuts import render, get_object_or_404
-
-from cart.views import cart_summary
+from cart.models import CartItem
+from cart.views import _cart_id
 from .models import *
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from backend.settings import AUTH_USER_MODEL
 from cities_light.models import Country
-from cart.cart import Cart
 from category.models import *
 # Create your views here.
 
@@ -23,10 +21,14 @@ def home(request):
 def product_detail(request, category_slug=None, product_slug=None):
     try:
         single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     except Exception as e:
         raise e
    
-    context = {'single_product':single_product}
+    context = {
+        'single_product':single_product,
+        'in_cart':in_cart
+        }
     return render(request, 'store/product/product.html', context )
 
 
