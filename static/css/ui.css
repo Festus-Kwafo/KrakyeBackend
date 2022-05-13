@@ -584,3 +584,12 @@ dl[class=row] {
   letter-spacing: -0.7px;
   line-height: 1.2;
 }
+
+.input-spinner input.form-control {
+  text-align: center;
+  max-width: 46px;
+  font-weight: bold;
+  flex-basis: 46px;
+  border-color: #e4e4e4;
+  flex-grow: 0;
+}

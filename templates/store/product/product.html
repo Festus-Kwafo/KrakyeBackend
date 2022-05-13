@@ -37,7 +37,10 @@
                         </ol>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                
+            <form class="col-sm-6" action="{%url 'cart:add_cart' single_product.id%}" method="POST">
+              {%csrf_token%}
+                <div>
                     <h5 class="font-inter font-size-20" id="product-name">{{single_product.product_name}}</h5>
                     <hr class="m-0">
                     <!--Product Price-->
@@ -62,55 +65,35 @@
                     </table>
                     <!--End Product Price-->
                     <hr>
-                    
-                          <div class="row mb-3">
-                            <div class="item-option-select">
-                              <h6>Choose Color</h6>
-                              <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color"> Silver
-                                </label>
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color" > Gray
-                                </label>
-                                <label class="btn btn-light active">
-                                  <input type="radio" name="radio_color checked"> Gold
-                                </label>
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color"> Black
-                                </label>
-                              </div> 
-                            </div>
+                      <div class="row">
+                        <div class="col mb-3">
+                          <div class="item-option-select">
+                            <h6>Choose Color</h6>
+                            <select name="color" class="form-control" required>
+                              <option value="" disabled selected >Choose Color</option>
+                              {%for i in single_product.variation_set.colors %}
+                              <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                              {%endfor%}
+                            </select>
                           </div>
-                           <!-- row.// -->
-                           <div class="row mb-3">
-                            <div class="item-option-select">
-                              <h6>Select Size</h6>
-                              <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color"> S
-                                </label>
-                                <label class="btn btn-light active">
-                                  <input type="radio" name="radio_color" checked> M
-                                </label>
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color"> L
-                                </label>
-                                <label class="btn btn-light">
-                                  <input type="radio" name="radio_color"> XL
-                                </label>
-                              </div> 
-                            </div>
-                          </div> <!-- row.// -->
-                        <forms>
-                          <!--Color-->
-
-
-
+                        </div>
+                         <!-- row.// -->
+                         <div class="col mb-3">
+                          <div class="item-option-select">
+                            <h6>Select Size</h6>
+                            <select name="size" class="form-control" required>
+                              <option value="" disabled selected >Choose Size</option>
+                              {%for i in single_product.variation_set.sizes %}
+                              <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                              {%endfor%}
+                            </select>
+                          </div> 
+                        </div> <!-- row.// -->
+                      
+                      </div>
+                        
+                        
                           <div class='row'>
-                    
-                          
-
                           <div class="col-12 details">
                             <div class="font-rubik font-size-16 text-black">
                               <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -129,46 +112,47 @@
                             <hr>
                           </div>
                       </div>
-                        </forms>
-                     {%if in_cart%}
-                    <div class="btn-inCart">
+                        
+                     {% comment %} {%if in_cart%} {% endcomment %}
+                    {% comment %} <div class="btn-inCart">
                   <div class="form-row pt-2 font-size-16 font-inter" id="in-cart"> 
-                    <div class="col">
-                        <button type="submit" class="btn btn-secondary form-control">In Cart</button>
+                    <div class="col pl-2">
+
+                        <button class="btn btn-secondary form-control">In Cart</button>
                     </div>
                 </div>
                   <div class="form-row pt-2 font-size-16 font-inter" id="btn-shopping"> 
                     <div class="col">
                       <a href="{%url 'store:shop'%}">
-                        <button type="submit" class="btn btn-primary form-control">Continue Shopping</button>
+                        <button class="btn btn-primary form-control">Continue Shopping</button>
                       </a>
                         
                     </div>
                     <div class="col">
                       <a href="{%url 'cart:cart_summary'%}">
-                        <button type="submit" class="btn btn-product form-control">Go to cart</button>
+                        <button class="btn btn-product form-control">Go to cart</button>
                       </a>
                         
                     </div>
                 </div>
-              </div>
-              {%else%}
+              </div> {% endcomment %}
+              {% comment %} {%else%} {% endcomment %}
                 <div class="form-row pt-2 font-size-16 font-inter">
                       
                   <div class="col">
                     {%if single_product.stock <= 0%}
                     <h4 class="text-danger">Out of Stock</h4>
                     {%else%}
-                      <a href="{%url 'cart:add_cart' single_product.id%}">
-                        <button class="btn btn-product form-control update-cart">Add to Cart</button>
-                      </a>
+                      
+                        <button type="submit" class="btn btn-product form-control update-cart">Add to Cart</button>
+                      
                       
                     {%endif%}
                     </div>
                   
               </div>
-              {%endif%}
-              
+              {% comment %} {%endif%} {% endcomment %}
+            </form>
                 
                     <!--Order Details-->
                     <div id="order-details" class="font-inter d-flex flex-column text-dark m-1">

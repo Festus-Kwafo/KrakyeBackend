@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from backend.settings import EMAIL_HOST_USER
 
 from orders.views import user_orders
-from .forms import RegistrationForm, UserEditForm
+from .forms import RegistrationForm, UserEditForm, UserLoginForm
 from .models import UserBase
 from .tokens import account_activation_token
 
@@ -48,6 +48,21 @@ def account_register(request):
         registerForm = RegistrationForm()
     return render(request, 'account/registration/register.html', {'form': registerForm})
 
+def login(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are now logged in.')
+            return redirect('store:home')
+        else:
+            messages.error(request, 'Invalid login credentials')
+
+    return render(request, 'account/registration/login.html' )
 
 def account_activate(request, uidb64, token):
     try:
@@ -83,3 +98,4 @@ def delete_user(request):
     user.save()
     logout(request)
     return redirect('accounts:delete_confirmation')
+

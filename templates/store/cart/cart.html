@@ -5,7 +5,8 @@
   <main id="main-site">
     <!--Shopping Cart Section-->
     <section id="cart" class="py-3">
-      <div class="container">
+      
+      <div class="">
         <div class="row">
          {%if not cart_items%}
           <div class="pt-4 m-auto text-center font-inter">
@@ -15,8 +16,10 @@
                 <p class="font-size-40">No item in Cart</p>
                 <a href="{%url 'store:shop'%}"><button type="submit" class="btn btn-checkout mb-3"> <span class="font-inter font-size-16">Return to Shop</span></button></a>
           </div> 
-          {%else%}        
+          {%else%} 
+               
             <div class="col-md-8 cart">
+              
                 <div class="title">
                     <div class="row">
                         <div class="col">
@@ -42,29 +45,49 @@
                           <span class="font-size-14 frow"> <strong>GH₵ {{cart_item.product.discounted_price}}</strong></span> 
                            
                         </div> <!-- price-wrap .// --> 
+                        
+                    </div>
+                    <div class="col">
+                      {%if cart_item.variation.all%}
+                      {% for item in cart_item.variation.all%}
+                      <span class="row text-muted font-size-12"><b>{{item.variation_category |  capfirst}}</b> : {{item.variation_value |  capfirst}}</span>
+                      {%endfor%}
+                      {%endif%}
                     </div>
                         <div class="col d-flex justify-content-center text-center"> 
                           <div class="input-group input-spinner">
-                            <div class="input-group-prepend">
-                              <a href="{%url 'cart:cart_delete' cart_item.product.id%}">
-                                <button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
-                              </a>
+                            <div>
+                              <form class="input-group-prepend" action="{%url 'cart:cart_delete' cart_item.product.id cart_item.id%}" method="POST">
+                                {%csrf_token%}
+                                {%for item in cart_item.variation.all%}
+                                <input type="hidden" name ="{{item.variation_category | lower}}" value="{{item.variation_value | lower}}"></input>
+                                {%endfor%}
+                                <button class="btn btn-light" type="submit" id="button-plus"> <i class="fa fa-minus"></i></button>
+                              </form>
                             </div>
                             <div>
-                              <input type="text" class="form-control" style="width: 3rem"   value="{{cart_item.quantity}}">
+                              <form>
+                                <input type="text" class="form-control" style="width: 3rem"   value="{{cart_item.quantity}}">
+                              </form>
+                              
                             </div>
-                            <div class="input-group-append">
-                              <a href="{%url 'cart:add_cart' cart_item.product.id%}" class='m-0'>
-                                <button  class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
-                              </a>
+                            <div>
+                              <form class="input-group-append" action="{%url 'cart:add_cart' cart_item.product.id%}" method="POST">
+                                {%csrf_token%}
+                                {%for item in cart_item.variation.all%}
+                                <input type="hidden" name ="{{item.variation_category | lower}}" value="{{item.variation_value | capfirst}}"></input>
+                                {%endfor%}
+                                  <button  class="btn btn-light" type="submit" id="button-minus"> <i class="fa fa-plus"></i> </button>
+                              </form>
+                              
                             </div>
                           </div> <!-- input-group.// -->
                           
                          </div>
                         
                     <div class="col font-size-16 font-inter">
-                      <a href="{%url 'cart:cart_item_delete' cart_item.product.id%}">
-                        <button type="submit" id="delete-btn" data-index="{{product.id}}" class="btn btn-danger form-control font-inter delete-btn">Delete</button>
+                      <a href="{%url 'cart:cart_item_delete' cart_item.product.id cart_item.id%}">
+                        <button type="submit" id="delete-btn" data-index="{{product.id}}" onclick="return confirm('Are you sure you want delete this Cart?')" class="btn btn-danger form-control font-inter delete-btn">Delete</button>
                       </a>
                       
                   </div>
@@ -121,43 +144,6 @@
     </section>
     <!--End Shopping Cart Section-->
 
-    <!--New Clothes-->
-    <section id="new-clothes">
-        <div class="container py-5">
-          <h4 class="font-inter font-size-20">Related Products</h4>
-          <hr>
-          <!--Owl carousel-->
-        <div class="owl-carousel owl-theme">
-          <div class="shadow-sm item py-2 m-2" style="width: 200px">
-            <div class="product font-inter">
-              <button type="button" class="btn p-0" data-toggle="modal" data-target=".bd-example-modal-lg"><img src="assets/product-1.jpg" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;"></button>
-              <div class="mt-2">
-                <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">Church</a></h4>
-              </div>
-              
-              <div class="text-center ml-2">
-                <div class="d-flex align-items-center justify-content-between mb-0">
-                  <h6>Kaftan Men</h6>
-                  <button class="btn btn-wishlist pb-3" style="color: black;">
-                    <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                  </button>
-                </div>
-                <div class="price d-flex text-left font-size-14">
-                  <span class="new-price p-2">$150</span>
-                  <span class="old-price text-muted p-2">$140</span>
-                  <span class="discount-percentage ml-auto p-2 text-danger">-7%</span>
-                </div>
-                <button type="submit" class="btn btn-product font-size-12" data-toggle="modal" data-target=".bd-example-modal-lg">View Product</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--End Owl carousel-->
-        </div>
-        
-      </section>
-      
-      <!--End New Clothes-->
   </main>
   <script>
     var updateBtns = document.getElementsByClassName('delete-btn')

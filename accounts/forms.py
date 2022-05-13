@@ -8,13 +8,12 @@ from .models import UserBase
 
 
 class UserLoginForm(AuthenticationForm):
-
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'inputEmail'}))
+    username = forms.CharField(widget=forms.EmailInput(
+        attrs={'class': 'form-control', 'placeholder': 'E-mail Address', 'id': 'inputEmail'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Password',
+            'placeholder': 'Enter Password',
             'id': 'inputPassword',
         }
     ))
@@ -22,24 +21,26 @@ class UserLoginForm(AuthenticationForm):
 
 class RegistrationForm(forms.ModelForm):
     username = forms.CharField(
-        label='Enter Username', min_length=4, max_length=50, help_text='Required')
+        label='Enter Username', min_length=4, max_length=50, help_text='Required', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Username',}))
     first_name = forms.CharField(
-        label='Enter Firstname', min_length=4, max_length=50, help_text='Required')
-    other_name = forms.CharField(
-        label='Enter Othername(s)', min_length=4, max_length=50, help_text='Required')
+        label='Enter Firstname', min_length=3, max_length=50, help_text='Required', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter First name',}))
+    last_name = forms.CharField(
+        label='Enter Last name', min_length=3, max_length=50, help_text='Required', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Enter Last name',}))
     email = forms.EmailField(max_length=100, help_text='Required', error_messages={
-        'required': 'Sorry, you will need an email'})
-    phone_number = forms.CharField(max_length=100, help_text='Required', error_messages={
-        'required': 'Sorry, you will need a Phone Number'})
-    country = forms.ChoiceField(choices=sorted(COUNTRIES.items()))
+        'required': 'Sorry, you will need an email', })
+    phone_number = forms.CharField(max_length=14, help_text='Required', error_messages={
+        'required': 'Sorry, you will need a Phone Number'}, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': '+233-554',}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='Repeat password', widget=forms.PasswordInput)
 
     class Meta:
         model = UserBase
-        fields = ('username', 'email', 'first_name',
-                  'country', 'other_name', 'phone_number')
+        fields = ('username', 'email', 'first_name', 'last_name', 'phone_number')
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
@@ -64,13 +65,13 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update(
-            {'class': 'mb-0', 'placeholder': 'Username'})
+            {'class': 'form-control', 'placeholder': 'Enter Username'})
         self.fields['email'].widget.attrs.update(
-            {'class': 'mb-0', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
+            {'class': 'form-control', 'placeholder': 'Enter E-mail Address', 'name': 'email', 'id': 'id_email'})
         self.fields['password'].widget.attrs.update(
-            {'class': 'mb-0', 'placeholder': 'Password'})
+            {'class': 'form-control', 'placeholder': 'Enter Password'})
         self.fields['password2'].widget.attrs.update(
-            {'class': 'mb-0', 'placeholder': 'Repeat Password'})
+            {'class': 'form-control', 'placeholder': 'Confirm Password'})
 
 
 class UserEditForm(forms.ModelForm):
