@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
                                        SetPasswordForm)
 
 from .models import UserBase
-
+from django.contrib import auth
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.EmailInput(
@@ -17,6 +17,20 @@ class UserLoginForm(AuthenticationForm):
             'id': 'inputPassword',
         }
     ))
+    def clean(self):
+        username = self.cleaned_data.get('username').lower()
+        password = self.cleaned_data.get('password')
+
+        if username is not None and password:
+            self.user_cache = auth.authenticate(self.request, username=username, password=password)
+            if self.user_cache is None:
+                raise self.get_invalid_login_error()
+            else:
+                self.confirm_login_allowed(self.user_cache)
+
+        return self.cleaned_data
+    
+        
 
 
 class RegistrationForm(forms.ModelForm):

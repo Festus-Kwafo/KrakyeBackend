@@ -14,6 +14,7 @@ def _cart_id(request):
         cart = request.session.session_key
     return cart
 
+@login_required
 def cart_summary(request, total=0, quantity=0, cart_items=None, cart_item_count=0 ):
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request))
@@ -36,7 +37,7 @@ def cart_summary(request, total=0, quantity=0, cart_items=None, cart_item_count=
 
 
 
-
+@login_required
 def add_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     product_variation = []
@@ -102,7 +103,7 @@ def add_cart(request, product_id):
 
 
     
-    
+@login_required    
 def cart_delete(request, product_id, cart_item_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
@@ -116,7 +117,8 @@ def cart_delete(request, product_id, cart_item_id):
     except:
         pass
     return redirect('cart:cart_summary')
-
+    
+@login_required
 def cart_item_delete(request, product_id, cart_item_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
     product = get_object_or_404(Product, id=product_id)

@@ -5,7 +5,7 @@
     </div>
     <div class="ml-auto">
       {% if user.is_authenticated %}
-      <span class="font-inter font-size-14 text-light pr-2 m-1">Hello, {{user.username}}</span>
+      <span class="font-inter font-size-14 text-light pr-2 m-1">Hello, {{user.first_name | capfirst}}</span>
       <span class="font-inter font-size-14 text-light pr-2 m-1 border-left" ><a href="{% url "accounts:logout" %}" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Log out</a></span>
       {%else%}
         <span class="font-inter font-size-14 text-light pr-2 m-1 border-rightx" ><a href="Register" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Register</a></span>
