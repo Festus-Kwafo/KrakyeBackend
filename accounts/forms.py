@@ -17,6 +17,7 @@ class UserLoginForm(AuthenticationForm):
             'id': 'inputPassword',
         }
     ))
+    
     def clean(self):
         username = self.cleaned_data.get('username').lower()
         password = self.cleaned_data.get('password')

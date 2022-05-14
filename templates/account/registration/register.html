@@ -7,8 +7,9 @@
     <div class="card mx-auto font-inter border" style="max-width:520px; margin-top:40px;">
         <article class="card-body">
       <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-      <form action="{}" method="POST">
+      <form action="." method="POST">
         {% csrf_token %}
+        {%include '../../includes/alerts.html'%}
           <div class="form-row">
             <div class="col form-group">
               <label>First name</label>

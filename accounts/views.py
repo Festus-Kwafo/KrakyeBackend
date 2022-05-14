@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core.mail import send_mail
-
+from django.contrib import messages
 from backend.settings import EMAIL_HOST_USER
 
 from orders.views import user_orders
@@ -29,23 +29,26 @@ def account_register(request):
             user = registerForm.save(commit=False)
             user.email = registerForm.cleaned_data['email']
             user.set_password(registerForm.cleaned_data['password'])
-            user.is_active = False
+            user.is_active = True
             user.save()
+            messages.success(request, "Account Created Successfully")
             # setup Email
-            current_site = get_current_site(request)
-            subject = 'Activate your Account'
-            message = render_to_string('account/registration/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = registerForm.cleaned_data.get('email')
-            send_mail(subject, message, EMAIL_HOST_USER, [to_email])
-            return render(request, 'account/registration/activation_link.html')
+            # current_site = get_current_site(request)
+            # subject = 'Activate your Account'
+            # message = render_to_string('account/registration/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # to_email = registerForm.cleaned_data.get('email')
+            # send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+            return redirect('accounts:register')
+            # return render(request, 'account/registration/activation_link.html')
 
     else:
         registerForm = RegistrationForm()
+
     return render(request, 'account/registration/register.html', {'form': registerForm})
 
 def login(request):

@@ -84,7 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 # Custom user model
 AUTH_USER_MODEL = 'accounts.UserBase'
-LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_REDIRECT_URL = 'store:home'
 LOGIN_URL = '/account/login/'
 
 AUTHENTICATION_BACKENDS = [
@@ -201,6 +201,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_EMAIL_VERIFICATION ="optional"
 
-CITIES_LIGHT_TRANSLATION_LANGUAGES = ['fr', 'en']
-CITIES_LIGHT_INCLUDE_COUNTRIES = ['FR']
-CITIES_LIGHT_INCLUDE_CITY_TYPES = ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC', 'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT',]
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.INFO: '',
+    60: 'critical',
+}

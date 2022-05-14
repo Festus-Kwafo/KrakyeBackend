@@ -118,5 +118,6 @@ function myFunction(x) {
     x.classList.toggle("show_color");
   }
 
-
-
+setTimeout(function(){
+    $('#message').fadeOut('slow')
+  }, 4000)
