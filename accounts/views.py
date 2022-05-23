@@ -1,3 +1,4 @@
+import email
 from django.contrib.auth import login, logout
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
@@ -16,12 +17,6 @@ from .models import UserBase
 from .tokens import account_activation_token
 
 
-@login_required
-def dashboard(request):
-    orders = user_orders(request)
-    return render(request, 'account/user/dashboard.html', {'orders':orders})
-
-
 def account_register(request):
     if request.method == 'POST':
         registerForm = RegistrationForm(request.POST)
@@ -29,7 +24,7 @@ def account_register(request):
             user = registerForm.save(commit=False)
             user.email = registerForm.cleaned_data['email']
             user.set_password(registerForm.cleaned_data['password'])
-            user.is_active = True
+            user.is_active = False
             user.save()
             # setup Email
             current_site = get_current_site(request)
@@ -61,7 +56,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in.')
-            return redirect('store:home')
+            return redirect('accounts:dashboard')
         else:
             messages.warning(request, 'Invalid login credentials')
             return redirect('accounts:login')
@@ -81,8 +76,74 @@ def account_activate(request, uidb64, token, backend='django.contrib.auth.backen
         # auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('accounts:login')
     else:
-        messages.error(request, "Invalid Activation Link. 😥")
+        messages.warning(request, "Invalid Activation Link. 😥")
         return redirect('accounts:register')
+
+@login_required(login_url = 'login')
+def logout(request):
+    auth.logout(request)
+    messages.success(request, 'You are logged out. 😥')
+    return redirect('accounts:login')
+
+@login_required
+def dashboard(request):
+    return render(request, 'account/user/dashboard.html',)
+
+def passwordforgot(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        if UserBase.objects.filter(email=email).exists():
+            user = UserBase.objects.get(email__exact=email)
+            current_site = get_current_site(request)
+            subject = 'Reset Your Password'
+            message = render_to_string('account/user/password_reset_email.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = email
+            send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+
+            messages.success(request, "Password reset email has been sent to your email")
+            return redirect("accounts:login")
+        else:
+            messages.warning(request, "Your search did not return any results. Please try again with other information.")   
+            return redirect('accounts:pwdreset')
+    return render(request, 'account/user/password_reset_form.html')
+
+
+def pwdresetvalidate(request, uidb64, token,):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = UserBase.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, UserBase.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        request.session['uid'] =uid
+        messages.success(request, "Please Reset your Password")
+        return redirect('accounts:resetPassword')
+    else:
+        messages.warning(request, "Invalid Activation Link. 😥")
+        return redirect('accounts:register')
+
+def resetPassword(request):
+    if request.method == "POST":
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        
+        if password == confirm_password:
+            uid = request.session.get('uid')
+            user = UserBase.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(request, 'Password Reset Successful')
+            return redirect('accounts:login')
+        else:
+            messages.warning(request, "Password does not match")
+            return redirect('accounts:resetPassword')
+
+    return render(request, 'account/user/password_reset_confirm.html')
 
 @login_required
 def edit_details(request):
