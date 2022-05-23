@@ -125,3 +125,24 @@ def cart_item_delete(request, product_id, cart_item_id):
     cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
     cart_item.delete()
     return redirect('cart:cart_summary')
+
+@login_required(login_url='accounts:login')
+def checkout(request, total=0, quantity=0, cart_items=None, cart_item_count=0):
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        for cart_item in cart_items:
+            total += (cart_item.product.discounted_price * cart_item.quantity)
+            quantity += cart_item.quantity
+            cart_item_count = CartItem.objects.get(cart_id=_cart_id(request)).count()
+        
+    except:
+        pass
+
+    context ={
+        'total': total,
+        'quantity':quantity,
+        'cart_items':cart_items,
+        'cart_item_count':cart_item_count
+    }
+    return render(request,  'store/cart/checkout.html', context )
