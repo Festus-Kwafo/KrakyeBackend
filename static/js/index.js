@@ -120,4 +120,4 @@ function myFunction(x) {
 
 setTimeout(function(){
     $('#message').fadeOut('slow')
-  }, 4000)
+  }, 8000)

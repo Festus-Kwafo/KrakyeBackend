@@ -37,17 +37,16 @@ class OrderAdmin(admin.ModelAdmin):
 
 class AddressAdmin(admin.ModelAdmin):
     list_display = [
-        'user',
         'first_name',
         'street_address',
         'apartment_address',
         'country',
         'zip',
         'address_type',
-        'default'
+        'default',
     ]
-    list_filter = ['default', 'address_type', 'country']
-    search_fields = ['user', 'street_address', 'apartment_address', 'zip']
+    list_filter = ['default', 'address_type', 'country',]
+    search_fields = ['street_address', 'apartment_address', 'zip',]
 
 
 # Register your models here.

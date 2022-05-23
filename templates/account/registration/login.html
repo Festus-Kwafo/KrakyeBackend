@@ -5,38 +5,38 @@
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content font-inter padding-y" style="min-height:84vh">
-
+  {%if request.GET.command == 'verification'%}
+  <div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top: 100px">
+    Thank you for registering with us. We have sent you a verification email to your email address [{{request.GET.email}}]
+    <br><br>
+    Already Activated? <a href="{%url 'accounts:login'%}">Login</a>
+  </div>
+  {%else%}
   <!-- ============================ COMPONENT LOGIN   ================================= -->
     <div class="card mx-auto border "  style="max-width: 450px; margin-top:100px;">
         <div class="card-body">
         <h4 class="card-title mb-4">Sign in</h4>
         <form action="." method="POST">
-          {% csrf_token %}
-          {% if form.errors %}
-                    <div class="alert alert-primary" role="alert">
-                      {{form.errors}}
-                    </div>
-                    {% endif %}
-            
+          {% csrf_token %}      
+          {%include '../../includes/alerts.html'%}    
             <div class="form-group">
               <label>Email:</label>
-              {{ form.username}}
+              <input type="email" class="form-control" placeholder="Email Address" name="email" >
             </div> <!-- form-group// -->
             <div class="form-group">
               <label>Password</label>
-              {{form.password}}
+              <input type="password" class="form-control" placeholder="Password" name="password">
             </div> <!-- form-group// -->
             
             <div class="form-group">
-              <a href="{%url 'accounts:pwdreset'%}" class="float-right">Forgot password?</a> 
-             
+              <a href="{%url 'accounts:pwdreset'%}" class="float-right">Forgot password?</a>            
             </div> <!-- form-group form-check .// -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block font-inter"> Login  </button>
             </div> <!-- form-group// --> 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <a href="">
+                <a href="{% provider_login_url 'google' %}">
                   <div class="google-btn">
                     <div class="google-icon-wrapper">
                       <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
@@ -60,9 +60,9 @@
         </div> <!-- card-body.// -->
       </div> <!-- card .// -->
   
-       <p class="text-center mt-4">Don't have account? <a href="{% url 'account_signup' %}">Sign up</a></p>
+       <p class="text-center mt-4">Don't have account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
        <br><br>
-       
+       {%endif%}
   <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
   
   

@@ -6,8 +6,6 @@ from django.db import models
 
 
 class Payment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL, blank=True, null=True)
     amount = models.FloatField(null=True)
     email= models.CharField(max_length=255)
     verified = models.BooleanField(default=False)

@@ -19,7 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['192.168.8.100', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 CITIES_COUNTRY_MODEL = 'my_cities_app.CustomCountryModel'
 
@@ -188,7 +188,11 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': env('GOOGLE_CLIENT_ID'),
             'secret': env('GOOGLE_SECRET'),
             'key': ''
-        }
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
     },
     'facebook':{
         'APP':{
@@ -199,10 +203,15 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_EMAIL_VERIFICATION ="optional"
+ACCOUNT_EMAIL_REQUIRED = "True"
+ACCOUNT_EMAIL_VERIFICATION ="mandatory"
+
+SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
+SOCIALACCOUNT_EMAIL_REQUIRED =ACCOUNT_EMAIL_REQUIRED
+
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.INFO: '',
-    60: 'critical',
+    50: 'critical',
 }

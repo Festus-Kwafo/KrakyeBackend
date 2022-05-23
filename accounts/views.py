@@ -31,20 +31,19 @@ def account_register(request):
             user.set_password(registerForm.cleaned_data['password'])
             user.is_active = True
             user.save()
-            messages.success(request, "Account Created Successfully")
             # setup Email
-            # current_site = get_current_site(request)
-            # subject = 'Activate your Account'
-            # message = render_to_string('account/registration/account_activation_email.html', {
-            #     'user': user,
-            #     'domain': current_site.domain,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': account_activation_token.make_token(user),
-            # })
-            # to_email = registerForm.cleaned_data.get('email')
-            # send_mail(subject, message, EMAIL_HOST_USER, [to_email])
-            return redirect('accounts:register')
-            # return render(request, 'account/registration/activation_link.html')
+            current_site = get_current_site(request)
+            subject = 'Activate your Account'
+            message = render_to_string('account/registration/account_activation_email.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = registerForm.cleaned_data.get('email')
+            send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+            
+            return redirect('/account/login/?command=verification&email='+user.email)
 
     else:
         registerForm = RegistrationForm()
@@ -53,8 +52,9 @@ def account_register(request):
 
 def login(request):
     if request.method == "POST":
-        email = request.POST['email']
+        email = request.POST['email'].lower()
         password = request.POST['password']
+
 
         user = auth.authenticate(email=email, password=password)
 
@@ -63,23 +63,26 @@ def login(request):
             messages.success(request, 'You are now logged in.')
             return redirect('store:home')
         else:
-            messages.error(request, 'Invalid login credentials')
+            messages.warning(request, 'Invalid login credentials')
+            return redirect('accounts:login')
 
     return render(request, 'account/registration/login.html' )
 
-def account_activate(request, uidb64, token):
+def account_activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = UserBase.objects.get(pk=uid)
-    except:
-        pass
+    except(TypeError, ValueError, OverflowError, UserBase.DoesNotExist):
+        user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
-        return redirect('accounts:dashboard')
+        messages.success(request, "Congulatulations, Your Account is Activated.🤗")
+        # auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        return redirect('accounts:login')
     else:
-        return render(request, 'account/registration/activation_invalid.html')
+        messages.error(request, "Invalid Activation Link. 😥")
+        return redirect('accounts:register')
 
 @login_required
 def edit_details(request):
@@ -88,6 +91,7 @@ def edit_details(request):
 
         if user_form.is_valid():
             user_form.save()
+            
     else:
         user_form = UserEditForm(instance=request.user)
 
