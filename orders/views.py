@@ -5,6 +5,11 @@ from .forms import OrderForm
 from .models import Order
 import datetime
 
+
+
+def payment(request):
+    return render(request, 'store/order/payment.html')
+
 def place_orders(request, total=0, quantity=0):
     current_user = request.user
     cart_items = CartItem.objects.filter(user=current_user)
@@ -23,7 +28,7 @@ def place_orders(request, total=0, quantity=0):
             # Store all the billing information inside Order table
             data = Order()
             data.user = current_user
-            data.first_name = request.POST['first_name']
+            data.first_name = form.cleaned_data['first_name']
             data.last_name = form.cleaned_data['last_name']
             data.phone = form.cleaned_data['phone']
             data.email = form.cleaned_data['email']
@@ -45,7 +50,13 @@ def place_orders(request, total=0, quantity=0):
             order_number = current_date + str(data.id)
             data.order_number = order_number
             data.save()
-            return redirect('cart:checkout')   
+
+            order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            context = {
+                'order': order,
+                'total': total,
+                'cart_items':cart_items
+            }
+            return render(request, 'store/order/payment.html', context)   
         else:
             return redirect('cart:checkout')  
-    return render( 'store/cart/checkout.html',{'form': form})

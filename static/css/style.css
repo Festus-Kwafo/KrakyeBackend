@@ -374,14 +374,6 @@ a:hover {
 }
 
 /*Cart Template*/
-.card {
-  margin: auto;
-  max-width: 950px;
-  width: 90%;
-  border-radius: 1rem;
-  border: 1px transparent;
-}
-
 .cart {
   background-color: #fff;
   padding: 4vh 5vh;
@@ -438,9 +430,6 @@ a {
   margin-top: 4.5rem;
 }
 
-h5 {
-  margin-top: 4vh;
-}
 
 hr {
   margin-top: 1.25rem;
@@ -585,17 +574,6 @@ input:focus::-webkit-input-placeholder {
   margin-bottom: 2rem;
 }
 
-.card-header:first-child {
-  border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0;
-}
-
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
 .track {
   position: relative;
   background-color: #ddd;
@@ -692,65 +670,6 @@ ul.row-sm {
   color: #212529;
 }
 
-.card-signin {
-  border: 0;
-  border-radius: 0rem;
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
-}
-
-.card-signin .card-title {
-  margin-bottom: 2rem;
-  font-weight: 300;
-  font-size: 1.5rem;
-}
-
-.card-signin .card-body {
-  padding: 2rem;
-}
-
-.form-signin {
-  width: 100%;
-}
-
-.form-signin .btn {
-  font-size: 80%;
-  border-radius: 0rem;
-  font-weight: bold;
-  padding: 1rem;
-  transition: all 0.2s;
-}
-
-.form-label-group {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.form-label-group input {
-  height: auto;
-}
-
-.form-label-group > input,
-.form-label-group > label {
-  padding: 0.75rem 1.5rem;
-}
-
-.form-label-group > label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  line-height: 1.5;
-  color: #495057;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  transition: all 0.1s ease-in-out;
-}
-
-.form-control:focus {
-  box-shadow: 10px 0px 0px 0px #ffffff !important;
-}
 
 .btn-google {
   color: white;
@@ -760,14 +679,6 @@ ul.row-sm {
 .btn-facebook {
   color: white;
   background-color: #3b5998;
-}
-
-.forms-card {
-  padding: 30px 40px;
-  margin-top: 60px;
-  margin-bottom: 60px;
-  border: none !important;
-  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2);
 }
 
 .blue-text {
@@ -801,7 +712,6 @@ textarea:focus {
 }
 
 .btn-block {
-  text-transform: uppercase;
   font-size: 15px !important;
   font-weight: 400;
   height: 43px;
