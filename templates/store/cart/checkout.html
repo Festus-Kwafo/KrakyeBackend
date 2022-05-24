@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{%static 'css/ui.css'%}">
   <!--Main site-->
   <section class="section-content mt-4 padding-y bg">
-  <div class="container-fluid">
+  <div class="container">
   <!-- ============================ COMPONENT 1 ================================= -->
   <div class="row">
     <aside class="col-lg-8">
@@ -111,18 +111,19 @@
           </div>
         </div>
           </div>
-      </div>
-
+      
+      
         {% endfor %}
-  
-        <hr>
         <p class="text-center mb-3">
-          <img src="{%static 'images/mobile-money-logo-text-label-symbol-trademark-transparent-png-1174493.png'%}" class="img-fluid" height="26">
+          <img src="{%static 'images/mobile-money-logo-text-label-symbol-trademark-transparent-png-1174493.png'%}" class="img-fluid" style="max-width: 250px;">
         </p>
        
-  
-        <button type="submit" name="submit" class="btn btn-primary">Place Order</button>
-        <a href="{% url 'store:home' %}" class="btn btn-light">Continue Shopping</a>
+        <div class="mx-2">
+          <button type="submit" name="submit" class="btn btn-product btn-block font-inter">Place Order</button>
+        </div>
+        <div class="mx-2 mb-2">
+          <a href="{% url 'store:shop' %}" class="btn btn-primary btn-block font-inter">Continue Shopping</a>
+        </div>
         </form>
       </div> <!-- card-body.// -->
       </div> <!-- card.// -->

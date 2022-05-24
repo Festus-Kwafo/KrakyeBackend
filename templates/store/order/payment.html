@@ -4,41 +4,29 @@
   <!--Main site-->
   <main id="main-site">
     <!--Shopping Cart Section-->
-    <section class="section-conten mt-4 bg">
-      
+    <section class="section-content mt-4 bg">      
       <div class="container">
+        <h4>Review Your Order and make Payment<h4>
         <div class="row">
             <div class="col-lg-8 cart">
-              <div class="card">
+              <div class="card font-size-14">
                 <h5 class="card-header">Billing Address</h5>
                 <div class="card-body">
                   <p class="card-text mb-0">{{order.full_name}}</p>
                   <p class="card-text mb-0">{{order.email}}</p>
-                  <p class="card-text mb-0">{{order.phone_number}}</p>
+                  <p class="card-text mb-0">{{order.phone}}</p>
                   <p class="card-text mb-0">{{order.full_address}}</p>
                   <p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
                   <p class="card-text mb-0">{{order.country}}</p>
                   
                 </div>
               </div>
-              <div class="card">
+              <!-- <div class="card">
                 <h5 class="card-header">Payment Method</h5>
                 <div class="card-body">
-                  <div class="px-8 w-full md:w-1/4 mb-4 py-3 shadow rounded cursor-pointer border-blue-400">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" wire:model="transactionMethod" value="Momo" checked="">
-                        <div class="flex align-center justify-between">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Pay with Mobile Money
-                            </label>
-                            <div class="imag">
-                                <img src="https://d16t4flbnjsikk.cloudfront.net/2d382873-1c81-4010-a3c8-60561036b4e7/images/products/shop/Momo.jpg" class="w-28 my-auto" alt="momo image">
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
-                </div>
-              </div>
+              </div> -->
               <div class="card">
                 <h5 class="card-header">Review Product</h5>
                 <div class="card-body">
@@ -55,7 +43,9 @@
                           <img src="{{cart_item.product.images.url}}" class="img-fluid" style="max-width: 90px;">
                         </div>
                         <div class="col">
-                            <div class="row font-inter font-size-16">{{cart_item.product.product_name}}</div>
+                            <div class="row font-inter font-size-16">
+                              {{cart_item.product.product_name}}
+                            </div>
                             <div class="col">
                               {%if cart_item.variation.all%}
                               {% for item in cart_item.variation.all%}
@@ -69,65 +59,63 @@
                             <span class="font-size-14 font-inter">
                               {{cart_item.quantity}}
                             </span>
-                            
                           </div>
                        </div>
                         <div class="col font-inter d-flex justify-content-center text-center">
                           <div class="price-wrap"> 
                           <span class="font-size-14 frow"> <strong>GH₵ {{cart_item.product.discounted_price}}</strong></span> 
-                           
-                        </div> <!-- price-wrap .// --> 
-                        
-                    </div>
+                          </div> <!-- price-wrap .// --> 
+                        </div>
                   </div>
-                    </div>
                 </div>
+                    
           
                   {% endfor %}
-                </div>
+      </div>
+      
               </div>
-            <div class="col-lg-4 summary font-inter">  <!-- card .// -->
-              
-              <div class="card font-inter ">
-                <div class="card-body">
-                  <dl class="dlist-align">
-                    <dt>Total price:</dt>
-                    <dd class="text-right font-inter">GH₵{{total}}</dd>
-                  </dl>
-                  <dl class="dlist-align">
-                    <dt>Discount:</dt>
-                    <dd class="text-right font-inter ">GH₵0.00</dd>
-                  </dl>
-                  <dl class="dlist-align">
-                    <dt>Total:</dt>
-                    <dd class="text-right font-inter text-dark b"><strong>GH₵{{total}}</strong></dd>
-                  </dl>
-                  <hr>
-                  <p class="text-center mb-3">
-                    <img src="{%static 'images/mobile-money-logo-text-label-symbol-trademark-transparent-png-1174493.png'%}" class="img-fluid" height="26">
-                  </p>
-                  <script src="https://js.paystack.co/v1/inline.js"></script> 
-                  <button class = "btn btn-large btn-block btn-success" onclick="payWithPayStack()" id ="django-paystack-button">Make Payment</button>
-                </div> <!-- card-body.// -->
-                </div> <!-- card.// -->
-            
             </div>
-                
+          <div class="col-lg-4 mt-2 font-inter font-size-16">
+            <div class="card font-inter">
+              <div class="card-body">
+                <dl class="dlist-align">
+                  <dt>Total price:</dt>
+                  <dd class="text-right font-inter">GH₵{{total}}</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Discount:</dt>
+                  <dd class="text-right font-inter ">GH₵0.00</dd>
+                </dl>
+                <dl class="dlist-align">
+                  <dt>Total:</dt>
+                  <dd class="text-right font-inter text-dark b"><strong>GH₵{{total}}</strong></dd>
+                </dl>
+                <hr>
+                <p class="text-center mb-3">
+                  <img src="{%static 'images/mobile-money-logo-text-label-symbol-trademark-transparent-png-1174493.png'%}" class="img-fluid" height="26">
+                </p>
+                <script src="https://js.paystack.co/v1/inline.js"></script> 
+                <button class = "btn btn-large btn-block btn-success" onclick="payWithPayStack()" id ="django-paystack-button">Make Payment</button>
+              </div> <!-- card-body.// -->
+          </div>
         </div>
-    </div>
+
     </section>
     <!--End Shopping Cart Section-->
 
   
 
 <script>
+  
   function payWithPayStack(){
-    var amount_val = {{cart.get_total_price}} * 100
+    var amount_val = {{total}} * 100
+    var orderID = {{order.order_number}}
     let currency = "GHS";
+
     let plan = "";
     let obj = {
       key: "{{paystack_public_key}}",
-      email: "{{payment.email}}",
+      email: "{{order.email}}",
       amount: amount_val,
       ref : ""+ Math.floor(Math.random()* 1000000000 + 1),
 
@@ -140,24 +128,29 @@
         ]
       },
       callback: function(response){
-        var referenceid = response.reference;
+        var referenceid = response;
         var status = response.status
+        var transID = response.trans
+        var message = response.message
         console.log(status)
         console.log(referenceid)
+        console.log(transID)
         $.ajax({
           type: "POST",
-          url: "http://127.0.0.1:8000/orders/add/",
+          url: "{%url 'orders:payment'%}",
           data: {
-            order_key: referenceid,
+            orderID: orderID,
             status: status,
+            transID: transID,
             csrfmiddlewaretoken: "{{csrf_token}}",
+            amount_val: {{total}},
+            message: message,
             action: 'post'       
         },
           success: function(response){
             
             if (status == "success"){
-              window.location.replace("")
-              console.log(order_key)
+              console.log("Transaction success")
             }else {
               $(".alert").text("Transaction reference not found");
               console.log("Transaction failed")
