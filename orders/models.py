@@ -3,58 +3,70 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from store.models import Product
 from cities_light.models import Country
+from accounts.models import UserBase
+from cart.models import Variation
+class Payment(models.Model):
+    user = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+    payment_id = models.CharField(max_length=100)
+    payment_method = models.CharField(max_length=100)
+    amount_paid = models.CharField(max_length=100)
+    status = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-
-ADDRESS_CHOICES = (
-    ('B', 'Billing'),
-    ('S', 'Shipping'),
-)
-
+    def __str__(self):
+        return self.payment_id
 class Order(models.Model):
-    shipping_address = models.ForeignKey(
-        'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
-    billing_address = models.ForeignKey(
-        'Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True, null=True)
-    updated = models.DateTimeField(auto_now=True, null=True)
-    order_key = models.CharField(max_length=200, null=True, blank=True)
-    billing_status = models.BooleanField(default=False)
-    shipped = models.BooleanField(default=False)
-    complete =  models.BooleanField(default=False)
-    billing_status = models.BooleanField(default=False)
+    STATUS = (
+        ('New', 'New'),
+        ('Accepted', 'Accepted'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
+    )
+
+    user = models.ForeignKey(UserBase, on_delete=models.SET_NULL, null=True)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    order_number = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField(max_length=50)
+    address_line_1 = models.CharField(max_length=50)
+    address_line_2 = models.CharField(max_length=50, blank=True)
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    order_note = models.CharField(max_length=100, blank=True)
+    order_total = models.FloatField()
+    tax = models.FloatField()
+    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    ip = models.CharField(blank=True, max_length=20)
+    is_ordered = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def full_address(self):
+        return f'{self.address_line_1} {self.address_line_2}'
+
+    def __str__(self):
+        return self.first_name
 
     class Meta:
         ordering = ('-created',)
-    
-    def __str__(self):
-        return str(self.created)
-class Address(models.Model):
-
-    first_name = models.CharField(max_length=255, null=True)
-    last_name = models.CharField(max_length=255, null=True)
-    street_address = models.CharField(max_length=225, null=True)
-    apartment_address = models.CharField(max_length=225, null=True)
-    country = models.CharField(max_length=255, null=True)
-    zip = models.CharField(max_length=225, null=True)
-    address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES, null=True)
-    default = models.BooleanField(default=False, null=True)
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        verbose_name_plural = 'Addresses'
  
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order,
-                              related_name='items',
-                              on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product,
-                                related_name='order_items',
-                                on_delete=models.CASCADE, null=True)
-    price = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    quantity = models.PositiveIntegerField(default=1, null=True)
+class OrderProduct(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variations = models.ManyToManyField(Variation, blank=True)
+    quantity = models.IntegerField()
+    product_price = models.FloatField()
+    ordered = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.id)
+        return self.product.product_name
