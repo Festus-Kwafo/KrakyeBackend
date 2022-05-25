@@ -147,10 +147,10 @@
             message: message,
             action: 'post'       
         },
-          success: function(response){
-            
-            if (status == "success"){
-              console.log("Transaction success")
+          success: function(json){
+            window.location.href = '/orders/order_complete' +'?order_number='+json.Order_number+'&payment_id='+json.transID
+            console.log(json)
+            if (status == "success"){    
             }else {
               $(".alert").text("Transaction reference not found");
               console.log("Transaction failed")
