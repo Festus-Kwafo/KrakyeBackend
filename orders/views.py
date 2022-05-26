@@ -22,15 +22,19 @@ def payment(request):
         transID = int(request.POST.get('transID'))
         order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
         transaction = Transaction(authorization_key=PAYSTACK_SECRET_KEY)
-        
+        channel = transaction.getone(transID)[3]['channel']
+        bank = transaction.getone(transID)[3]['authorization']['bank']
+        brand = transaction.getone(transID)[3]['authorization']['brand']
         #strore all the transaction details in the payment models
-        all_transaction = transaction.getone(transID)[3]
-        print(all_transaction)
+        print(brand)
         payment = Payment(
             user = request.user,
             payment_id = payment_id,
             amount_paid = amount_paid,
-            status = status
+            status = status,
+            payment_method = channel,
+            bank = bank,
+            brand = brand,
         )
         payment.save()
         if status == "success":
