@@ -24,7 +24,8 @@ def payment(request):
         transaction = Transaction(authorization_key=PAYSTACK_SECRET_KEY)
         
         #strore all the transaction details in the payment models
-        all_transaction = transaction.getone(transID)
+        all_transaction = transaction.getone(transID)[3]
+        print(all_transaction)
         payment = Payment(
             user = request.user,
             payment_id = payment_id,

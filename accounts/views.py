@@ -12,11 +12,25 @@ from django.contrib import messages
 import requests
 from backend.settings import EMAIL_HOST_USER
 from cart.models import Cart, CartItem, Variation
+from orders.models import Order
 
 from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
 from .tokens import account_activation_token
 from cart.views import _cart_id
+
+
+@login_required
+def dashboard(request):
+    orders = Order.objects.filter(user=request.user)
+    orders_count = orders.count()
+    context = {
+        'orders_count':orders_count
+    }
+    return render(request, 'account/user/dashboard.html', context)
+
+def my_orders(request):
+    return
 
 def account_register(request):
     if request.method == 'POST':
@@ -132,9 +146,7 @@ def logout(request):
     messages.success(request, 'You are logged out. 😥')
     return redirect('accounts:login')
 
-@login_required
-def dashboard(request):
-    return render(request, 'account/user/dashboard.html',)
+
 
 def passwordforgot(request):
     if request.method == "POST":

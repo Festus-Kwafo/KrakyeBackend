@@ -111,11 +111,13 @@
     var amount_val = {{total}} * 100
     var orderID = {{order.order_number}}
     let currency = "GHS";
-
     let plan = "";
+    let first_name= "{{order.first_name}}";
+    let last_name= "{{order.last_name}}";    
     let obj = {
       key: "{{paystack_public_key}}",
       email: "{{order.email}}",
+      name: "{{order.full_name}}",
       amount: amount_val,
       ref : ""+ Math.floor(Math.random()* 1000000000 + 1),
 
