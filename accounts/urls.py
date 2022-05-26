@@ -23,9 +23,12 @@ urlpatterns = [
     # user dashboard
     path('dashboard/', views.dashboard, name='dashboard'),
     path('', views.dashboard, name='dashboard'),
-    path('my_orders', views.my_orders, name='my_orders'),
-    path('profile/edit', views.edit_details, name='edit_details'),
+    path('my_orders/', views.my_orders, name='my_orders'),
+    path('profile/edit/', views.edit_details, name='edit_details'),
     path('profile/delete_user', views.delete_user, name='delete_user'),
     path('profile/delete_confirm',TemplateView.as_view(template_name='account/user/delete_confirmation.html'), name='delete_confirmation'),
+
+    #change password
+    path('change_password/', views.change_password, name='change_password')
 
 ]

@@ -14,7 +14,7 @@ from backend.settings import EMAIL_HOST_USER
 from cart.models import Cart, CartItem, Variation
 from orders.models import Order
 
-from .forms import RegistrationForm, UserEditForm
+from .forms import RegistrationForm, UserEditForm, ChangePasswordForm
 from .models import UserBase
 from .tokens import account_activation_token
 from cart.views import _cart_id
@@ -30,7 +30,43 @@ def dashboard(request):
     return render(request, 'account/user/dashboard.html', context)
 
 def my_orders(request):
-    return
+    orders = Order.objects.filter(user = request.user, is_ordered=True).order_by('-created_at')
+    context = {
+        'orders':orders
+    }
+    return render(request, 'account/user/my_order.html', context)
+
+@login_required
+def edit_details(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, "User Profile successfully updated!")
+            
+    else:
+        user_form = UserEditForm(instance=request.user)
+
+    return render(request,
+                  'account/user/profile_edit.html', {'user_form': user_form})
+
+def change_password(request):
+
+    if request.method == 'POST':
+        username = request.user.username
+        password = request.POST['old_password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            user.set_password(request.POST['new_password'])
+            user.save()
+            print("Yes it mached")
+            messages.success(request, "Password Changed successfully!")
+        else:
+            messages.warning(request, "Old Password did not Matched Password!")
+        
+
+    return render(request, 'account/user/change_password.html')
 
 def account_register(request):
     if request.method == 'POST':
@@ -41,6 +77,7 @@ def account_register(request):
             user.set_password(registerForm.cleaned_data['password'])
             user.is_active = False
             user.save()
+
             # setup Email
             current_site = get_current_site(request)
             subject = 'Activate your Account'
@@ -204,19 +241,6 @@ def resetPassword(request):
 
     return render(request, 'account/user/password_reset_confirm.html')
 
-@login_required
-def edit_details(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user, data=request.POST)
-
-        if user_form.is_valid():
-            user_form.save()
-            
-    else:
-        user_form = UserEditForm(instance=request.user)
-
-    return render(request,
-                  'account/user/edit_details.html', {'user_form': user_form})
 
 @login_required
 def delete_user(request):

@@ -4,13 +4,13 @@
         <span class="font-inter font-size-14 text-light pr-2 m-1" > <b><i class="fa-solid fa-envelope"></i></b> <a href="mailto:krakyegh@gmail.com" class="text-light text-decoration-none" >Krakye Clothing</a></span>
     </div>
     <div class="ml-auto">
-      {% if user.is_authenticated %}
+      {% comment %} {% if user.is_authenticated %}
       <span class="font-inter font-size-14 text-light pr-2 m-1">Hello, {{user.first_name | capfirst}}</span>
       <span class="font-inter font-size-14 text-light pr-2 m-1 border-left" ><a href="{% url "accounts:logout" %}" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Log out</a></span>
       {%else%}
         <span class="font-inter font-size-14 text-light pr-2 m-1 border-rightx" ><a href="{% url "accounts:register" %}" class="text-light text-decoration-none"><i class="fa-solid fa-user"></i>&ensp;Register</a></span>
         <span class="font-inter font-size-14 text-light m-1 ml-0"><a href="{% url "accounts:login" %}" class="text-light text-decoration-none">Sign in</a></span>  
-      {% endif %}
+      {% endif %} {% endcomment %}
         
     </div>
   </nav>

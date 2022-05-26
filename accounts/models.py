@@ -38,12 +38,21 @@ class CustomAccountManager(BaseUserManager):
 
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
+    #required field
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
-    phone_number = models.CharField(max_length=50)
     
+    #user profile 
+    phone_number = models.CharField(max_length=50)
+    address_line_1 = models.CharField(blank=True, max_length=100)
+    address_line_2 = models.CharField(blank=True, max_length=100)
+    profile_picture = models.ImageField(blank=True, upload_to='userprofile')
+    city = models.CharField(blank=True, max_length=20)
+    state = models.CharField(blank=True, max_length=20)
+    country = models.CharField(blank=True, max_length=20)
+
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)

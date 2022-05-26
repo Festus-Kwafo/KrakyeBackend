@@ -3,6 +3,7 @@ from django_countries import countries
 from django_countries.data import COUNTRIES
 from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
                                        SetPasswordForm)
+from requests import request
 
 from .models import UserBase
 from django.contrib import auth
@@ -93,19 +94,47 @@ class UserEditForm(forms.ModelForm):
 
     email = forms.EmailField(
         label='Account email (can not be changed)', max_length=200, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
-
+            attrs={'class': 'form-control', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
     first_name = forms.CharField(
         label='Firstname', min_length=4, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-firstname'}))
+            attrs={'class': 'form-control', 'placeholder': 'Firstname', 'id': 'form-firstname'}))
+    last_name = forms.CharField(
+        label='Lastname', min_length=4, max_length=50, widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Lastname', 'id': 'form-lastname'}))
+    phone_number = forms.CharField(
+        label='Phone Number', min_length=4, max_length=14, widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Phone Number', 'id': 'form-phonenumber'}))
+    address_line_1 = forms.CharField(
+        label='Address Line 1', widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Address Line 1', 'id': 'form-adressline1'}))
+    address_line_2 = forms.CharField(
+        label='Address Line 2', widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Address Line 2', 'id': 'form-adressline2'}))
+    country = forms.CharField(
+        label='Address Line 2', widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Country', 'id': 'form-adressline2'}))
+    state = forms.CharField(
+        label='Address Line 2', widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'State/Region', 'id': 'form-adressline2'}))
+    city = forms.CharField(
+        label='Address Line 2', widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'City', 'id': 'form-adressline2'}))
+    profile_picture = forms.CharField(
+        label='Phone Number', widget=forms.FileInput(
+            attrs={'class': 'form-control', 'placeholder': 'Phone Number', 'id': 'form-profilepicture'}))
 
     class Meta:
         model = UserBase
-        fields = ('email', 'first_name',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'address_line_1', 'address_line_2', 'profile_picture')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['phone_number'].required = True
+        self.fields['address_line_1'].required = True
+        self.fields['address_line_2'].required = True
+        self.fields['profile_picture'].required = False
         self.fields['email'].required = True
 
 
@@ -126,7 +155,22 @@ class PwdResetForm(PasswordResetForm):
 class PwdResetConfirmForm(SetPasswordForm):
     new_password1 = forms.CharField(
         label='New password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-newpass'}))
+            attrs={'class': 'form-control', 'placeholder': 'New Password', 'id': 'form-newpass'}))
     new_password2 = forms.CharField(
         label='Repeat password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-new-pass2'}))
+            attrs={'class': 'form-control', 'placeholder': 'New Password', 'id': 'form-new-pass2'}))
+
+
+class ChangePasswordForm(forms.ModelForm):
+    old_password = forms.CharField(
+        label='Old password', widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'Old Password', 'name':'old_password', 'id': 'form-oldpass'}))
+    new_password = forms.CharField(
+        label='New password', widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder': 'New Password', 'name':'new_password','id': 'form-new-pass2'}))
+    
+    class Meta:
+        model = UserBase
+        fields = ('username',)
+
+    

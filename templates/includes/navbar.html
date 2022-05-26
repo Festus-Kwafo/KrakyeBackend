@@ -10,30 +10,38 @@
           
         
         <div class="d-flex">
-            <div class="mr-3 navbar-item-hidden">
-              <a href="">
-                <button class="btn btn-wishlist" style="color: black;">
-                  <span class="material-icons font-size-40">
-                      favorite_border
-                      </span>
-                  <span class="btn-wishlist__badge">4</span>
-              </button>
-              </a>    
+            <div class="mr-3 navbar-item-hidden font-inter text-decoration-none">
+              {% if user.id is None %}
+              <div class="widget-header">
+                <small class="title text-muted">Welcome Guest!</small>
+                <div>
+                  <a href="{% url 'accounts:login' %}">Sign in</a> <span class="dark-transp"> | </span>
+                  <a href="{% url 'accounts:register' %}"> Register</a>
+                </div>
+              </div>
+              {% else %}
+              <div class="widget-header ">
+                <small class="title font-inter text-muted">Hello, {{user.full_name}}</small>
+                <div>
+                  <span class=" border rounded-circle ">
+                    <i class="fa-solid fa-user"></i>
+                  </span>
+                  <a href="{% url 'accounts:dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
+                  <a href="{% url 'accounts:logout' %}"> Logout</a>
+                </div>
+              </div>
+              {% endif %}
             </div>
             <div>
               <a href="{%url 'cart:cart_summary'%}">
-                <button class="btn btn-cart" style="color: black;">
-                  <span class="material-icons font-size-40">
-                      shopping_cart
-                      </span>
-                      
-                      <span id="cart-qty" class="btn-cart__badge">
-                        {{cart_count}}
-                      </span>
-                     
-              </button>
+                <button type="button" class="btn btn-cart border rounded-circle position-relative">
+                  <i class="fa-solid fa-cart-shopping font-size-20"></i>
+                  <span class="text-light position-absolute top-0 start-100 translate-middle rounded-circle badge bg-primary">
+                    {{cart_count}}
+                  </span>
+                </button>
               </a>
-                
+
             </div>
         </div>
     <div>
