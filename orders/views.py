@@ -78,6 +78,9 @@ def payment(request):
     })
     to_email = user.email
     send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+
+    #send SMS after Payment
+    
     response = JsonResponse({'Order_number': order.order_number, 'transID':transID})
     return response
 
