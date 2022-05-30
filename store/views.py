@@ -91,5 +91,3 @@ def search(request):
     }
     return render(request, 'store/shop.html', context)
 
-def appointment(request):
-    return render(request, 'appointment.html')

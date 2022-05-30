@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'address',
     'sslserver',
+    'appointment',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

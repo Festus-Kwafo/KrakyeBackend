@@ -71,8 +71,3 @@ class Variation(models.Model):
     
     def __str__(self):
         return self.variation_value
-
-
-class Appointment(models.Model):
-    name = models.CharField(max_length=255, null=True)
-    email = models.CharField(max_length=150)

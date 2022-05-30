@@ -121,3 +121,6 @@ function myFunction(x) {
 setTimeout(function(){
     $('#message').fadeOut('slow')
   }, 8000)
+
+
+  // Data Picker Initialization

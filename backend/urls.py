@@ -11,6 +11,7 @@ urlpatterns = [
     path('account/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('allauth.urls')),
     path('orders/', include('orders.urls', namespace='orders')),
+    path('appointment/', include('appointment.urls', namespace='appointment')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
