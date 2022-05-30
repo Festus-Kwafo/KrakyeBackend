@@ -21,7 +21,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-CITIES_COUNTRY_MODEL = 'my_cities_app.CustomCountryModel'
+
 
 # Application definition
 
@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'address',
     'sslserver',
-    'cities_light',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

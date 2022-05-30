@@ -39,8 +39,6 @@ class Product(models.Model):
     #         return mark_safe('<img src="/media/%s" width="90" height="90" />' % (self.image))
     # image_tag.short_description = 'Image'
 
-
-
     def __str__(self):
         return self.product_name
 
@@ -73,3 +71,8 @@ class Variation(models.Model):
     
     def __str__(self):
         return self.variation_value
+
+
+class Appointment(models.Model):
+    name = models.CharField(max_length=255, null=True)
+    email = models.CharField(max_length=150)

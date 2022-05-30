@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from cart.models import CartItem
@@ -7,7 +8,6 @@ from django.db.models import Q
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from backend.settings import AUTH_USER_MODEL
-from cities_light.models import Country
 from category.models import *
 # Create your views here.
 
@@ -16,8 +16,13 @@ def home(request):
     products    = Product.objects.filter(in_stock=True).order_by('id')[:10]
     top_sale    = Product.objects.filter(in_stock=True).order_by('-price')[:10]
     new_arrivals = Product.objects.all().order_by('-created_date')[:5]
-    countries_qs = Country.objects.all()
-    return render(request, 'index.html', {'products': products, 'categories': categories, 'new_arrivals': new_arrivals, 'top_sale': top_sale, 'countries_qs': countries_qs })
+    context = {
+        'products': products, 
+        'categories': categories, 
+        'new_arrivals': new_arrivals, 
+        'top_sale': top_sale,
+        }
+    return render(request, 'index.html', context)
 
 
 def product_detail(request, category_slug=None, product_slug=None):
@@ -85,3 +90,6 @@ def search(request):
         'product_count':product_count,
     }
     return render(request, 'store/shop.html', context)
+
+def appointment(request):
+    return render(request, 'appointment.html')

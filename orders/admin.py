@@ -13,9 +13,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page = 20
     inlines = [OrderProductInline]
 
+class OrderProductAdmin(admin.ModelAdmin):
+    list_display = ['product', 'quantity', 'user', 'payment', 'ordered']
+    search_fields = ['product', 'user', 'payment']
 
 # Register your models here.
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Payment)
-admin.site.register(OrderProduct)
+admin.site.register(OrderProduct, OrderProductAdmin)
 
