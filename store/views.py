@@ -33,6 +33,12 @@ def product_detail(request, category_slug=None, product_slug=None):
         }
     return render(request, 'store/product/product.html', context )
 
+def product_by_category(request):
+    product_category = Category.objects.all()
+    context = {
+        'product_category': product_category
+    }
+    return render(request, 'includes/category.html', context)
 
 def shop(request, category_slug=None):
     shop_products = None
@@ -60,7 +66,7 @@ def shop(request, category_slug=None):
     context = {
         'shop_products': shop_products, 
         'pages'  : page ,
-        'product_count': product_count
+        'product_count': product_count,
     }
     return render(request, 'store/shop.html', context)
 

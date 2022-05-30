@@ -159,18 +159,4 @@ class PwdResetConfirmForm(SetPasswordForm):
     new_password2 = forms.CharField(
         label='Repeat password', widget=forms.PasswordInput(
             attrs={'class': 'form-control', 'placeholder': 'New Password', 'id': 'form-new-pass2'}))
-
-
-class ChangePasswordForm(forms.ModelForm):
-    old_password = forms.CharField(
-        label='Old password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'Old Password', 'name':'old_password', 'id': 'form-oldpass'}))
-    new_password = forms.CharField(
-        label='New password', widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': 'New Password', 'name':'new_password','id': 'form-new-pass2'}))
-    
-    class Meta:
-        model = UserBase
-        fields = ('username',)
-
     

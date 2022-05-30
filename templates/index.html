@@ -106,9 +106,9 @@
                 <div class="text-center ml-2">
                   <div class="d-flex align-items-center justify-content-between mb-0">
                     <h6>{{item.product_name}}</h6>
-                    <button class="btn btn-wishlist pb-3" style="color: black;">
+                    <!-- <button class="btn btn-wishlist pb-3" style="color: black;">
                       <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    </button>
+                    </button> -->
                   </div>
                   <div class="price d-flex text-left font-size-14">
                     <div class="new-price p-2">
@@ -119,7 +119,10 @@
                       <span class="discount-percentage text-danger">{{item.discount}}%</span>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
+
+                <a href="{{item.get_absolute_url}}">
+              <button type="submit" class="btn btn-product font-size-12 product-link" >View Product</button>
+                </a>
                 </div>
               </div>
             </div>
@@ -154,13 +157,12 @@
             <div class="mt-2">
               <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">{{item.category}}</a></h4>
             </div>
-            
             <div class="text-center ml-2">
               <div class="d-flex align-items-center justify-content-between mb-0">
                 <h6>{{item.product_name}}</h6>
-                <button class="btn btn-wishlist pb-3" style="color: black;">
+                <!-- <button class="btn btn-wishlist pb-3" style="color: black;">
                   <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                </button>
+                </button> -->
               </div>
               <div class="price d-flex text-left font-size-14">
                 <div class="new-price p-2">
@@ -171,7 +173,9 @@
                   <span class="discount-percentage text-danger">{{item.discount}}%</span>
                 </div>
               </div>
-              <button type="submit" id='addtest' class="btn btn-product font-size-12 product-link"  data-toggle="modal" data-target=".bd-example-modal-lg" data-name="{{item.name}}" data-img="{{item.image_one.url}}" data-imga="{{item.image_two.url}}" data-imgb="{{item.image_three.url}}" data-description="{{ item.description}}" data-size="{{item.size_guide.url}}" data-listprice="{{item.list_price}}" data-saleprice="{{item.sale_price}}" data-productcategory="{{item.category}}" data-id="{{item.id}}">View Product</button>
+              <a href="{{item.get_absolute_url}}">
+                <button type="submit" class="btn btn-product font-size-12 product-link" >View Product</button>
+                </a>
             </div>
           </div>
         </div>

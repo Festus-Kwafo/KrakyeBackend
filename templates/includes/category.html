@@ -13,7 +13,9 @@
         <div class="filter-content collapse show" id="collapse_1" style="">
           <div class="card-body">         
             <ul class="list-menu">
-            <li><a href="#">People  </a></li>
+              {%for item in product_category %}
+            <li><a href="{{item.get_absolute_url}}">{{item.category_name}}  </a></li>
+            {%endfor%}
             </ul>
     
           </div> <!-- card-body.// -->

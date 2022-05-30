@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.db import models
 from django.forms import FloatField
@@ -64,7 +63,6 @@ variation_category_choices = (
 
 )
 class Variation(models.Model):
-    
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variation_category = models.CharField(max_length=100, choices=variation_category_choices)
     variation_value = models.CharField(max_length=100,)

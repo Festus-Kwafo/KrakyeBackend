@@ -14,13 +14,13 @@ from backend.settings import EMAIL_HOST_USER
 from cart.models import Cart, CartItem, Variation
 from orders.models import Order
 
-from .forms import RegistrationForm, UserEditForm, ChangePasswordForm
+from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
 from .tokens import account_activation_token
 from cart.views import _cart_id
 
 
-@login_required
+@login_required(login_url = 'login')
 def dashboard(request):
     orders = Order.objects.filter(user=request.user)
     orders_count = orders.count()
@@ -28,7 +28,8 @@ def dashboard(request):
         'orders_count':orders_count
     }
     return render(request, 'account/user/dashboard.html', context)
-
+    
+@login_required(login_url = 'login')
 def my_orders(request):
     orders = Order.objects.filter(user = request.user, is_ordered=True).order_by('-created_at')
     context = {
@@ -36,7 +37,7 @@ def my_orders(request):
     }
     return render(request, 'account/user/my_order.html', context)
 
-@login_required
+@login_required(login_url = 'login')
 def edit_details(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
@@ -51,21 +52,25 @@ def edit_details(request):
     return render(request,
                   'account/user/profile_edit.html', {'user_form': user_form})
 
+@login_required(login_url = 'login')
 def change_password(request):
-
     if request.method == 'POST':
         username = request.user.username
-        password = request.POST['old_password']
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            user.set_password(request.POST['new_password'])
-            user.save()
-            print("Yes it mached")
-            messages.success(request, "Password Changed successfully!")
-        else:
-            messages.warning(request, "Old Password did not Matched Password!")
-        
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
 
+        user = auth.authenticate(username=username, password=old_password)
+
+        if user is not None:
+            if new_password == confirm_password:
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, "Password Changed successfully!")
+            else:
+                messages.warning(request, "Password did not Matched Password!")
+        else:
+            messages.warning(request, "Enter A valid Current Password!")
     return render(request, 'account/user/change_password.html')
 
 def account_register(request):
