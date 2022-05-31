@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'address',
     'sslserver',
+    'admin_honeypot',
     'appointment',
     'allauth',
     'allauth.account',
@@ -161,9 +162,6 @@ EMAIL_HOST_USER= env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD= env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT=env('EMAIL_PORT')
 
-
-#GOOGLE_API_KEY
-GOOGLE_API_KEY = 'AIzaSyD--your-google-maps-key-SjQBE'
 
 # PAYSTACT SECRET KEYS
 PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY')
