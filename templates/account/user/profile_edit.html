@@ -79,6 +79,8 @@ Dashboard {%endblock %} {% block content %}
               <div class="d-flex flex-row">
                 <button class="btn btn-primary" type="submit"
                 value="Save changes">Save Changes</button>
+                <a href="{%url 'accounts:delete_user'%}"><button onclick="return confirm('Are you sure you want delete this Account?')" class="btn btn-danger">Delete Account</button></a>
+                
               </div>
             </form>
           </div>

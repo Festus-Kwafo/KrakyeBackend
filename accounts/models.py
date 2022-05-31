@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin, User)
@@ -21,9 +22,9 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(
                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, username, password)
+        return self.create_user(email, username, password, **other_fields)
 
-    def create_user(self, first_name, last_name, email, username, password):
+    def create_user(self, email, username, password, **other_fields):
 
         if not email:
             raise ValueError(_('You must provide an email address'))
@@ -31,7 +32,7 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(_('You must provide a username'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username, first_name=first_name, last_name=last_name)
+        user = self.model(email=email, username=username, **other_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -48,7 +49,7 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=50)
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)
-    profile_picture = models.ImageField(blank=True, upload_to='userprofile')
+    profile_picture = models.ImageField(blank=True, upload_to='userprofile', default='/userprofile/profile_default.png')
     city = models.CharField(blank=True, max_length=20)
     state = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)

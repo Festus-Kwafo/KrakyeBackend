@@ -12,7 +12,7 @@ from django.contrib import messages
 import requests
 from backend.settings import EMAIL_HOST_USER
 from cart.models import Cart, CartItem, Variation
-from orders.models import Order
+from orders.models import Order, OrderProduct
 
 from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
@@ -257,4 +257,10 @@ def delete_user(request):
 
 @login_required
 def order_detail(request, order_id):
-    return render(request, 'account/user/order_detail.html')
+    order_detail = OrderProduct.objects.filter(order__order_number = order_id)
+    order = Order.objects.get(order_number = order_id)
+    context = {
+        'order_detail':order_detail,
+        'order': order,
+    }
+    return render(request, 'account/user/order_detail.html', context)

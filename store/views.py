@@ -29,23 +29,42 @@ def product_detail(request, category_slug=None, product_slug=None):
     try:
         single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
         in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
+        new_arrivals = Product.objects.all().order_by('-created_date')[:5]
     except Exception as e:
         raise e
    
     context = {
         'single_product':single_product,
-        'in_cart':in_cart
+        'in_cart':in_cart,
+        'new_arrivals': new_arrivals, 
         }
     return render(request, 'store/product/product.html', context )
 
 def product_by_category(request, category_slug=None):
-    product_category = Category.objects.all()    
-    product_count = Product.objects.count()
+    product_category = Category.objects.all()
+    category = Category.objects.get(slug = category_slug )    
+    
+    product = Product.objects.filter(category = category)
+    product_count = product.count()
+    paginator = Paginator(product, 20)
+    page = request.GET.get('page')
+    
+    try:
+        product = paginator.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer deliver the first page
+        product = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deliver last page of results
+        product = paginator.page(paginator.num_pages)
+
     context = {
         'product_category': product_category,
         'product_count': product_count,
+        'pages'  : page,
+        'shop_products': product,
     }
-    return render(request, 'includes/category.html', context)
+    return render(request, 'store/shop.html', context)
 
 def shop(request, category_slug=None):
     shop_products = None
@@ -55,7 +74,6 @@ def shop(request, category_slug=None):
         shop_products = Product.objects.filter(category = categories, in_stock=True).order_by('?')
         product_count = Product.objects.count()
     else:
-        
         shop_products  = Product.objects.all().order_by('?')
         product_count = Product.objects.count()
 
