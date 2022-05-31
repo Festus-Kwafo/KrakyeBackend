@@ -9,7 +9,8 @@ class Category(models.Model):
     cat_image = models.ImageField(upload_to = 'categories')
 
     def get_absolute_url(self):
-        return reverse('store:shop', args=[self.slug])
+        return reverse('store:products_by_category', args=[str(self.slug)])
+    
     class Meta:
         verbose_name_plural ='categories'
 

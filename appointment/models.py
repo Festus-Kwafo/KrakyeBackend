@@ -6,3 +6,4 @@ class Appointment(models.Model):
     email = models.CharField(max_length=150)
     phone_number = models.CharField(max_length=15)
     time_slot = models.CharField(max_length=100)
+    note = models.TimeField()

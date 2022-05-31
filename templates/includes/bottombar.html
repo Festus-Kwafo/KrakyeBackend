@@ -19,24 +19,32 @@
         <a class="nav-link" href="{% url "store:shop" %}">Shop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{%url 'store:appointment' %}">Book Appointment</a>
+        <a class="nav-link" href="{%url 'appointment:appointment' %}">Book Appointment</a>
       </li>
       <li class="nav-item nav-item-hidden">
         <a class="nav-link" href="#">Contact</a>
       </li>
       <li class="nav-item nav-item-hidden">
-        <a href="">
+        <a href="{%url 'accounts:dashboard'%}">
           <button type="button" class="btn btn-dark rounded">
-              Wishlist <span class="badge badge-light">4</span>
+              Dashboard <span class="badge badge-light">4</span>
           </button>
         </a>
       </li>
       <li class="nav-item nav-item-hidden">
+        {%if user.id is None%}
+        <a href="{% url "accounts:login" %}">
+          <button type="button" class="btn btn-danger rounded">
+              Log in
+          </button>
+        </a>
+        {%else%}
         <a href="{% url "accounts:logout" %}">
           <button type="button" class="btn btn-danger rounded">
               Log Out
           </button>
         </a>
+        {%endif%}
       </li>
     </ul>
     </div>

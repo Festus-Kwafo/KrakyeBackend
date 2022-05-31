@@ -255,3 +255,6 @@ def delete_user(request):
     logout(request)
     return redirect('accounts:delete_confirmation')
 
+@login_required
+def order_detail(request, order_id):
+    return render(request, 'account/user/order_detail.html')

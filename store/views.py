@@ -38,10 +38,12 @@ def product_detail(request, category_slug=None, product_slug=None):
         }
     return render(request, 'store/product/product.html', context )
 
-def product_by_category(request):
-    product_category = Category.objects.all()
+def product_by_category(request, category_slug=None):
+    product_category = Category.objects.all()    
+    product_count = Product.objects.count()
     context = {
-        'product_category': product_category
+        'product_category': product_category,
+        'product_count': product_count,
     }
     return render(request, 'includes/category.html', context)
 
@@ -68,10 +70,12 @@ def shop(request, category_slug=None):
     except EmptyPage:
         # If page is out of range deliver last page of results
         shop_products = paginator.page(paginator.num_pages)
+    product_category = Category.objects.all()   
     context = {
         'shop_products': shop_products, 
         'pages'  : page ,
         'product_count': product_count,
+        'product_category': product_category
     }
     return render(request, 'store/shop.html', context)
 
