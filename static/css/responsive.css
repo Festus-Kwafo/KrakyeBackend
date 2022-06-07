@@ -101,6 +101,14 @@
     .card {
         margin: 3vh auto
     }
+    .accounts {
+        display: none !important;
+    }
+}
+@media(max-width:793px) {
+    .accounts {
+        display: none !important;
+    }
 }
 
 @media(max-width:767px) {

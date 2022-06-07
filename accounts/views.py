@@ -20,7 +20,7 @@ from .tokens import account_activation_token
 from cart.views import _cart_id
 
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'accounts:login')
 def dashboard(request):
     orders = Order.objects.filter(user=request.user)
     orders_count = orders.count()
@@ -29,7 +29,7 @@ def dashboard(request):
     }
     return render(request, 'account/user/dashboard.html', context)
     
-@login_required(login_url = 'login')
+@login_required(login_url = 'accounts:login')
 def my_orders(request):
     orders = Order.objects.filter(user = request.user, is_ordered=True).order_by('-created_at')
     context = {
@@ -37,7 +37,7 @@ def my_orders(request):
     }
     return render(request, 'account/user/my_order.html', context)
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'accounts:login')
 def edit_details(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
@@ -52,7 +52,7 @@ def edit_details(request):
     return render(request,
                   'account/user/profile_edit.html', {'user_form': user_form})
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'accounts:login')
 def change_password(request):
     if request.method == 'POST':
         username = request.user.username
@@ -182,7 +182,7 @@ def account_activate(request, uidb64, token, backend='django.contrib.auth.backen
         messages.warning(request, "Invalid Activation Link. 😥")
         return redirect('accounts:register')
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'accounts:login')
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You are logged out. 😥')
