@@ -5,7 +5,7 @@ from .forms import OrderForm
 from .models import Order, OrderProduct, Payment
 import datetime
 from backend.settings import PAYSTACK_PUBLIC_KEY, PAYSTACK_SECRET_KEY
-from pypaystack import Transaction
+from paystackapi.paystack import Paystack
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from backend.settings import EMAIL_HOST_USER
@@ -20,7 +20,8 @@ def payment(request):
         orderID = int(request.POST.get('orderID'))
         transID = int(request.POST.get('transID'))
         order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
-        transaction = Transaction(authorization_key=PAYSTACK_SECRET_KEY)
+        paystack = Paystack(secret_key=PAYSTACK_SECRET_KEY)
+        transaction = paystack.transaction.list()
         channel = transaction.getone(transID)[3]['channel']
         bank = transaction.getone(transID)[3]['authorization']['bank']
         brand = transaction.getone(transID)[3]['authorization']['brand']
