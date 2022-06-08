@@ -6,7 +6,7 @@ from .forms import OrderForm
 from .models import Order, OrderProduct, Payment
 import datetime
 from backend.settings import PAYSTACK_PUBLIC_KEY, PAYSTACK_SECRET_KEY
-from pypaystack import Transaction, Customer, Plan
+from pypaystack import Transaction
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from backend.settings import EMAIL_HOST_USER
