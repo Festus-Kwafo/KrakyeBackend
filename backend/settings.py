@@ -42,11 +42,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'admin_honeypot',
     'appointment',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
@@ -165,8 +160,8 @@ EMAIL_PORT=env('EMAIL_PORT')
 
 
 # PAYSTACT SECRET KEYS
-PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY')
-PAYSTACK_PUBLIC_KEY = env('PAYSTACK_PUBLIC_KEY')
+PAYSTACK_SECRET_KEY = 'sk_test_e022f519f1b86f7c7e8978e6914ec89b2f1296a4'
+PAYSTACK_PUBLIC_KEY = 'pk_live_45f230ee5c6b64db3056f3857a162959bf24f05b'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -21,10 +21,10 @@ def payment(request):
         transID = int(request.POST.get('transID'))
         order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
         paystack = Paystack(secret_key=PAYSTACK_SECRET_KEY)
-        transaction = paystack.transaction.list()
-        channel = transaction.getone(transID)[3]['channel']
-        bank = transaction.getone(transID)[3]['authorization']['bank']
-        brand = transaction.getone(transID)[3]['authorization']['brand']
+        transaction = paystack.transaction.verify(reference= transID)
+        channel = transaction['data']['channel']
+        bank = transaction['data']['authorization']['bank']
+        brand = transaction['data']['authorization']['brand']
         #strore all the transaction details in the payment models
         print(brand)
         payment = Payment(
