@@ -10,11 +10,11 @@ from django.contrib import auth
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.EmailInput(
-        attrs={'class': 'form-control', 'placeholder': 'E-mail Address', 'id': 'inputEmail'}))
+        attrs={'class': 'form-control', 'placeholder': 'johndoe@sample.com', 'id': 'inputEmail'}))
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Enter Password',
+            'placeholder': '',
             'id': 'inputPassword',
         }
     ))
@@ -41,15 +41,15 @@ class RegistrationForm(forms.ModelForm):
         attrs={'class': 'form-control', 'placeholder': 'Username',}))
     first_name = forms.CharField(
         label='Enter Firstname', min_length=3, max_length=50, help_text='Required', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter First name',}))
+        attrs={'class': 'form-control', 'placeholder': 'John',}))
     last_name = forms.CharField(
         label='Enter Last name', min_length=3, max_length=50, help_text='Required', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter Last name',}))
+        attrs={'class': 'form-control', 'placeholder': 'Doe',}))
     email = forms.EmailField(max_length=100, help_text='Required', error_messages={
         'required': 'Sorry, you will need an email', })
     phone_number = forms.CharField(max_length=14, help_text='Required', error_messages={
         'required': 'Sorry, you will need a Phone Number'}, widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': '+233-554',}))
+        attrs={'class': 'form-control', 'placeholder': '+2335547982365',}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='Repeat password', widget=forms.PasswordInput)
@@ -81,13 +81,13 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update(
-            {'class': 'form-control', 'placeholder': 'Enter Username'})
+            {'class': 'form-control', 'placeholder': 'johndoe1'})
         self.fields['email'].widget.attrs.update(
-            {'class': 'form-control', 'placeholder': 'Enter E-mail Address', 'name': 'email', 'id': 'id_email'})
+            {'class': 'form-control', 'placeholder': 'johndoe@sample.com', 'name': 'email', 'id': 'id_email'})
         self.fields['password'].widget.attrs.update(
-            {'class': 'form-control', 'placeholder': 'Enter Password'})
+            {'class': 'form-control', 'placeholder': ''})
         self.fields['password2'].widget.attrs.update(
-            {'class': 'form-control', 'placeholder': 'Confirm Password'})
+            {'class': 'form-control', 'placeholder': ''})
 
 
 class UserEditForm(forms.ModelForm):

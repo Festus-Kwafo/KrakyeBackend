@@ -27,7 +27,6 @@ urlpatterns = [
      path('my_orders/', views.my_orders, name='my_orders'),
      path('profile/edit/', views.edit_details, name='edit_details'),
      path('profile/delete_user', views.delete_user, name='delete_user'),
-     path('profile/delete_confirm',TemplateView.as_view(template_name='account/user/delete_confirmation.html'), name='delete_confirmation'),
      path('order_detail/<int:order_id>/', views.order_detail, name="order_detail"),
      
      #change password

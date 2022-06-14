@@ -1,7 +1,5 @@
 {% extends '../../base.html' %} {% block title %}Login{% endblock %}
-{%block content %} {% load socialaccount %} {% load account %}
-{% load i18n %}
-{% load account socialaccount %}
+{%block content %}
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content font-inter padding-y" style="min-height:84vh">
@@ -21,11 +19,11 @@
           {%include '../../includes/alerts.html'%}    
             <div class="form-group">
               <label>Email:</label>
-              <input type="email" class="form-control" placeholder="Email Address" name="email" >
+              <input type="email" class="form-control" placeholder="johndoe@sample.com" name="email" >
             </div> <!-- form-group// -->
             <div class="form-group">
               <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password" name="password">
+              <input type="password" class="form-control" placeholder="" name="password">
             </div> <!-- form-group// -->
             
             <div class="form-group">
@@ -33,35 +31,11 @@
             </div> <!-- form-group form-check .// -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block font-inter"> Login  </button>
-            </div> <!-- form-group// --> 
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <a href="{% provider_login_url 'google' %}">
-                  <div class="google-btn">
-                    <div class="google-icon-wrapper">
-                      <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-                    </div>
-                    <p class="btn-text"><b>Log in with Google</b></p>
-                  </div>
-                </a>
-              </div>
-              <div class="form-group col-md-6">
-                <a href="">
-                  <div class="facebook-btn">
-                    <div class="facebook-icon-wrapper">
-                      <i class="fa-brands fa-facebook-f facebook-icon"></i>
-                    </div>
-                    <p class="btn-text"><b>Sign up with Facebook</b></p>
-                  </div>
-                </a>
-              </div> <!-- form-group end.// -->
-            </div> <!-- form-row.// -->   
-        </form>
-        </div> <!-- card-body.// -->
+            </div>
+            <span class="text-center mt-4">Don't have account? <a href="{% url 'accounts:register' %}">Sign up</a></span>
       </div> <!-- card .// -->
-  
-       <p class="text-center mt-4">Don't have account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
-       <br><br>
+       
+       <br>
        {%endif%}
   <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
   
