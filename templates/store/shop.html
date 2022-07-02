@@ -4,7 +4,7 @@
   <main id="main-site">
     <div class="row">
       {%include '../includes/category.html'%}
-      <div class='col-md-9'>
+    <div class='col-md-9'>
         <!--Top Sale-->
       <section id="shop">
         <div class="container py-5">
@@ -18,7 +18,7 @@
           </div>
           <hr>
         <!--Owl carousel-->
-        <div class="grid">
+        <div class="grid w-100">
           {%for item in shop_products%}
           <div class="grid-item {{item.category}} m-0">
             <div class="shadow-sm item py-2 m-1" style="width: 200px">

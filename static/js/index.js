@@ -12,16 +12,19 @@ $(document).ready(function(){
     //top sale carousel
     $("#top-sale .owl-carousel").owlCarousel({
         loop: true,
-        nav: true,
+        nav: false,
         dots: false,
         responsive: {
             0:{
                 items: 2
             },
-            600:{
-                items: 2
+            420:{
+                items: 3
             },
-            1000:{
+            980:{
+                items: 4
+            },
+            1244:{
                 items: 5
             }
         }
@@ -31,17 +34,20 @@ $(document).ready(function(){
     //shop carousel
     $("#shop .owl-carousel").owlCarousel({
         loop: true,
-        nav: true,
+        nav: false,
         dots: false,
         responsive: {
             0:{
                 items: 2
             },
-            600:{
-                items: 2
-            },
-            1000:{
+            420:{
                 items: 3
+            },
+            980:{
+                items: 4
+            },
+            1244:{
+                items: 5
             }
         }
     });
@@ -61,16 +67,19 @@ $(document).ready(function(){
     //New Clothes carousel
     $("#new-clothes .owl-carousel").owlCarousel({
         loop: true,
-        nav: true,
+        nav: false,
         dots: false,
         responsive: {
             0:{
                 items: 2
             },
-            600:{
-                items: 2
+            420:{
+                items: 3
             },
-            1000:{
+            980:{
+                items: 4
+            },
+            1244:{
                 items: 5
             }
         }
