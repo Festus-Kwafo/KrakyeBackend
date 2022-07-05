@@ -1,8 +1,45 @@
 {%extends 'templates/base.html'%}
-{% block title %}Krakye Clothing{% endblock%}
+{% block title %}Book Appointment{% endblock%}
 {% block content %} {%load static%}
 <section>
   <div class="container">
+    <div class="row my-5">
+      <div class="col-3">
+
+      </div>
+      <div class="col-9">
+        <form action="{%url 'appointment:appointment' %}" method="post">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="col-6 form-group">
+              <label for="">Full name</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="col-6 form-group">
+              <label for="">Email</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col form-group">
+              <label for="">Phone Number</label>
+              <input type="text" name="phone_number" class="form-control" required>
+            </div>
+            <div class="col form-group">
+              <label for="">Time Slot</label>
+              <input type="date" name="time_slot" class="form-control" required>
+            </div>
+          </div>
+            <div class="form-row">
+              <label for="">Appointment Note</label>
+              <textarea name="note" rows="2" class="form-control"></textarea>
+            </div>
+            <div class="float-right my-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
     
   </div>
 </section>

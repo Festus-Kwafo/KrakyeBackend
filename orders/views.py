@@ -115,6 +115,7 @@ def place_orders(request, total=0, quantity=0):
             data.order_total = total
             data.ip = request.META.get('REMOTE_ADDR')
             data.save()
+            
             # Generate order number
             yr = int(datetime.date.today().strftime('%Y'))
             dt = int(datetime.date.today().strftime('%d'))
