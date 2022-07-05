@@ -1,6 +1,4 @@
 from django import forms
-from django_countries import countries
-from django_countries.data import COUNTRIES
 from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
                                        SetPasswordForm)
 from requests import request

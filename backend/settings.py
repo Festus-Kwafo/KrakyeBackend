@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'cart',
     'category',
     'orders',
-    'sslserver',
-    'django_extensions',
     'admin_honeypot',
     'appointment',
 ]
