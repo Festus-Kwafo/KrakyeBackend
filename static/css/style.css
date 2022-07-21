@@ -800,4 +800,7 @@ textarea:focus {
   background: #1669F2;
 }
 
+.mobile-cart{
+  display: none;
+}
 /*#sourceMappingURL=style.css.map*/

@@ -1,6 +1,6 @@
-<nav class="px-5 ml-3 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
+<nav class="px-5 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
     <a class="navbar-brand" href="{%url "store:home"%}"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
-        <form action="{%url 'store:search'%}" method="GET" class="col-6">
+        <form action="{%url 'store:search'%}" method="GET" class="col-6 search-bar">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search..." name="keyword">
             <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
@@ -8,7 +8,6 @@
           </div>
         </form>
           
-        
         <div class="d-flex nav-item">
             <div class="accounts mr-3 navbar-item-hidden font-inter text-decoration-none">
               {% if user.id is None %}
@@ -32,18 +31,17 @@
               </div>
               {% endif %}
             </div>
-            <div>
-              <a href="{%url 'cart:cart_summary'%}">
-                <button type="button" class="btn btn-cart border rounded-circle position-relative">
-                  <i class="fa-solid fa-cart-shopping font-size-20"></i>
-                  <span class="text-light position-absolute top-0 start-100 translate-middle rounded-circle badge bg-primary">
-                    {{cart_count}}
-                  </span>
-                </button>
-              </a>
-
-            </div>
         </div>
     <div>
+    </div>
+    <div class="mobile-cart">
+      <a href="{%url 'cart:cart_summary'%}">
+        <button type="button" class="btn btn-cart border rounded-circle position-relative">
+          <i class="fa-solid fa-cart-shopping font-size-20"></i>
+          <span class="text-light position-absolute top-0 start-100 translate-middle rounded-circle badge bg-primary">
+            {{cart_count}}
+          </span>
+        </button>
+      </a>
     </div>
   </nav>

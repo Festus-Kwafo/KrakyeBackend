@@ -21,8 +21,6 @@ def appointment(request):
         else:
             print(form.errors.as_data())
             return redirect('appointment:appointment')
-
-
     context = {
         'form': form
     }

@@ -4,43 +4,70 @@
 <section>
   <div class="container">
     <div class="row my-5">
-      <div class="col-3">
 
-      </div>
-      <div class="col-9">
-        <form action="{%url 'appointment:appointment' %}" method="post">
-          {% csrf_token %}
-          <div class="form-row">
-            <div class="col-6 form-group">
-              <label for="">Full name</label>
-              <input type="text" name="name" class="form-control" required>
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-6 form-group">
-              <label for="">Email</label>
-              <input type="email" name="email" class="form-control" required>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Book Appointment with Krakye Clothing</h5>
+                <form action="{%url 'appointment:appointment' %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-row">
+                    <div class="col-6 form-group">
+                      <label for="">Full name</label>
+                      <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="col-6 form-group">
+                      <label for="">Email</label>
+                      <input type="email" name="email" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <label for="">Phone Number</label>
+                      <input type="text" name="phone_number" class="form-control" required>
+                    </div>
+                    <div class="col form-group">
+                      <label for="">Date</label>
+                      <input id="datefield" type="date" name="time_slot" class="form-control" min="2021-08-01" required>
+                    </div>
+                  </div>
+                    <div class="form-row">
+                      but 
+                    </div>
+                    <div class="form-row">
+                      <label for="">Appointment Note</label>
+                      <textarea name="note" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="float-right my-3">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+              </div>
             </div>
           </div>
-          <div class="form-row">
-            <div class="col form-group">
-              <label for="">Phone Number</label>
-              <input type="text" name="phone_number" class="form-control" required>
-            </div>
-            <div class="col form-group">
-              <label for="">Time Slot</label>
-              <input type="date" name="time_slot" class="form-control" required>
-            </div>
-          </div>
-            <div class="form-row">
-              <label for="">Appointment Note</label>
-              <textarea name="note" rows="2" class="form-control"></textarea>
-            </div>
-            <div class="float-right my-3">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-      </div>
+        </div>
+
     </div>
     
   </div>
 </section>
+<script>
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+  var yyyy = today.getFullYear();
+    if(dd<10){
+      dd='0'+dd
+    } 
+    if(mm<10){
+      mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefield").setAttribute("min", today);
+</script>
 {%endblock%}
