@@ -12,7 +12,7 @@ def appointment(request):
             appointment.name = request.POST.get("name")
             appointment.email = request.POST.get("email")
             appointment.phone_number = request.POST.get("phone_number")
-            appointment.time_slot = request.POST.get("time_slot")
+            appointment.time_slot = request.POST.get("date")
             appointment.note = request.POST.get("note")
             appointment = form.save(commit=False)
             print(appointment.time_slot)
