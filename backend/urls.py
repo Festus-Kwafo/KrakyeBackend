@@ -14,7 +14,7 @@ urlpatterns = [
     path('account/', include('accounts.urls', namespace='accounts')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('appointment/', include('appointment.urls', namespace='appointment')),
-    path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
