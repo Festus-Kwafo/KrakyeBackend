@@ -8,3 +8,5 @@ cert.pem
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+staticfiles

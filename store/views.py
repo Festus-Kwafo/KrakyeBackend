@@ -113,3 +113,5 @@ def search(request):
     }
     return render(request, 'store/shop.html', context)
 
+def my_custom_page_not_found_view(request):
+    return render(request, '404.html')

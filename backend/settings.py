@@ -200,3 +200,5 @@ MESSAGE_TAGS = {
     messages.INFO: '',
     50: 'critical',
 }
+
+handler404 = 'store.views.my_custom_page_not_found_view'
