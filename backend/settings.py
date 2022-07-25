@@ -158,8 +158,8 @@ EMAIL_PORT=env('EMAIL_PORT')
 
 
 # PAYSTACT SECRET KEYS
-PAYSTACK_SECRET_KEY = env('PAYSTACK_SECRET_KEY_TEST')
-PAYSTACK_PUBLIC_KEY = env('PAYSTACK_PUBLIC_KEY_TEST')
+PAYSTACK_SECRET_KEY =env('PAYSTACK_SECRET_KEY_TEST')
+PAYSTACK_PUBLIC_KEY =env('PAYSTACK_PUBLIC_KEY_TEST')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
