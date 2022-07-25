@@ -14,19 +14,22 @@ from django.core.mail import send_mail
 def payment(request):
     if request.POST.get('action') == 'post':
         user = request.user
-        payment_id = int(request.POST.get('transID'))
-        amount_paid = int(request.POST.get('amount_val'))
+        payment_id = int(request.POST.get('transRef'))
+        amount_paid = float(request.POST.get('amount_val'))
         status = request.POST.get('status')
         orderID = int(request.POST.get('orderID'))
-        transID = int(request.POST.get('transID'))
+        transRef = int(request.POST.get('transRef'))
         order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
         paystack = Paystack(secret_key=PAYSTACK_SECRET_KEY)
-        transaction = paystack.transaction.verify(reference= transID)
+        transaction = paystack.transaction.verify(transRef)
+        print(transaction.keys())
         channel = transaction['data']['channel']
+        print(channel)
         bank = transaction['data']['authorization']['bank']
         brand = transaction['data']['authorization']['brand']
+
         #strore all the transaction details in the payment models
-        print(brand)
+        # print(brand)
         payment = Payment(
             user = request.user,
             payment_id = payment_id,
@@ -80,8 +83,7 @@ def payment(request):
     send_mail(subject, message, EMAIL_HOST_USER, [to_email])
 
     #send SMS after Payment
-    
-    response = JsonResponse({'Order_number': order.order_number, 'transID':transID})
+    response = JsonResponse({'Order_number': order.order_number, 'transRef': transRef})
     return response
 
 def place_orders(request, total=0, quantity=0):

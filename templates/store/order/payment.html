@@ -132,35 +132,36 @@
       callback: function(response){
         var referenceid = response;
         var status = response.status
-        var transID = response.trans
+        var transRef = response.reference
         var message = response.message
         console.log(status)
         console.log(referenceid)
-        console.log(transID)
+        console.log(transRef)
         $.ajax({
           type: "POST",
           url: "{%url 'orders:payment'%}",
           data: {
             orderID: orderID,
             status: status,
-            transID: transID,
+            transRef: transRef,
             csrfmiddlewaretoken: "{{csrf_token}}",
             amount_val: {{total}},
             message: message,
             action: 'post'       
         },
           success: function(json){
-            window.location.href = '/orders/order_complete' +'?order_number='+json.Order_number+'&payment_id='+json.transID
+            window.location.href = '/orders/order_complete' +'?order_number='+json.Order_number+'&payment_id='+json.transRef
             console.log(json)
             if (status == "success"){    
             }else {
               $(".alert").text("Transaction reference not found");
               console.log("Transaction failed")
-            }
+            } 
           }
         })
       }
     }
+  
     if (Boolean(currency)){
       obj.currency = currency.toUpperCase()
     }
