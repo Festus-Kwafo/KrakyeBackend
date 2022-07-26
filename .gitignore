@@ -10,3 +10,5 @@ cert.pem
 !.elasticbeanstalk/*.global.yml
 
 staticfiles
+
+db.sqlite3
