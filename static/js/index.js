@@ -151,7 +151,7 @@ function magnifier() {
     }
     
     if(!($pointer.is('.magnifiedImg'))){
-      alert('Object must be image.');
+      // alert('Object must be image.');
       return false;
     }
 
