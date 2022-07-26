@@ -249,7 +249,6 @@
   margin-bottom: 7px;
 }
 .list-check > li::before {
-  font-family: "Font Awesome 5 Free";
   font-weight: 900;
   font-size: 12px;
   color: #00b517;

@@ -2,6 +2,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 /* Sass Template*/
 /*global Classes*/
+*{
+  font-family: sans-serif;
+}
 
 html{
     font-family: "Roboto", cursive;
@@ -807,4 +810,4 @@ textarea:focus {
 .mobile-cart{
   display: none;
 }
-/*#sourceMappingURL=style.css.map*/
+#sourceMappingURL=style.css.map

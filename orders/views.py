@@ -45,6 +45,7 @@ def payment(request):
             order.payment = payment
             order.status = 'Completed'
             order.save()
+
     #move the cart items to Order Product Model
         cart_items = CartItem.objects.filter(user=request.user)
         for item in cart_items:
@@ -57,7 +58,7 @@ def payment(request):
             orderproduct.product_price = item.product.discounted_price
             orderproduct.ordered = True
             orderproduct.save()
-
+            
             cart_item = CartItem.objects.get(id=item.id)
             product_variation =cart_item.variation.all()
             orderproduct = OrderProduct.objects.get(id=orderproduct.id)
