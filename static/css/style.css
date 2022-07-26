@@ -810,4 +810,11 @@ textarea:focus {
 .mobile-cart{
   display: none;
 }
-#sourceMappingURL=style.css.map
+.btn-shop{
+  font-size: 2em !important;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.897) !important;
+  border: none;
+  margin-bottom: 5em !important;
+}
+/* #sourceMappingURL=style.css.map */

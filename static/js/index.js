@@ -5,7 +5,7 @@ $(document).ready(function(){
         items: 1,
         loop: true,
         autoplay:true,
-        autoplayTimeout:000,
+        autoplayTimeout: 2000,
         autoplayHoverPause:true
     });
 
