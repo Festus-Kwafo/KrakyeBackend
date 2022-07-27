@@ -86,22 +86,22 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Database
 #https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'd8seq2kllvinub',
-#         'USER': 'yxsyxdntztukha',
-#         'PASSWORD': 'ee3b37dd1232e60279ee3ceee97f78a2ff3b41e558a1368dcbc751f718675d24',
-#         'HOST': 'ec2-52-72-99-110.compute-1.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8seq2kllvinub',
+        'USER': 'yxsyxdntztukha',
+        'PASSWORD': 'ee3b37dd1232e60279ee3ceee97f78a2ff3b41e558a1368dcbc751f718675d24',
+        'HOST': 'ec2-52-72-99-110.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -23,7 +23,7 @@ def appointment(request):
             print(appointment.date)
             appointment.save()
 
-                # setup Email
+            # setup Email
             subject = 'Appointment Book '
             message = f'Hello, {appointment.name} \n\nYour Appoitment Schedule for {appointment.date} has be received Successfuly. \n\nThese are appointment Information \n\nRegular Outfit:  {appointment.regular_outfit} \n\nCeremonial Event: {appointment.ceremonial_event} \n\nUrban Outfit:  {appointment.urban_outfit}\n\nAppointment Notes: {appointment.note}'
             to_email = appointment.email
