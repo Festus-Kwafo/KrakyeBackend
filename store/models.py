@@ -14,8 +14,6 @@ class ProductManager(models.Manager):
 class Product(models.Model):
     product_name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True)
-    # size = models.CharField(max_length=30, choices=SIZES)
-    # color = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     size_guide = models.ImageField(upload_to='size_guide/')
     images = models.ImageField(upload_to='products/')

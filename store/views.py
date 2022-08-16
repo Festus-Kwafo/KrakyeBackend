@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from cart.models import CartItem
 from cart.views import _cart_id
@@ -114,4 +114,7 @@ def search(request):
     return render(request, 'store/shop.html', context)
 
 def my_custom_page_not_found_view(request):
-    return render(request, '404.html')
+    return JsonResponse({"data": "Not found"})
+
+def my_custom_page_not_found(request):
+    return JsonResponse({"data": "Not found"})

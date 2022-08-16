@@ -211,4 +211,12 @@ function magnifier() {
 var magnify = new magnifier();
 magnify.magnifyImg('.magnifiedImg', magnification, magnifierSize);
 
-
+/**
+     * Preloader
+     */
+ let preloader = select('#preloader');
+ if (preloader) {
+   window.addEventListener('load', () => {
+     preloader.remove()
+   });
+ }

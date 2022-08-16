@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -75,6 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+
 # Custom user model
 AUTH_USER_MODEL = 'accounts.UserBase'
 LOGIN_REDIRECT_URL = 'store:home'
@@ -88,12 +89,12 @@ AUTHENTICATION_BACKENDS = [
 #https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd8seq2kllvinub',
-        'USER': 'yxsyxdntztukha',
-        'PASSWORD': 'ee3b37dd1232e60279ee3ceee97f78a2ff3b41e558a1368dcbc751f718675d24',
-        'HOST': 'ec2-52-72-99-110.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': env('ENGINE'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
     }
 }
 # DATABASES = {
@@ -201,4 +202,4 @@ MESSAGE_TAGS = {
     50: 'critical',
 }
 
-handler404 = 'store.views.my_custom_page_not_found_view'
+handler404 = 'store.views.my_custom_page_not_found'
