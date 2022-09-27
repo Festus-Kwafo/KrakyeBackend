@@ -1,0 +1,144 @@
+{% extends '../../base.html' %} {% block title %}Krakye Clothing || Cart{% endblock%}
+{% block content %} {%load static%}
+<link rel="stylesheet" href="{%static 'css/ui.css'%}">
+  <!--Main site-->
+  <section class="section-content mt-4 padding-y bg">
+  <div class="container">
+  <!-- ============================ COMPONENT 1 ================================= -->
+  <div class="row">
+    <aside class="col-lg-8">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Billing Address</h4>
+      <form action="{%url 'orders:place_order'%}" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="col form-group">
+            <label for="">First Name</label>
+            <input type="text" name="first_name" class="form-control" required>
+          </div>
+          <div class="col form-group">
+            <label for="">Last Name</label>
+            <input type="text" name="last_name" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col form-group">
+            <label for="">Email</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="col form-group">
+            <label for="">Phone Number</label>
+            <input type="text" name="phone" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col form-group">
+            <label for="">Address Line 1</label>
+            <input type="text" name="address_line_1" class="form-control" required>
+          </div>
+          <div class="col form-group">
+            <label for="">Address Line 2</label>
+            <input type="text" name="address_line_2" class="form-control">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col form-group">
+            <label for="">City</label>
+            <input type="text" name="city" class="form-control" required>
+          </div>
+          <div class="col form-group">
+            <label for="">State</label>
+            <input type="text" name="state" class="form-control" required>
+          </div>
+          <div class="col form-group">
+            <label for="">Country</label>
+            <input type="text" name="country" class="form-control" required>
+          </div>
+          </div>
+          <div class="form-row">
+            <label for="">Order Note</label>
+            <textarea name="order_note" rows="2" class="form-control"></textarea>
+          </div>
+  
+  
+    </div>
+  </div> <!-- card.// -->
+  
+    </aside> <!-- col.// -->
+    <aside class="col-lg-4">
+  
+      <div class="card">
+      <div class="card-body">
+        <div class="row text-center font-size-16 font-inter ">
+          <div class="col"><span >PRODUCT</span></div>
+          <div class="col"></div>
+          <div class="col">QUANTITY</div>
+          <div class="col">PRICE</div>
+          <div></div>
+          <div></div>
+        </div>
+        {% for cart_item in cart_items %}
+        <div data-index='{{cart_item.id}}' class="row border-top border-bottom  product-item">
+          <div class="row main align-items-center">
+              <div class="col ">
+                <img src="{{cart_item.product.images.url}}" class="img-fluid">
+              </div>
+              <div class="col">
+                  <div class="row font-inter font-size-16">{{cart_item.product.product_name}}</div>
+                  <div class="col">
+                    {%if cart_item.variation.all%}
+                    {% for item in cart_item.variation.all%}
+                    <span class="row text-muted font-size-12"><b>{{item.variation_category |  capfirst}}</b> : {{item.variation_value |  capfirst}}</span>
+                    {%endfor%}
+                    {%endif%}
+                  </div>
+              </div>
+              <div class="col d-flex justify-content-center text-center"> 
+                <div>
+                  <span class="font-size-14 font-inter">
+                    {{cart_item.quantity}}
+                  </span>
+                  
+                </div>
+             </div>
+              <div class="col font-inter d-flex justify-content-center text-center">
+                <div class="price-wrap"> 
+                <span class="font-size-14 frow"> <strong>GH₵ {{cart_item.product.discounted_price}}</strong></span> 
+                 
+              </div> <!-- price-wrap .// --> 
+              
+          </div>
+        </div>
+          </div>
+      
+      
+        {% endfor %}
+        <p class="text-center mb-3">
+          <img src="{%static 'images/mobile-money-logo-text-label-symbol-trademark-transparent-png-1174493.png'%}" class="img-fluid" style="max-width: 250px;">
+        </p>
+       
+        <div class="mx-2">
+          <button type="submit" name="submit" class="btn btn-product btn-block font-inter">Place Order</button>
+        </div>
+        <div class="mx-2 mb-2">
+          <a href="{% url 'store:shop' %}" class="btn btn-primary btn-block font-inter">Continue Shopping</a>
+        </div>
+        </form>
+      </div> <!-- card-body.// -->
+      </div> <!-- card.// -->
+  
+  
+  </aside> <!-- col.// -->
+  
+  
+  </div> <!-- row.// -->
+  
+  <!-- ============================ COMPONENT 1 END .// ================================= -->
+  
+  </div> <!-- container .//  -->
+  </section>
+  <!-- ========================= SECTION CONTENT END// ========================= -->
+  
+  <!--End Main site-->
+{%endblock%}

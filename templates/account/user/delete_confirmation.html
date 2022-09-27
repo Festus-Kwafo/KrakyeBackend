@@ -1,0 +1,13 @@
+{% extends '../../base.html' %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+
+<div class="container font-inter" style="margin-top: 50px;">
+    <center><i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i></center>
+    <h2 class="text-center">Account Deleted Successfully</h2>
+	<br>
+	<div class="text-center">
+		<a href="{% url 'store:shop' %}" class="btn btn-success">Shop more</a>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends '../base.html' %} {% block title %}Krakye Clothing{% endblock%}
+{% block content %} {%load static%}
+  <!--Main site-->
+  <main id="main-site">
+    <div class="row">
+      {%include '../includes/category.html'%}
+    <div class='col-md-9'>
+        <!--Top Sale-->
+      <section id="shop">
+        <div class="container py-5">
+          <div class="row d-flex justify-content-between">
+            <div class="col">{%if 'search' in request.path%}
+              <h4 class="font-inter font-size-20">Search Results</h4>
+              {%else%}
+              <h4 class="font-inter font-size-20">Shop</h4>
+              {%endif%}</div>
+            <div class="col text-right"><span class="font-inter font-size-14"><b>{{product_count}}</b> Item{%if product_count > 1%}s{%else%}{%endif%} found</span></div>
+          </div>
+          <hr>
+        <!--Owl carousel-->
+        <div class="grid w-100">
+          {%for item in shop_products%}
+          <div class="grid-item {{item.category}} m-0">
+            <div class="shadow-sm item py-2 m-1" style="width: 200px">
+              <div class="product font-inter">
+                  <img src="{{item.images.url}}" alt="product-1" class="img-fluid" style="width: 198px; height: 242.3px;">
+                <div class="mt-2">
+                  <h4 class="product-category mx-2 border-bottom"><a class="text-black font-size-14 text-muted" href="">{{item.category}}</a></h4>
+                </div>
+                
+                <div class="text-center ml-2">
+                  <div class="d-flex align-items-center justify-content-between mb-0">
+                    <h6>{{item.product_name}}</h6>
+                    <button class="btn btn-wishlist pb-3" style="color: black;">
+                      <svg id="btn_wishlist" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" onclick="myFunction(this)" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                  </div>
+                  <div class="price d-flex text-left font-size-14">
+                    <div class="new-price p-2">
+                      <span><b>GH₵{{item.price}}</b></span>
+                      <span class="old-price text-muted">GH₵{{item.discounted_price}}</span>
+                    </div>
+                    <div class= "ml-auto p-2">
+                      <span class="discount-percentage text-danger">{{item.discount}}%</span>
+                    </div>
+                  </div>
+                  <a href="{{item.get_absolute_url}}">
+                    <button type="submit" class="btn btn-product font-size-12 product-link" >View Product</button>
+                    </a>
+                  </div>
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        <!--End Owl carousel-->
+        </div>
+      </section>
+      <!--End Top Sale-->
+      </div>
+    </div>
+
+    
+  
+
+    <!--Pagination-->
+    <div class="container"> 
+    {% include "./pagination.html" with page=shop_products %} 
+    </div>
+    <!--End Pagination-->
+
+     <!--Site Info-->
+     <section id="site-info" class="bg-light pt-2">
+        <div class="container">
+          <div class="row ">
+            <div class="col-lg-4 col-12 text-center">
+              <i class="fa-solid fa-credit-card font-size-50 pb-2"></i>
+              <h4>Secure Payment</h4>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eos harum error, sunt tenetur odit.</p>
+            </div>
+            <div class="col-lg-4 col-12 text-center">
+              <i class="fa-solid fa-headset font-size-50 pb-2"></i>
+              <h4>Customer Support</h4>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eos harum error, sunt tenetur odit.</p>
+            </div>
+            <div class="col-lg-4 col-12 text-center">
+              <i class="fa-solid fa-truck-fast font-size-50 pb-2"></i>
+              <h4>Nationwide Delivery</h4>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus eos harum error, sunt tenetur odit.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--End Site Info-->
+    
+  </main>
+  <!--End Main site-->
+
+{%endblock%}

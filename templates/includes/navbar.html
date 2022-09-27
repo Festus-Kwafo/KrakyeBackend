@@ -1,0 +1,47 @@
+<nav class="px-5 navbar navbar-expand-lg navbar-light bg-white d-flex justify-content-between">
+    <a class="navbar-brand" href="{%url "store:home"%}"><img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" width="70" alt="" class="img-fluid"></a>
+        <form action="{%url 'store:search'%}" method="GET" class="col-6 search-bar">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." name="keyword">
+            <button class="btn btn-product" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+          
+        <div class="d-flex nav-item">
+            <div class="accounts mr-3 navbar-item-hidden font-inter text-decoration-none">
+              {% if user.id is None %}
+              <div class="widget-header">
+                <small class="title text-muted">Welcome Guest!</small>
+                <div>
+                  <a href="{% url 'accounts:login' %}">Sign in</a> <span class="dark-transp"> | </span>
+                  <a href="{% url 'accounts:register' %}"> Register</a>
+                </div>
+              </div>
+              {% else %}
+              <div class="widget-header ">
+                <small class="title font-inter text-muted">Hello, {{user.full_name}}</small>
+                <div>
+                  <span>
+                    <i class="fa-solid fa-user"></i>
+                  </span>
+                  <a href="{% url 'accounts:dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
+                  <a href="{% url 'accounts:logout' %}"> Logout</a>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+        </div>
+    <div>
+    </div>
+    <div class="">
+      <a href="{%url 'cart:cart_summary'%}">
+        <button type="button" class="btn btn-cart border rounded-circle position-relative">
+          <i class="fa-solid fa-cart-shopping font-size-20"></i>
+          <span class="text-light position-absolute top-0 start-100 translate-middle rounded-circle badge bg-primary">
+            {{cart_count}}
+          </span>
+        </button>
+      </a>
+    </div>
+  </nav>

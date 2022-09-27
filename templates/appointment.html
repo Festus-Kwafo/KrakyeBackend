@@ -1,0 +1,105 @@
+{%extends 'templates/base.html'%}
+{% block title %}Book Appointment{% endblock%}
+{% block content %} {%load static%}
+<section>
+  <div class="container">
+    <div class="row my-5">
+
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="https://festus-kwafo.github.io/KrakyeClothing/assets/logo.png" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Book Appointment with Krakye Clothing</h5>
+                <form action="{%url 'appointment:appointment' %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-row">
+                    <div class="col-6 form-group">
+                      <label for="">Full name</label>
+                      <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="col-6 form-group">
+                      <label for="">Email</label>
+                      <input type="email" name="email" class="form-control" required>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <label for="">Phone Number</label>
+                      <input type="text" name="phone_number" class="form-control" required>
+                    </div>
+                    <div class="col form-group">
+                      <label for="">Date</label>
+                      <input id="datefield" type="date" name="date" class="form-control" min="2021-08-01" required>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col form-group">
+                        <label for=""> Regular Outfit (Fabric Inclusive)</label>
+                        <select class="form-select form-control"  aria-label="Default select example" name='regular_outfit'>
+                          <option selected>Open this select menu</option>
+                          <option value="1. Kaftan (top and down $ 150) or equivalent to the cedi">1. Kaftan (top and down $ 150) or equivalent to the cedi</option>
+                          <option value="2. Kaftan Ceremonial (TOP) $100 -$150 or equivalent to the cedi">2. Kaftan Ceremonial (TOP) $100 -$150 or equivalent to the cedi</option>
+                          <option value="3. Normal Regular Top $60 OR equivalent to the cedi">3. Normal Regular Top $60 OR equivalent to the cedi</option>
+                          <option value="4. Office Trousers -$100-$150 OR equivalent to the cedi">4. Office Trousers -$100-$150 OR equivalent to the cedi</option>
+                          <option value="5. luxurious kaftan Top and Down $400 OR equivalent to the cedi">5. luxurious kaftan Top and Down $400 OR equivalent to the cedi</option>
+                          <option value="6. luxurious kaftan Top $200 OR equivalent to the cedi">6. luxurious kaftan Top $200 OR equivalent to the cedi</option>
+                          <option value="7. Regular Summer Shirt and Shorts -$150 OR equivalent to the cedi">7. Regular Summer Shirt and Shorts -$150 OR equivalent to the cedi</option>
+                        </select> 
+                    </div>
+                    <div class="col form-group">
+                      <label for=""> Ceremonial Event (Fabric Inclusive)</label>
+                        <select class="form-select form-control"  aria-label="Default select example" name='ceremonial_event'>
+                          <option selected>Open this select menu</option>
+                          <option value="1. Kaftan including design (Engagement -traditional)($300) OR equivalent to the cedi">1.Kaftan including design (Engagement -traditional)($300) OR equivalent to the cedi</option>
+                          <option value="2. 2 piece kaftan (Trouser and top)-$150 OR equivalent to the cedi">2. 2 piece kaftan (Trouser and top)-$150 OR equivalent to the cedi</option>
+                          <option value="3. 3 piece abada ;Ceremonial 3 piece Abada($600) OR equivalent to the cedi">3. 3 piece abada ;Ceremonial 3 piece Abada($600) OR equivalent to the cedi</option>
+                        </select> 
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col form-group">
+                      <label for=""> Urban Outfit (Fabric Inclusive)</label>
+                        <select class="form-select form-control"  aria-label="Default select example" name='urban_outfit'>
+                          <option selected>Open this select menu</option>
+                          <option value="1. (short and Top) based on what you want $150- $200  or the cedi equivalent">1. (short and Top) based on what you want $150- $200  or the cedi equivalent</option>
+                          <option value="2. Pouch $100 upwards base on the leather or the cedi equivalent">2. 2 piece kaftan (Trouser and top)-$150 OR equivalent to the cedi</option>
+                        </select> 
+                    </div>
+                  </div>
+                    <div class="form-row">
+                      <label for="">Appointment Note</label>
+                      <textarea name="note" rows="2" class="form-control"></textarea>
+                    </div>
+
+                    <div class="float-right my-3">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    
+  </div>
+</section>
+<script>
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+  var yyyy = today.getFullYear();
+    if(dd<10){
+      dd='0'+dd
+    } 
+    if(mm<10){
+      mm='0'+mm
+    } 
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefield").setAttribute("min", today);
+</script>
+{%endblock%}
