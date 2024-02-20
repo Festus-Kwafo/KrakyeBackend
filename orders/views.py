@@ -5,87 +5,91 @@ from .forms import OrderForm
 from .models import Order, OrderProduct, Payment
 import datetime
 from backend.settings import PAYSTACK_PUBLIC_KEY, PAYSTACK_SECRET_KEY
-from paystackapi.paystack import Paystack
+
 from django.http import JsonResponse
-from django.template.loader import render_to_string
-from backend.settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
+from .paystack import PaystackApi
+
+
 
 def payment(request):
-    if request.POST.get('action') == 'post':
-        user = request.user
-        payment_id = int(request.POST.get('transRef'))
-        amount_paid = float(request.POST.get('amount_val'))
-        status = request.POST.get('status')
-        orderID = int(request.POST.get('orderID'))
-        transRef = int(request.POST.get('transRef'))
-        order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
-        paystack = Paystack(secret_key=PAYSTACK_SECRET_KEY)
-        transaction = paystack.transaction.verify(transRef)
-        print(transaction.keys())
-        channel = transaction['data']['channel']
-        print(channel)
-        bank = transaction['data']['authorization']['bank']
-        brand = transaction['data']['authorization']['brand']
+    try:
+        if request.POST.get('action') == 'post':
+            user = request.user
+            payment_id = int(request.POST.get('transRef'))
+            amount_paid = float(request.POST.get('amount_val'))
+            status = request.POST.get('status')
+            orderID = int(request.POST.get('orderID'))
+            transRef = int(request.POST.get('transRef'))
+            print(transRef)
+            order = Order.objects.get(user=user, is_ordered=False, order_number=orderID)
+            paystack = PaystackApi(PAYSTACK_SECRET_KEY)
+            transaction = paystack.verify_transaction(str(transRef))
+            print(transaction)
+            channel = transaction['data']['channel']
+            bank = transaction['data']['authorization']['bank']
+            brand = transaction['data']['authorization']['brand']
 
-        #strore all the transaction details in the payment models
-        # print(brand)
-        payment = Payment(
-            user = request.user,
-            payment_id = payment_id,
-            amount_paid = amount_paid,
-            status = status,
-            payment_method = channel,
-            bank = bank,
-            brand = brand,
-        )
-        payment.save()
-        if status == "success":
-            order.is_ordered = True
-            order.payment = payment
-            order.status = 'Completed'
-            order.save()
+            # strore all the transaction details in the payment models
+            # print(brand)
+            payment = Payment(
+                user=request.user,
+                payment_id=payment_id,
+                amount_paid=amount_paid,
+                status=status,
+                payment_method=channel,
+                bank=bank,
+                brand=brand,
+            )
+            payment.save()
+            if status == "success":
+                order.is_ordered = True
+                order.payment = payment
+                order.status = 'Accepted'
+                order.save()
 
-    #move the cart items to Order Product Model
-        cart_items = CartItem.objects.filter(user=request.user)
-        for item in cart_items:
-            orderproduct = OrderProduct()
-            orderproduct.order_id = order.id
-            orderproduct.payment = payment
-            orderproduct.user_id = request.user.id
-            orderproduct.product_id = item.product_id
-            orderproduct.quantity = item.quantity
-            orderproduct.product_price = item.product.discounted_price
-            orderproduct.ordered = True
-            orderproduct.save()
-            
-            cart_item = CartItem.objects.get(id=item.id)
-            product_variation =cart_item.variation.all()
-            orderproduct = OrderProduct.objects.get(id=orderproduct.id)
-            orderproduct.variations.set(product_variation)
-            orderproduct.save()
+            # move the cart items to Order Product Model
+            cart_items = CartItem.objects.filter(user=request.user)
+            for item in cart_items:
+                orderproduct = OrderProduct()
+                orderproduct.order_id = order.id
+                orderproduct.payment = payment
+                orderproduct.user_id = request.user.id
+                orderproduct.product_id = item.product_id
+                orderproduct.quantity = item.quantity
+                orderproduct.product_price = item.product.discounted_price
+                orderproduct.ordered = True
+                orderproduct.save()
 
-        #reduce the quantity of product if sold
-            product = Product.objects.get(id=item.product_id)
-            product.stock -= item.quantity
-            product.save()
-    
-    #clear cart if order is succcess
-    CartItem.objects.filter(user=request.user).delete()
+                cart_item = CartItem.objects.get(id=item.id)
+                product_variation = cart_item.variation.all()
+                orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+                orderproduct.variations.set(product_variation)
+                orderproduct.save()
 
-    #Send Email after order
-    # setup Email
-    subject = 'Order Recieved'
-    message = render_to_string('store/order/order_received_email.html', {
-        'user': user,
-        'order':order,
-    })
-    to_email = user.email
-    send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+                # reduce the quantity of product if sold
+                product = Product.objects.get(id=item.product_id)
+                product.stock -= item.quantity
+                product.save()
 
-    #send SMS after Payment
-    response = JsonResponse({'Order_number': order.order_number, 'transRef': transRef})
+        # clear cart if order is succcess
+        CartItem.objects.filter(user=request.user).delete()
+
+        # Send Email after order
+        #setup Email
+        # subject = 'Order Recieved'
+        # message = render_to_string('store/order/order_received_email.html', {
+        #     'user': user,
+        #     'order': order,
+        # })
+        # to_email = user.email
+        # send_mail(subject, message, EMAIL_HOST_USER, [to_email])
+        # send SMS after Payment
+        response = JsonResponse({'Order_number': order.order_number, 'transRef': transRef})
+    except Exception as e:
+        print(e)
+        response = JsonResponse({'Order_number': 1, 'transRef': 2})
     return response
+
 
 def place_orders(request, total=0, quantity=0):
     current_user = request.user
@@ -97,7 +101,6 @@ def place_orders(request, total=0, quantity=0):
     for cart_item in cart_items:
         total += (cart_item.product.discounted_price * cart_item.quantity)
         quantity += cart_item.quantity
-
 
     if request.method == "POST":
         form = OrderForm(request.POST)
@@ -118,13 +121,13 @@ def place_orders(request, total=0, quantity=0):
             data.order_total = total
             data.ip = request.META.get('REMOTE_ADDR')
             data.save()
-            
+
             # Generate order number
             yr = int(datetime.date.today().strftime('%Y'))
             dt = int(datetime.date.today().strftime('%d'))
             mt = int(datetime.date.today().strftime('%m'))
-            d = datetime.date(yr,mt,dt)
-            current_date = d.strftime("%Y%m%d") #20210305
+            d = datetime.date(yr, mt, dt)
+            current_date = d.strftime("%Y%m%d")  # 20210305
             order_number = current_date + str(data.id)
             data.order_number = order_number
             data.save()
@@ -134,12 +137,12 @@ def place_orders(request, total=0, quantity=0):
             context = {
                 'order': order,
                 'total': total,
-                'cart_items':cart_items,
+                'cart_items': cart_items,
                 'paystack_public_key': paystack_public_key,
             }
-            return render(request, 'store/order/payment.html', context)   
+            return render(request, 'store/order/payment.html', context)
         else:
-            return redirect('cart:checkout')  
+            return redirect('cart:checkout')
 
 
 def order_complete(request):
@@ -147,22 +150,21 @@ def order_complete(request):
     payment_id = request.GET.get('payment_id')
 
     try:
-        order = Order.objects.get(order_number=order_number, is_ordered= True)
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
         ordered_product = OrderProduct.objects.filter(order_id=order.id)
-        payment= Payment.objects.get(payment_id=payment_id)
+        payment = Payment.objects.get(payment_id=payment_id)
 
         subtotal = 0
         for i in ordered_product:
             subtotal = i.product_price * i.quantity
 
         context = {
-            'order':order,
-            'ordered_product':ordered_product,
+            'order': order,
+            'ordered_product': ordered_product,
             'order_number': order.order_number,
             'payment_id': payment.payment_id,
-            'payment':payment,
-            'subtotal':subtotal
-
+            'payment': payment,
+            'subtotal': subtotal
         }
         return render(request, 'store/order/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):

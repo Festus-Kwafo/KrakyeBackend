@@ -18,7 +18,6 @@
                   <p class="card-text mb-0">{{order.full_address}}</p>
                   <p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
                   <p class="card-text mb-0">{{order.country}}</p>
-                  
                 </div>
               </div>
               <!-- <div class="card">
@@ -108,14 +107,15 @@
 <script>
   
   function payWithPayStack(){
+      console.log("working")
     var amount_val = {{total}} * 100
     var orderID = {{order.order_number}}
-    let currency = "GHS";
+    var currency = "GHS";
     let plan = "";
     let first_name= "{{order.first_name}}";
     let last_name= "{{order.last_name}}";    
     let obj = {
-      key: "{{paystack_public_key}}",
+      key: "pk_test_e58f4c1f10b7124c3c50b5fee024f8d04e6875c9",
       email: "{{order.email}}",
       name: "{{order.full_name}}",
       amount: amount_val,
@@ -152,12 +152,14 @@
           success: function(json){
             window.location.href = '/orders/order_complete' +'?order_number='+json.Order_number+'&payment_id='+json.transRef
             console.log(json)
-            if (status == "success"){    
+              console.log("Transaction successful")
+            if (status === "success"){
             }else {
               $(".alert").text("Transaction reference not found");
               console.log("Transaction failed")
             } 
           }
+
         })
       }
     }
